@@ -28,6 +28,7 @@ const config = {
         rules: [
             {
                 test: /\.(js|jsx)$/i,
+                exclude: ['node_modules'],
                 loader: 'babel-loader',
             },
             {
@@ -46,6 +47,15 @@ const config = {
     optimization: {
         minimizer: []
     },
+    resolve: {
+        alias: {
+          config$: './configs/app-config.js',
+        },
+        extensions: ['.js', '.jsx'],
+        modules: [
+          'node_modules',
+        ],
+      },
 };
 
 module.exports = () => {
