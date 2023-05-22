@@ -49,4 +49,5 @@ Battleship game with the original board game's rules.
     6. `pivot`: grid coordinate pair defining the ship's rotation center.
     7. `checkHits(hits[])`: checks whether a list of hits' coordinate pairs hit the ship.
     8. `registerHit(hit)`: marks a parts of the ship as damaged.
+    8. `move(newPivot)`: moves ship to a new position.
     
