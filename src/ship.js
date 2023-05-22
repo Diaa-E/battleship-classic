@@ -3,9 +3,11 @@
 export function ship(name, length, pivot)
 {
     const hits = [];
-    const position = [];
+    let position = [];
     let isSunk = false;
     let isVertical = true;
+
+    position = evaluatePosition(pivot, isVertical);
 
     function rotate()
     {
@@ -29,7 +31,24 @@ export function ship(name, length, pivot)
 
     function evaluatePosition(newPivot, vert)
     {
+        const newPosition = [];
 
+        if (vert)
+        {
+            for (let y = 0; y < length; y++)
+            {
+                newPosition.push([newPivot[0], newPivot[1] + y]);
+            }
+        }
+        else
+        {
+            for (let x = 0; x < length; x++)
+            {
+                newPosition.push([newPivot[0] + x, newPivot[1]]);
+            }
+        }
+
+        return newPosition;
     }
 
     return {
