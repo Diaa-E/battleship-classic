@@ -7,7 +7,7 @@ export function ship(name, length, pivot)
     let isSunk = false;
     let isVertical = true;
 
-    position = evaluatePosition(pivot, isVertical);
+    position = move(pivot, isVertical); //place ship for the first time
 
     function rotate()
     {
@@ -24,12 +24,7 @@ export function ship(name, length, pivot)
 
     }
 
-    function move(newPivot)
-    {
-
-    }
-
-    function evaluatePosition(newPivot, vert)
+    function move(newPivot, vert = isVertical)
     {
         const newPosition = [];
 
