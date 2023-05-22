@@ -36,3 +36,17 @@ Battleship game with the original board game's rules.
 9. The first player to destroy their opponent's fleet wins.
 
 -----
+
+## Design   
+
+* ### Ship Object  
+
+    1. `name`: ship's name, used by UI components.
+    2. `position[]`: grid coordinate pairs that construct the ship.
+    3. `hits[]`: grid coordinate pairs that define hits.
+    4. `isSunk`: used by board object to quickly check whether all player's ships are sunk.
+    5. `rotate()`: toggles ship rotation between 90 and 0.
+    6. `pivot`: grid coordinate pair defining the ship's rotation center.
+    7. `checkHits(hits[])`: checks whether a list of hits' coordinate pairs hit the ship.
+    8. `registerHit(hit)`: marks a parts of the ship as damaged.
+    
