@@ -3,12 +3,12 @@
   "presets": [
     [
       "@babel/preset-env",
-      {"targets": {"node": "current"}} //use ES6 import
+      {"modules": false}
     ]
   ],
   "env": {
     "test": {
-      "plugins": ["dynamic-import-node"]
+      "plugins": ["@babel/plugin-transform-modules-commonjs"] //use ES6 modules in testing
     }
   }
 }
