@@ -1,11 +1,11 @@
+import {expect, jest, test} from '@jest/globals';
 import { ship } from "./ship";
-
 
 test("Evaluates position", () => {
     
     const carrier = ship("Carrier", 5, [0, 3]);
     
-    expect(carrier.position).toEqual([[0, 3], [0, 4], [0, 5], [0, 6], [0, 7]]);
+    expect(carrier.position).toStrictEqual([[0, 3], [0, 4], [0, 5], [0, 6], [0, 7]]);
 });
 
 test("Registers a single hit", () => {
