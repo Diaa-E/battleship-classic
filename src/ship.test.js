@@ -11,23 +11,26 @@ test("Initializes position", () => {
 test("Moves to a new location", () => {
 
     const carrier = ship("Carrier", 5, [0, 3]);
+    carrier.move([2, 3]);
 
-    expect(carrier.move([2, 3])).toStrictEqual([[2, 3], [2, 4], [2, 5], [2, 6], [2, 7]]);
+    expect(carrier.position).toStrictEqual([[2, 3], [2, 4], [2, 5], [2, 6], [2, 7]]);
 });
 
 test("Rotates -90d", () => {
 
     const carrier = ship("Carrier", 5, [1, 3]);
+    carrier.rotate();
 
-    expect(carrier.rotate()).toStrictEqual([[1, 3], [2, 3], [3, 3], [4, 3], [5, 3]]);
+    expect(carrier.position).toStrictEqual([[1, 3], [2, 3], [3, 3], [4, 3], [5, 3]]);
 });
 
 test("Rotates +90d", () => {
 
     const carrier = ship("Carrier", 5, [1, 3]);
     carrier.rotate();
+    carrier.rotate();
 
-    expect(carrier.rotate()).toStrictEqual([[1, 3], [1, 4], [1, 5], [1, 6], [1, 7]]);
+    expect(carrier.position).toStrictEqual([[1, 3], [1, 4], [1, 5], [1, 6], [1, 7]]);
 });
 
 test("Registers a single hit", () => {
