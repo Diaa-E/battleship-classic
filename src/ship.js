@@ -1,17 +1,17 @@
 "use strict";
 
-export function ship(name, length, pivot)
+export function ship(name, length, pivot, vert = true)
 {
     const hits = [];
     let position = [];
     let isSunk = false;
-    let isVertical = true;
+    let isVertical = vert;
 
     move(pivot); //place ship for the first time
 
     function rotate()
     {
-    
+        
     }
 
     function checkHits(hits)
