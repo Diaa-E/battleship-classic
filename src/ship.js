@@ -6,12 +6,15 @@ export function ship(name, length, pivot, vert = true)
     let position = [];
     let isSunk = false;
     let isVertical = vert;
+    let currentPivot = pivot;
 
     move(pivot); //place ship for the first time
 
     function rotate()
     {
-        
+        isVertical = !isVertical;
+
+        updatePosition(setPosition(currentPivot));
     }
 
     function checkHits(hits)
