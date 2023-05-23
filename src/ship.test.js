@@ -26,7 +26,7 @@ test("Rotates -90d", () => {
 
 test("Rotates +90d", () => {
 
-    const carrier = ship("Carrier", 5, [1, 3]);
+    const carrier = ship("Carrier", 5, [1, 3], false);
     carrier.rotate();
     carrier.rotate();
 
