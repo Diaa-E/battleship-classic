@@ -29,6 +29,8 @@ export function ship(name, length, pivot, vert = true)
 
     function move(newPivot)
     {
+        currentPivot = newPivot;
+
         updatePosition(setPosition(newPivot));
     }
 
