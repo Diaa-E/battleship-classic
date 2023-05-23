@@ -28,7 +28,6 @@ test("Rotates +90d", () => {
 
     const carrier = ship("Carrier", 5, [1, 3], false);
     carrier.rotate();
-    carrier.rotate();
 
     expect(carrier.position).toStrictEqual([[1, 3], [1, 4], [1, 5], [1, 6], [1, 7]]);
 });
