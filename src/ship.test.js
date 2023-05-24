@@ -61,5 +61,5 @@ test("Sinks when all squares have been hit", () => {
     const carrier = ship("Carrier", 5, [0, 3]);
     carrier.checkHits([[0, 3], [0, 4], [0, 5], [0, 6], [0, 7]]);
 
-    expect(carrier.isSunk).toBeTruthy();
+    expect(carrier.isSunk).toStrictEqual(true);
 });
