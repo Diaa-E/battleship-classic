@@ -2,7 +2,7 @@
 
 export function ship(name, length, pivot, vert = true)
 {
-    const hits = [];
+    let hits = [];
     let position = [];
     let isSunk = false;
     let isVertical = vert;
@@ -23,14 +23,23 @@ export function ship(name, length, pivot, vert = true)
 
             position.forEach(square => {
 
-                if (square[0] === newHit[0] && square[1] === newHit[1]) registerHit(newHit);
+                if (square[0] === newHit[0] && square[1] === newHit[1]) 
+                {
+                    registerHit(newHit);
+                    checkSunk();
+                }
             });
         });
     }
-
+    
     function registerHit(newHit)
     {
         hits.push(newHit);
+    }
+
+    function checkSunk()
+    {
+        if (hits.length === position.length) isSunk = true;
     }
 
     function move(newPivot)
@@ -70,11 +79,14 @@ export function ship(name, length, pivot, vert = true)
         return newPosition;
     }
 
+    //the object only returns a copy of the local variable
+    //it worked with arrays because they're passed by ref
+    //using a getter accesses the local property, and as a bonus prevents undesired assignment
     return {
-        name: name,
-        hits: hits,
-        position: position,
-        isSunk: isSunk,
+        get name(){return name},
+        get hits(){return hits},
+        get position(){return position},
+        get isSunk(){return isSunk},
         rotate: rotate,
         checkHits: checkHits,
         move: move,
