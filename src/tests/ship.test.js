@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import { ship } from "./ship";
+import { ship } from "../ship";
 
 test("Initializes position", () => {
     
