@@ -17,14 +17,20 @@ export function ship(name, length, pivot, vert = true)
         updatePosition(setPosition(currentPivot));
     }
 
-    function checkHits(hits)
+    function checkHits(newHits)
     {
+        newHits.forEach(newHit => {
 
+            position.forEach(square => {
+
+                if (square[0] === newHit[0] && square[1] === newHit[1]) registerHit(newHit);
+            });
+        });
     }
 
-    function registerHit(hit)
+    function registerHit(newHit)
     {
-
+        hits.push(newHit);
     }
 
     function move(newPivot)
