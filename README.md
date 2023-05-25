@@ -41,13 +41,22 @@ Battleship game with the original board game's rules.
 
 * ### Ship Object  
 
-    1. `name`: ship's name, used by UI components.
-    2. `position[]`: grid coordinate pairs that construct the ship.
+    1. `get name`: ship's name, used by UI components.
+    2. `get position[]`: grid coordinate pairs that construct the ship.
     3. `hits[]`: grid coordinate pairs that define hits.
-    4. `isSunk`: used by board object to quickly check whether all player's ships are sunk.
-    5. `rotate()`: toggles ship rotation between 90 and 0.
+    4. `get isSunk`: used by board object to quickly check whether all player's ships are sunk.
+    5. ~~`rotate()`: toggles ship rotation between 90 and 0.~~
     6. `pivot`: grid coordinate pair defining the ship's rotation center.
-    7. `checkHits(hits[])`: checks whether a list of hits' coordinate pairs hit the ship.
+    7. ~~`checkHits(hits[])`: checks whether a list of hits' coordinate pairs hit the ship.~~
     8. `registerHit(hit)`: marks a parts of the ship as damaged.
-    8. `move(newPivot)`: moves ship to a new position.
+    9. ~~`move(newPivot)`: moves ship to a new position.~~
+    10. `updatePosition(newPivot, rotate = false)`: update position and rotation.
     
+* ### Gameboard Object
+
+    1. `board`: gameboard's grid, includes ships, empty squares, ship squares, missed shots, damaged ship squares and sunk ship squares. Used to render the board.
+    2. `boardTokens{}`: contains all the symbols used to build. the board. `empty, hit, sunk, missed, ship`
+    3. `checkHits(newShots)`: Check whether a shot hit a ship.
+    4. `rotateShip(ship)`: toggle a ship's rotation to -90d or 0d around its pivot.
+    5. `moveShip(ship,)`: move a ship to a new location.
+    6. `locationConflict(ship, shipLength)`: checks if the ship is clear to move or rotate.
