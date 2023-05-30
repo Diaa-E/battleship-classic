@@ -11,6 +11,13 @@ export function ship(name, length, startPivot, startVertical)
 
     _drawShip(pivot);
 
+    function changePosition(newPivot, rotate)
+    {
+        if (rotate) isVertical = !isVertical;
+
+        _drawShip(newPivot);
+    }
+
     function _drawShip(newPivot)
     {
         const newPosition = [];
@@ -36,6 +43,8 @@ export function ship(name, length, startPivot, startVertical)
         get pivot(){ return pivot },
         get NAME(){ return NAME },
         get LENGTH(){ return LENGTH },
-        get isVertical(){ return isVertical }
+        get isVertical(){ return isVertical },
+
+        changePosition: changePosition,
     }
 }
