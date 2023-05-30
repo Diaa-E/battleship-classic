@@ -1,94 +1,41 @@
 "use strict";
 
-export function ship(name, length, pivot, vert = true)
+export function ship(name, length, startPivot, startVertical)
 {
-    let hits = [];
     let position = [];
+    const NAME = name;
+    const LENGTH = length;
+    let isVertical = startVertical;
+    let pivot = startPivot;
     let isSunk = false;
-    let isVertical = vert;
-    let currentPivot = pivot;
 
-    move(pivot); //place ship for the first time
+    _drawShip(pivot);
 
-    function rotate()
-    {
-        isVertical = !isVertical;
-
-        updatePosition(setPosition(currentPivot));
-    }
-
-    function checkHits(newHits)
-    {
-        newHits.forEach(newHit => {
-
-            position.forEach(square => {
-
-                if (square[0] === newHit[0] && square[1] === newHit[1]) 
-                {
-                    registerHit(newHit);
-                    checkSunk();
-                }
-            });
-        });
-    }
-    
-    function registerHit(newHit)
-    {
-        hits.push(newHit);
-    }
-
-    function checkSunk()
-    {
-        if (hits.length === position.length) isSunk = true;
-    }
-
-    function move(newPivot)
-    {
-        currentPivot = newPivot;
-
-        updatePosition(setPosition(newPivot));
-    }
-
-    function updatePosition(newPosition)
-    {
-        newPosition.forEach((pair, index) => {
-
-            position[index] = pair;
-        });
-    }
-
-    function setPosition(newPivot)
+    function _drawShip(newPivot)
     {
         const newPosition = [];
 
-        if (isVertical)
+        for (let i = 0; i < LENGTH; i++)
         {
-            for (let y = 0; y < length; y++)
+            if (isVertical) 
             {
-                newPosition.push([newPivot[0], newPivot[1] + y]);
+                newPosition.push([newPivot[0], newPivot[1] + i]);
             }
-        }
-        else
-        {
-            for (let x = 0; x < length; x++)
+            else
             {
-                newPosition.push([newPivot[0] + x, newPivot[1]]);
+                newPosition.push([newPivot[0] + i, newPivot[1]]);
             }
         }
 
-        return newPosition;
+        newPosition.forEach((element, index) => { position[index] = element });
     }
 
-    //the object only returns a copy of the local variable
-    //it worked with arrays because they're passed by ref
-    //using a getter accesses the local property, and as a bonus prevents undesired assignment
     return {
-        get name(){return name},
-        get hits(){return hits},
-        get position(){return position},
-        get isSunk(){return isSunk},
-        rotate: rotate,
-        checkHits: checkHits,
-        move: move,
+        get position(){ return position },
+        get isSunk(){ return isSunk },
+        get pivot(){ return pivot },
+        get NAME(){ return NAME },
+        get LENGTH(){ return LENGTH },
+        get isVertical(){ return isVertical }
     }
 }
