@@ -15,8 +15,15 @@ export function ship(name, length, startPivot, startVertical)
     function receiveDamage(hits)
     {
         hits.forEach(hit => {
+            
             damage.push(hit);
-        })
+
+            if (damage.length === LENGTH)
+            {
+                isSunk = true;
+                return;
+            }
+        });
     }
 
     function changePosition(newPivot, rotate)
