@@ -1,11 +1,39 @@
 import {expect, jest, test} from '@jest/globals';
 import { ship } from "../ship";
 
-test("Initializes position", () => {
+test("Initializes ship position", () => {
     
     const carrier = ship("Carrier", 5, [0, 3], true);
     
     expect(carrier.position).toStrictEqual([[0, 3], [0, 4], [0, 5], [0, 6], [0, 7]]);
+});
+
+test("Initializes ship name", () => {
+
+    const carrier = ship("Carrier", 5, [0, 3], true);
+
+    expect(carrier.NAME).toStrictEqual("Carrier");
+});
+
+test("Initializes ship Pivot", () => {
+
+    const carrier = ship("Carrier", 5, [0, 3], true);
+
+    expect(carrier.pivot).toStrictEqual([0, 3]);
+});
+
+test("Initialize ship orientation", () => {
+
+    const carrier = ship("Carrier", 5, [0, 3], true);
+
+    expect(carrier.isVertical).toStrictEqual(true);
+});
+
+test("Initialize ship length", () => {
+
+    const carrier = ship("Carrier", 5, [0, 3], true);
+
+    expect(carrier.LENGTH).toStrictEqual(5);
 });
 
 test("Moves to a new location", () => {
