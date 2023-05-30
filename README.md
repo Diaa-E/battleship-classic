@@ -41,16 +41,16 @@ Battleship game with the original board game's rules.
 
 * ### Ship Object  
 
-    1. `get name`: ship's name, used by UI components.
-    2. `get position[]`: grid coordinate pairs that construct the ship.
-    3. `hits[]`: grid coordinate pairs that define hits.
-    4. `get isSunk`: used by board object to quickly check whether all player's ships are sunk.
-    5. ~~`rotate()`: toggles ship rotation between 90 and 0.~~
-    6. `pivot`: grid coordinate pair defining the ship's rotation center.
-    7. ~~`checkHits(hits[])`: checks whether a list of hits' coordinate pairs hit the ship.~~
-    8. `registerHit(hit)`: marks a parts of the ship as damaged.
-    9. ~~`move(newPivot)`: moves ship to a new position.~~
-    10. `updatePosition(newPivot, rotate = false)`: update position and rotation.
+    1. `position[]`: ship's current position, encoded as a string "x,y".
+    2. `isVertical`: ship's orientation.
+    3. `damage[]`: ship's damaged squares, encoded as a string "x,y".
+    4. `isSunk`: ship's status.
+    5. `name`: ship's name/class.
+    6. `length`: ship's length.
+    7. `receiveDamage(hits[])`: register damaged squares by pushing encoded position into `damage[]`.
+    8. `changePosition(newPivot, rotate)`: update ship's position.
+    10. `pivot`: ship's origin square.
+    11. `_drawShip(newPivot)`: generate new position array from given data.
     
 * ### Gameboard Object
 
@@ -58,5 +58,8 @@ Battleship game with the original board game's rules.
     2. `boardTokens{}`: contains all the symbols used to build. the board. `empty, hit, sunk, missed, ship`
     3. `checkHits(newShots)`: Check whether a shot hit a ship.
     4. `rotateShip(ship)`: toggle a ship's rotation to -90d or 0d around its pivot.
-    5. `moveShip(ship,)`: move a ship to a new location.
+    5. `moveShip(ship, newPivot)`: move a ship to a new location.
     6. `locationConflict(ship, shipLength)`: checks if the ship is clear to move or rotate.
+    7. `updateBoard()`: update each board square.
+    8. `createShips(newShipList)`: creates ships based on list passed from main game function.
+    9. `shipList{}`: keeps a list of ships for the creation process. each key has `name` and `length`.
