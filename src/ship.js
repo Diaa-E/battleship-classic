@@ -3,6 +3,7 @@
 export function ship(name, length, startPivot, startVertical)
 {
     let position = [];
+    const damage = [];
     const NAME = name;
     const LENGTH = length;
     let isVertical = startVertical;
@@ -10,6 +11,13 @@ export function ship(name, length, startPivot, startVertical)
     let isSunk = false;
 
     _drawShip(pivot);
+
+    function receiveDamage(hits)
+    {
+        hits.forEach(hit => {
+            damage.push(hit);
+        })
+    }
 
     function changePosition(newPivot, rotate)
     {
@@ -44,7 +52,9 @@ export function ship(name, length, startPivot, startVertical)
         get NAME(){ return NAME },
         get LENGTH(){ return LENGTH },
         get isVertical(){ return isVertical },
+        get damage(){ return damage },
 
         changePosition: changePosition,
+        receiveDamage: receiveDamage,
     }
 }
