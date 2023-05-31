@@ -41,25 +41,34 @@ Battleship game with the original board game's rules.
 
 * ### Ship Object  
 
-    1. `position[]`: ship's current position, encoded as a string "x,y".
-    2. `isVertical`: ship's orientation.
-    3. `damage[]`: ship's damaged squares, encoded as a string "x,y".
-    4. `isSunk`: ship's status.
-    5. `name`: ship's name/class.
-    6. `length`: ship's length.
-    7. `receiveDamage(hits[])`: register damaged squares by pushing encoded position into `damage[]`.
-    8. `changePosition(newPivot, rotate)`: update ship's position.
-    10. `pivot`: ship's origin square.
-    11. `_drawShip(newPivot)`: generate new position array from given data.
+    * #### **Properties**
+        1. `position[]`: ship's current position, ~~encoded as a string "x,y"~~.
+        2. `isVertical`: ship's orientation.
+        3. `damage[]`: ship's damaged squares, ~~encoded as a string "x,y"~~.
+        4. `isSunk`: ship's status.
+        5. `name`: ship's name/class (i.e Cruiser).
+        6. `length`: ship's length.
+        7. `pivot`: ship's origin square.
+
+    * #### **Functions**
+        1. `receiveDamage(hits[])`: register damaged squares by pushing encoded position into `damage[]`.
+        2. `changePosition(newPivot, rotate)`: update ship's position.
+        3. `_drawShip(newPivot)`: generate new position array from given data.
     
 * ### Gameboard Object
 
-    1. `board`: gameboard's grid, includes ships, empty squares, ship squares, missed shots, damaged ship squares and sunk ship squares. Used to render the board.
-    2. `boardTokens{}`: contains all the symbols used to build. the board. `empty, hit, sunk, missed, ship`
-    3. `checkHits(newShots)`: Check whether a shot hit a ship.
-    4. `rotateShip(ship)`: toggle a ship's rotation to -90d or 0d around its pivot.
-    5. `moveShip(ship, newPivot)`: move a ship to a new location.
-    6. `locationConflict(ship, shipLength)`: checks if the ship is clear to move or rotate.
-    7. `updateBoard()`: update each board square.
-    8. `createShips(newShipList)`: creates ships based on list passed from main game function.
-    9. `shipList{}`: keeps a list of ships for the creation process. each key has `name` and `length`.
+    * #### **Properties**
+        1. `_tokens[{empty, damaged, missed}]`: characters used to populate the gameboard 2D array.
+        2. `board[]`: all gameboard squares held in a 2D array. **Note: X and Y are inverted when calling a square from the array (i.e `board[y][x]`)**.
+        3. `_ships[]`: reference to all ships.
+
+    * #### **Functions**
+        1. `updateBoard()`: add new changes to the board array.
+        2. `updateEmpty()`: assign the `_tokens.empty` to empty squares on the board.
+        3. `updateShip()`: assign a reference of each ship to its corresponding board squares.
+        4. `updateDamage()`: assign the `_tokens.damaged` to damaged ship squares.
+        5. `updateMissed()`: assign the `_tokens.missed` to missed shots on the board.
+        6. `moveShip(ship, newPivot, rotate)`: move or rotate ship by calling `ship.changePosition(newPivot, rotate)` after checking for illegal positions.
+        7. `_positionConflict(shipLength, newPivot)`: returns `true` if the new position overlaps with another ship or is outside the board.
+        8. `_rotationConflict(shipLength, newPivot, isVertical)`: returns `true` if the new rotation overlaps with another ship or is outside the board.
+        9. `gameOver()`: returns `true` if all `ships[i].isSunk` are `true`.
