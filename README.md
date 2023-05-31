@@ -58,18 +58,19 @@ Battleship game with the original board game's rules.
 * ### Gameboard Object
 
     * #### **Properties**
-        1. `_tokens[{empty, damaged, missed}]`: characters used to populate the gameboard 2D array.
+        1. `_TOKENS{empty, damaged, missed}`: characters used to populate the gameboard 2D array.
         2. `board[]`: all gameboard squares held in a 2D array. **Note: X and Y are inverted when calling a square from the array (i.e `board[y][x]`)**.
         3. `_ships[]`: reference to all ships.
 
     * #### **Functions**
         1. `updateBoard()`: add new changes to the board array.
-        2. `updateEmpty()`: assign the `_tokens.empty` to empty squares on the board.
+        2. `updateEmpty()`: assign the `_TOKENS.empty` to empty squares on the board.
         3. `updateShip()`: assign a reference of each ship to its corresponding board squares.
-        4. `updateDamage()`: assign the `_tokens.damaged` to damaged ship squares.
-        5. `updateMissed()`: assign the `_tokens.missed` to missed shots on the board.
+        4. `updateDamage()`: assign the `_TOKENS.damaged` to damaged ship squares.
+        5. `updateMissed()`: assign the `_TOKENS.missed` to missed shots on the board.
         6. `moveShip(ship, newPivot, rotate)`: move or rotate ship by calling `ship.changePosition(newPivot, rotate)` after checking for illegal positions.
         7. `_positionConflict(shipLength, newPivot)`: returns `true` if the new position overlaps with another ship or is outside the board.
         8. `_rotationConflict(shipLength, newPivot, isVertical)`: returns `true` if the new rotation overlaps with another ship or is outside the board.
         9. `gameOver()`: returns `true` if all `ships[i].isSunk` are `true`.
-        10. `createShips(shipList[{name, length}])`: creates ship objects and pushes them into `_ships[]` based on requirement list passed from the player object.
+        10. `_createShips(shipList[{name, length}])`: creates ship objects and pushes them into `_ships[]` based on requirement list passed from the player object.
+        11. `_initBoard(size, shipList)`: create board array, create ships and place them on the board.
