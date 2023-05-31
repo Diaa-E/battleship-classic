@@ -2,15 +2,11 @@
 
 import { ship } from "./ship";
 
-export function gameBoard(shipList, boardSize)
+export function gameBoard(shipList, boardSize, tokens)
 {
     const _ships = [];
     let board;
-    const _TOKENS = {
-        empty: "[]",
-        damaged: "X",
-        missed: "O",
-    }
+    const _TOKENS = {...tokens};
 
     _initBoard(boardSize, shipList);
 
