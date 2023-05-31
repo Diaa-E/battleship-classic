@@ -72,3 +72,4 @@ Battleship game with the original board game's rules.
         7. `_positionConflict(shipLength, newPivot)`: returns `true` if the new position overlaps with another ship or is outside the board.
         8. `_rotationConflict(shipLength, newPivot, isVertical)`: returns `true` if the new rotation overlaps with another ship or is outside the board.
         9. `gameOver()`: returns `true` if all `ships[i].isSunk` are `true`.
+        10. `createShips(shipList[{name, length}])`: creates ship objects and pushes them into `_ships[]` based on requirement list passed from the player object.
