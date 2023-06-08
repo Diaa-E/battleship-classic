@@ -42,19 +42,34 @@ Battleship game with the original board game's rules.
 * ### Ship Object  
 
     * #### **Properties**
-        1. `position[]`: ship's current position, ~~encoded as a string "x,y"~~.
+        1. `position[]`: an array of objects, each has a `coord: "x,y"` and `isDamaged: boolean`.
         2. `isVertical`: ship's orientation.
-        3. `damage[]`: ship's damaged squares, ~~encoded as a string "x,y"~~.
-        4. `isSunk`: ship's status.
-        5. `name`: ship's name/class (i.e Cruiser).
-        6. `length`: ship's length.
-        7. `pivot`: ship's origin square.
+        3. `isSunk`: ship's status.
+        4. `name`: ship's name/class (i.e Cruiser).
+        5. `length`: ship's length.
+        6. `pivot`: ship's origin square.
 
     * #### **Functions**
         1. `receiveDamage(hits[])`: register damaged squares by pushing encoded position into `damage[]`.
         2. `changePosition(newPivot, rotate)`: update ship's position.
         3. `_drawShip(newPivot)`: generate new position array from given data.
-    
+        4. `_encodeCoord(newCoord)`: takes an `[x, y]` pair and encodes it into the `"x,y"` format for easier comparison.
+
+    * #### **Tests**
+        1. Ship's position is generated correctly.
+        2. Ship's length is assigned correctly.
+        3. Ship's name is assigned correctly.
+        4. Ship's pivot is assigned correctly.
+        5. Draws ship vertically.
+        6. Draws ship horizontally.
+        7. Ship receives a single hit and assigns it to correct position pairs.
+        8. Ship receives multiple hits and assigns them to correct position pairs.
+        9. Ship is announced sunk when all squares are damaged.
+        10. Ship is not announced sunk if at least one square is intact
+        11. Ship moves to a new position.
+        12. Ship rotates -90d.
+        13. Ship rotates +90d.
+
 * ### Gameboard Object
 
     * #### **Properties**
