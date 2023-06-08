@@ -6,7 +6,7 @@ test("Ship's position is generated correctly.", () => {
     
     const carrier = Ship("Carrier", 5, [0, 3], true);
     
-    expect(carrier.position).toStrictEqual(["0,3", "0,4", "0,5", "0,6", "0,7"]);
+    expect(carrier.position.map(element => element.coord)).toStrictEqual(["0,3", "0,4", "0,5", "0,6", "0,7"]);
 });
 
 // 2 
@@ -38,7 +38,7 @@ test("Draws ship vertically.", () => {
 
     const carrier = Ship("Carrier", 5, [0, 3], true);
 
-    expect(carrier.position).toStrictEqual(["0,3", "0,4", "0,5", "0,6", "0,7"]);
+    expect(carrier.position.map(element => element.coord)).toStrictEqual(["0,3", "0,4", "0,5", "0,6", "0,7"]);
 });
 
 // 6
@@ -46,7 +46,7 @@ test("Draws ship horizontally.", () => {
 
     const carrier = Ship("Carrier", 5, [0, 3], false);
 
-    expect(carrier.position).toStrictEqual(["0,3", "1,3", "2,3", "3,3", "4,3"]);
+    expect(carrier.position.map(element => element.coord)).toStrictEqual(["0,3", "1,3", "2,3", "3,3", "4,3"]);
 });
 
 // 7
@@ -84,7 +84,7 @@ test("Ship moves to a new position.", () => {
     const carrier = Ship("Carrier", 5, [0, 3], true);
     carrier.changePosition([1, 3], false)
     
-    expect(carrier.position).toStrictEqual(["1,3", "1,4", "1,5", "1,6", "1,7"]);
+    expect(carrier.position.map(element => element.coord)).toStrictEqual(["1,3", "1,4", "1,5", "1,6", "1,7"]);
 });
 
 // 11
@@ -93,7 +93,7 @@ test("Ship rotates -90d.", () => {
     const carrier = Ship("Carrier", 5, [0, 3], false);
     carrier.changePosition([0, 3], true)
 
-    expect(carrier.position).toStrictEqual(["0,3", "0,4", "0,5", "0,6", "0,7"]);
+    expect(carrier.position.map(element => element.coord)).toStrictEqual(["0,3", "0,4", "0,5", "0,6", "0,7"]);
 });
 
 // 12
@@ -102,5 +102,5 @@ test("Ship rotates +90d.", () => {
     const carrier = Ship("Carrier", 5, [0, 3], true);
     carrier.changePosition([0, 3], true)
 
-    expect(carrier.position).toStrictEqual(["0,3", "1,3", "2,3", "3,3", "4,3"]);
+    expect(carrier.position.map(element => element.coord)).toStrictEqual(["0,3", "1,3", "2,3", "3,3", "4,3"]);
 });
