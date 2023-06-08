@@ -30,7 +30,7 @@ test("Ship's pivot is assigned correctly.", () => {
 
     const carrier = Ship("Carrier", 5, [0, 3], true);
 
-    expect(carrier.pivot).toStrictEqual("0,3");
+    expect(carrier.pivot).toStrictEqual([0,3]);
 });
 
 // 5
@@ -44,7 +44,7 @@ test("Draws ship vertically.", () => {
 // 6
 test("Draws ship horizontally.", () => {
 
-    const carrier = Ship("Carrier", 5, [0, 3], true);
+    const carrier = Ship("Carrier", 5, [0, 3], false);
 
     expect(carrier.position).toStrictEqual(["0,3", "1,3", "2,3", "3,3", "4,3"]);
 });
