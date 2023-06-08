@@ -46,11 +46,17 @@ export function Ship(name, length, startPivot, startVertical)
         {
             if (isVertical) 
             {
-                newPosition.push(_encodeCoord([newPivot[0], newPivot[1] + i]));
+                newPosition.push({
+                    coord: _encodeCoord([newPivot[0], newPivot[1] + i]),
+                    isDamaged: false
+                });
             }
             else
             {
-                newPosition.push(_encodeCoord([newPivot[0] + i, newPivot[1]]));
+                newPosition.push({
+                    coord: _encodeCoord([newPivot[0] + i, newPivot[1]]),
+                    isDamaged: false
+                });
             }
         }
 
