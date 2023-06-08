@@ -1,6 +1,6 @@
 "use strict";
 
-export function ship(name, length, startPivot, startVertical)
+export function Ship(name, length, startPivot, startVertical)
 {
     let position = [];
     const damage = [];
@@ -11,6 +11,11 @@ export function ship(name, length, startPivot, startVertical)
     let isSunk = false;
 
     _drawShip(pivot);
+
+    function _encodeCoord(newCoord)
+    {
+        return newCoord.join(",");
+    }
 
     function receiveDamage(hits)
     {
@@ -41,15 +46,15 @@ export function ship(name, length, startPivot, startVertical)
         {
             if (isVertical) 
             {
-                newPosition.push([newPivot[0], newPivot[1] + i]);
+                newPosition.push(_encodeCoord([newPivot[0], newPivot[1] + i]));
             }
             else
             {
-                newPosition.push([newPivot[0] + i, newPivot[1]]);
+                newPosition.push(_encodeCoord([newPivot[0] + i, newPivot[1]]));
             }
         }
 
-        newPosition.forEach((element, index) => { position[index] = element });
+        position = Array.from(newPosition);
     }
 
     return {
