@@ -56,6 +56,10 @@ test("Ship receives a single hit and assigns it to correct position pairs.", () 
     carrier.receiveDamage([[1, 5]]);
 
     expect(carrier.position.find(element => element.coord === "1,5").isDamaged).toStrictEqual(true);
+    expect(carrier.position.find(element => element.coord === "1,3").isDamaged).toStrictEqual(false);
+    expect(carrier.position.find(element => element.coord === "1,4").isDamaged).toStrictEqual(false);
+    expect(carrier.position.find(element => element.coord === "1,6").isDamaged).toStrictEqual(false);
+    expect(carrier.position.find(element => element.coord === "1,7").isDamaged).toStrictEqual(false);
 });
 
 // 8
@@ -67,6 +71,8 @@ test("Ship receives multiple hits and assigns them to correct position pairs.", 
     expect(carrier.position.find(element => element.coord === "1,5").isDamaged).toStrictEqual(true);
     expect(carrier.position.find(element => element.coord === "1,3").isDamaged).toStrictEqual(true);
     expect(carrier.position.find(element => element.coord === "1,4").isDamaged).toStrictEqual(true);
+    expect(carrier.position.find(element => element.coord === "1,6").isDamaged).toStrictEqual(false);
+    expect(carrier.position.find(element => element.coord === "1,7").isDamaged).toStrictEqual(false);
 });
 
 // 9
