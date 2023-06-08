@@ -55,18 +55,18 @@ test("Ship receives a single hit and assigns it to correct position pairs.", () 
     const carrier = Ship("Carrier", 5, [1, 3], true);
     carrier.receiveDamage([[1, 5]]);
 
-    expect(carrier.position[carrier.position.indexOf["1,5"]].isDamaged).toStrictEqual(true);
+    expect(carrier.position.find(element => element.coord === "1,5").isDamaged).toStrictEqual(true);
 });
 
 // 8
 test("Ship receives multiple hits and assigns them to correct position pairs.", () => {
 
-    const carrier = Ship("Carrier", 5, [1, 3], false);
-    carrier.receiveDamage([[1, 5], [1, 3], [1, 2]]);
+    const carrier = Ship("Carrier", 5, [1, 3], true);
+    carrier.receiveDamage([[1, 5], [1, 3], [1, 4]]);
 
-    expect(carrier.position[carrier.position.indexOf["1,5"]].isDamaged).toStrictEqual(true);
-    expect(carrier.position[carrier.position.indexOf["1,3"]].isDamaged).toStrictEqual(true);
-    expect(carrier.position[carrier.position.indexOf["1,2"]].isDamaged).toStrictEqual(true);
+    expect(carrier.position.find(element => element.coord === "1,5").isDamaged).toStrictEqual(true);
+    expect(carrier.position.find(element => element.coord === "1,3").isDamaged).toStrictEqual(true);
+    expect(carrier.position.find(element => element.coord === "1,4").isDamaged).toStrictEqual(true);
 });
 
 // 9
@@ -78,7 +78,16 @@ test("Ship is announced sunk when all squares are damaged.", () => {
     expect(carrier.isSunk).toStrictEqual(true);
 });
 
-// 10
+//10
+test("Ship is not announced sunk if at least one square is intact", () => {
+
+    const carrier = Ship("Carrier", 5, [0, 3], true);
+    carrier.receiveDamage([[0, 3], [0, 4], [0, 5], [0, 6]]);
+
+    expect(carrier.isSunk).toStrictEqual(false);
+});
+
+// 11
 test("Ship moves to a new position.", () => {
 
     const carrier = Ship("Carrier", 5, [0, 3], true);
@@ -87,7 +96,7 @@ test("Ship moves to a new position.", () => {
     expect(carrier.position.map(element => element.coord)).toStrictEqual(["1,3", "1,4", "1,5", "1,6", "1,7"]);
 });
 
-// 11
+// 12
 test("Ship rotates -90d.", () => {
 
     const carrier = Ship("Carrier", 5, [0, 3], false);
@@ -96,7 +105,7 @@ test("Ship rotates -90d.", () => {
     expect(carrier.position.map(element => element.coord)).toStrictEqual(["0,3", "0,4", "0,5", "0,6", "0,7"]);
 });
 
-// 12
+// 13
 test("Ship rotates +90d.", () => {
 
     const carrier = Ship("Carrier", 5, [0, 3], true);
