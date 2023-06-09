@@ -86,3 +86,67 @@ test("Board moves a ship to a new position.", () => {
     expect(board1.board[0][0]).toStrictEqual(board1.PINS.empty);
     expect(board1.board[0][8]).toBeInstanceOf(Object);
 });
+
+// 6
+test("Board rotates a ship.", () => {
+
+    const board1 = GameBoard(DEFAULT_SHIP_LIST, 10);
+    board1.rotateShip(board1.board[0][4]);
+
+    expect(board1.board[0][4]).toBeInstanceOf(Object);
+    expect(board1.board[0][5]).toBeInstanceOf(Object);
+    expect(board1.board[1][4]).toStrictEqual(board1.PINS.empty);
+});
+
+// 7
+test("Board does not move ship in case of position conflict.", () => {
+
+    const board1 = GameBoard(DEFAULT_SHIP_LIST, 10);
+    board1.moveShip(board1.board[0][0], [2, 0]);
+
+    for (let i = 0; i < DEFAULT_SHIP_LIST[0].shipLength; i ++)
+    {
+        expect(board1.board[i][0].NAME).toStrictEqual(DEFAULT_SHIP_LIST[0].shipName);
+    }
+
+    for (let i = 0; i < DEFAULT_SHIP_LIST.length; i ++)
+    {
+        expect(board1.board[0][i].NAME).toStrictEqual(DEFAULT_SHIP_LIST[i].shipName);
+    }
+    
+});
+
+// 8
+test("Board does not rotate ship in case of rotation conflict.", () => {
+
+    const board1 = GameBoard(DEFAULT_SHIP_LIST, 10);
+    board1.rotateShip(board1.board[0][0]);
+
+    for (let i = 0; i < DEFAULT_SHIP_LIST[0].shipLength; i ++)
+    {
+        expect(board1.board[i][0].NAME).toStrictEqual(DEFAULT_SHIP_LIST[0].shipName);
+    }
+
+    for (let i = 0; i < DEFAULT_SHIP_LIST.length; i ++)
+    {
+        expect(board1.board[0][i].NAME).toStrictEqual(DEFAULT_SHIP_LIST[i].shipName);
+    }
+    
+});
+
+// 9
+test("Board moves a ship to a location along it's old position", () => {
+
+    const board1 = GameBoard(DEFAULT_SHIP_LIST, 10);
+    board1.moveShip(board1.board[0][0], [0, 2]);
+
+    for (let i = 0; i < 2; i ++)
+    {
+        expect(board1.board[i][0]).toStrictEqual(board1.PINS.empty);
+    }
+
+    for (let i = 2; i < DEFAULT_SHIP_LIST[0].shipLength + 2; i ++)
+    {
+        expect(board1.board[i][0].NAME).toStrictEqual(DEFAULT_SHIP_LIST[0].shipName);
+    }
+});
