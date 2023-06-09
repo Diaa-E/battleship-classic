@@ -29,6 +29,7 @@ export function GameBoard(shipList, boardSize)
         updateMissed();
         updateShip();
         updateDamage();
+        console.table(board)
     }
 
     function _initBoard(size, shipList)
@@ -140,14 +141,14 @@ export function GameBoard(shipList, boardSize)
         {
             for (let i = 0; i < ship.LENGTH; i ++)
             {
-                if (board[newPivot[1] + i][newPivot[0]] !== PINS.empty) return true
+                if (board[newPivot[1] + i][newPivot[0]] !== PINS.empty && board[newPivot[1] + i][newPivot[0]] !== ship) return true
             }
         }
         else
         {
             for (let i = 0; i < ship.LENGTH; i ++)
             {
-                if (board[newPivot[1]][newPivot[0] + i] !== PINS.empty) return true
+                if (board[newPivot[1]][newPivot[0] + i] !== PINS.empty && board[newPivot[1]][newPivot[0] + i] !== ship) return true
             }
         }
 
