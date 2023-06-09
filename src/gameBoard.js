@@ -1,12 +1,16 @@
 "use strict";
 
-import { ship } from "./ship";
+import { Ship } from "./ship";
 
-export function gameBoard(shipList, boardSize, tokens)
+export function GameBoard(shipList, boardSize)
 {
     const _ships = [];
-    let board;
-    const _TOKENS = {...tokens};
+    let board = [];
+    const TOKENS = {
+        damaged: "D",
+        empty: "E",
+        missed: "M"
+    };
 
     _initBoard(boardSize, shipList);
 
@@ -14,7 +18,7 @@ export function gameBoard(shipList, boardSize, tokens)
     {
         shipList.forEach((element, index) => {
 
-            _ships.push(ship(element.name, element.shipLength, [index, 0], true));
+            _ships.push(Ship(element.shipName, element.shipLength, [index, 0], true));
         });
     }
 
@@ -27,18 +31,33 @@ export function gameBoard(shipList, boardSize, tokens)
 
     function _initBoard(size, shipList)
     {
-        board = Array(size).fill(Array(size).fill(_TOKENS.empty));
+        // Array.fill makes all row elements reference the same place
+        for (let i = 0; i < size; i++)
+        {
+            const row = [];
+            for (let j = 0; j < size; j ++)
+            {
+                row.push(TOKENS.empty)
+            }
+            board.push(row)
+        }
         _createShips(shipList);
         updateBoard();
     }
 
+    function _decodeCoord(newCoord)
+    {
+        return newCoord.split(",");
+    }
+
     function updateShip()
     {
-        _ships.forEach(element => {
+        _ships.forEach(ship => {
 
-            element.position.forEach(pair => {
+            ship.position.forEach(pair => {
 
-                board[pair[1]][pair[0]] = element;
+                pair = _decodeCoord(pair.coord)
+                board[pair[1]][pair[0]] = ship;
             });
         });
     }
@@ -49,7 +68,7 @@ export function gameBoard(shipList, boardSize, tokens)
 
             row.forEach(square => {
 
-                square = _TOKENS.empty;
+                square = TOKENS.empty;
             });
         });
     }
@@ -59,7 +78,20 @@ export function gameBoard(shipList, boardSize, tokens)
 
     }
 
+    function moveShip(ship, newPivot)
+    {
+        if (_positionConflict()) return;
+    }
+
+    function _positionConflict(shipLength, newPivot)
+    {
+
+    }
+
     return {
         get board(){ return board },
+        get TOKENS() { return TOKENS },
+
+        moveShip,
     }
 }
