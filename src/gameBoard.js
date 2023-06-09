@@ -106,6 +106,34 @@ export function GameBoard(shipList, boardSize)
         updateBoard();
     }
 
+    function rotateShip(ship)
+    {
+        if (_rotationConflict(ship)) return;
+
+        ship.changePosition(ship.pivot, true);
+        updateBoard();
+    }
+
+    function _rotationConflict(ship)
+    {
+        if (!ship.isVertical)
+        {
+            for (let i = 1; i < ship.LENGTH; i ++) //start at 1 to ignore checking ship's own pivot for conflict
+            {
+                if (board[ship.pivot[1] + i][ship.pivot[0]] !== PINS.empty) return true
+            }
+        }
+        else
+        {
+            for (let i = 1; i < ship.LENGTH; i ++)
+            {
+                if (board[ship.pivot[1]][ship.pivot[0] + i] !== PINS.empty) return true
+            }
+        }
+
+        return false
+    }
+
     function _positionConflict(ship, newPivot)
     {
         if (ship.isVertical)
@@ -148,6 +176,7 @@ export function GameBoard(shipList, boardSize)
         get PINS() { return PINS },
 
         moveShip,
-        receiveAttack
+        receiveAttack,
+        rotateShip
     }
 }
