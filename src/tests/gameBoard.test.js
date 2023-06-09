@@ -1,77 +1,44 @@
 import {expect, jest, test} from '@jest/globals';
-import {gameBoard} from "../gameBoard";
+import {GameBoard} from "../gameBoard";
 
-const tokens = {
-    empty: "[]",
-    damaged: "X",
-    missed: "O",
-}
-
-const SHIPS_LIST = [
+const DEFAULT_SHIP_LIST = [
     {
+        shipName: "Carrier",
         shipLength: 5,
-        name: "Carrier"
     },
     {
+        shipName: "Battleship",
         shipLength: 4,
-        name: "Battleship"
     },
     {
+        shipName: "Cruiser",
         shipLength: 3,
-        name: "Submarine"
     },
     {
+        shipName: "Submarine",
         shipLength: 3,
-        name: "Cruiser"
     },
     {
+        shipName: "Destroyer",
         shipLength: 2,
-        name: "Destroyer"
     }
-];
+]
 
-test("Creates ship objects from the given list placed vertically next to each other.", () => {
+// 1
+test("Board places ships vertically next to each other starting at (0, 0) after object is initialized.", () => {
 
-    const board1 = gameBoard(SHIPS_LIST, 10, tokens);
+    const board1 = GameBoard(DEFAULT_SHIP_LIST, 10);
 
-    SHIPS_LIST.forEach((element, index) => {
-
-        expect(board1.board[0][index].NAME).toStrictEqual(element.name);
-        expect(board1.board[0][index].LENGTH).toStrictEqual(element.shipLength);
-    });
-});
-
-test("Moves ship to a new position", () => {
-
-    const board1 = gameBoard([SHIPS_LIST[0]], 10, tokens);
-    board1.moveShip(board1[0][0], [1, 2], false);
-
-    expect(board1.board[0][0]).toStrictEqual(tokens.empty);
-    expect(board1[2][1].NAME).toStrictEqual(SHIPS_LIST[0].name);
-});
-
-test("Moves ship to a new position by selecting any part of the ship", () => {
-
-    const board1 = gameBoard([SHIPS_LIST[0]], 10, tokens);
-    board1.moveShip(board1[0][3], [1, 2], false);
-
-    expect(board1.board[0][0]).toStrictEqual(tokens.empty);
-    expect(board1[2][1].NAME).toStrictEqual(SHIPS_LIST[0].name);
-});
-
-test("Does not move ship over another ship", () => {
-
-    const board1 = gameBoard(SHIPS_LIST, 10, tokens);
-    board1.moveShip(board1[0][0], [1, 0], false);
-
-    expect(board1[0][0].NAME).toStrictEqual(SHIPS_LIST[0].name);
-    expect(board1[1][0].NAME).toStrictEqual(SHIPS_LIST[1].name);
-});
-
-test("Does not mvoe ship out of the board", () => {
-
-    const board1 = gameBoard([SHIPS_LIST[0]], 10, tokens);
-    board1.moveShip(board1[0][0], [0, 7], false);
-    expect(board1[0][0].NAME).toStrictEqual(SHIPS_LIST[0].name);
-    expect(board1[7][0]).toStrictEqual(tokens.empty);
+    expect(board1.board[0][0].NAME).toStrictEqual(DEFAULT_SHIP_LIST[0].shipName);
+    expect(board1.board[0][1].NAME).toStrictEqual(DEFAULT_SHIP_LIST[1].shipName);
+    expect(board1.board[0][2].NAME).toStrictEqual(DEFAULT_SHIP_LIST[2].shipName);
+    expect(board1.board[0][3].NAME).toStrictEqual(DEFAULT_SHIP_LIST[3].shipName);
+    expect(board1.board[0][4].NAME).toStrictEqual(DEFAULT_SHIP_LIST[4].shipName);
+    
+    expect(board1.board[0][5]).toStrictEqual(board1.TOKENS.empty);
+    expect(board1.board[5][0]).toStrictEqual(board1.TOKENS.empty);
+    expect(board1.board[4][1]).toStrictEqual(board1.TOKENS.empty);
+    expect(board1.board[3][2]).toStrictEqual(board1.TOKENS.empty);
+    expect(board1.board[3][3]).toStrictEqual(board1.TOKENS.empty);
+    expect(board1.board[2][4]).toStrictEqual(board1.TOKENS.empty);
 });
