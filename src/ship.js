@@ -1,10 +1,11 @@
 "use strict";
 
-export function Ship(name, length, startPivot, startVertical)
+export function Ship(name, length, startPivot, startVertical, pin)
 {
     let position = [];
     const NAME = name;
     const LENGTH = length;
+    const PIN = pin;
     let isVertical = startVertical;
     let pivot = startPivot;
     let isSunk = false;
@@ -71,6 +72,7 @@ export function Ship(name, length, startPivot, startVertical)
         get NAME(){ return NAME },
         get LENGTH(){ return LENGTH },
         get isVertical(){ return isVertical },
+        get PIN(){ return PIN },
 
         changePosition: changePosition,
         receiveDamage: receiveDamage,
