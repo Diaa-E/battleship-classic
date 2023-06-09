@@ -1,6 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
 import {GameBoard} from "../gameBoard";
-import { DefinePlugin } from 'webpack';
 
 const DEFAULT_SHIP_LIST = [
     {
