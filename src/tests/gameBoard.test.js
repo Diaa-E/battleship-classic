@@ -1,5 +1,6 @@
 import {expect, jest, test} from '@jest/globals';
 import {GameBoard} from "../gameBoard";
+import { DefinePlugin } from 'webpack';
 
 const DEFAULT_SHIP_LIST = [
     {
@@ -29,11 +30,11 @@ test("Board places ships vertically next to each other starting at (0, 0) after 
 
     const board1 = GameBoard(DEFAULT_SHIP_LIST, 10);
 
-    expect(board1.board[0][0]).toStrictEqual(0);
-    expect(board1.board[0][1]).toStrictEqual(1);
-    expect(board1.board[0][2]).toStrictEqual(2);
-    expect(board1.board[0][3]).toStrictEqual(3);
-    expect(board1.board[0][4]).toStrictEqual(4);
+    expect(board1.board[0][0].NAME).toStrictEqual(DEFAULT_SHIP_LIST[0].shipName);
+    expect(board1.board[0][1].NAME).toStrictEqual(DEFAULT_SHIP_LIST[1].shipName);
+    expect(board1.board[0][2].NAME).toStrictEqual(DEFAULT_SHIP_LIST[2].shipName);
+    expect(board1.board[0][3].NAME).toStrictEqual(DEFAULT_SHIP_LIST[3].shipName);
+    expect(board1.board[0][4].NAME).toStrictEqual(DEFAULT_SHIP_LIST[4].shipName);
 
     expect(board1.board[0][5]).toStrictEqual(board1.PINS.empty);
     expect(board1.board[5][0]).toStrictEqual(board1.PINS.empty);
@@ -80,8 +81,8 @@ test("Board handles mixed (includes hits and misses) attack correctly.", () => {
 test("Board moves a ship to a new position.", () => {
 
     const board1 = GameBoard(DEFAULT_SHIP_LIST, 10);
-    board1.moveShip(0, [8, 0]);
+    board1.moveShip(board1.board[0][0], [8, 0]);
 
     expect(board1.board[0][0]).toStrictEqual(board1.PINS.empty);
-    expect(board1.board[0][8]).toStrictEqual(0);
+    expect(board1.board[0][8]).toBeInstanceOf(Object);
 });

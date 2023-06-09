@@ -59,7 +59,7 @@ export function GameBoard(shipList, boardSize)
             ship.position.forEach(pair => {
 
                 pair = _decodeCoord(pair.coord)
-                board[pair[1]][pair[0]] = ship.PIN;
+                board[pair[1]][pair[0]] = ship;
             });
         });
     }
@@ -98,11 +98,11 @@ export function GameBoard(shipList, boardSize)
         });
     }
 
-    function moveShip(shipIndex, newPivot)
+    function moveShip(ship, newPivot)
     {
-        if (_positionConflict(_ships[shipIndex], newPivot)) return;
+        if (_positionConflict(ship, newPivot)) return;
 
-        _ships[shipIndex].changePosition(newPivot, false);
+        ship.changePosition(newPivot, false);
         updateBoard();
     }
 
@@ -136,7 +136,7 @@ export function GameBoard(shipList, boardSize)
             }
             else if (board[hit[1]][hit[0]] !== PINS.empty)
             {
-                _ships[board[hit[1]][hit[0]]].receiveDamage([hit]);
+                board[hit[1]][hit[0]].receiveDamage([hit]);
             }
         });
 
