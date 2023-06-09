@@ -6,7 +6,7 @@ export function GameBoard(shipList, boardSize)
 {
     const _ships = [];
     const _missed = [];
-    let board = [];
+    let _board = [];
     const PINS = {
         damaged: "D",
         empty: "E",
@@ -14,6 +14,11 @@ export function GameBoard(shipList, boardSize)
     };
 
     _initBoard(boardSize, shipList);
+
+    function getSquareAt(coord)
+    {
+        return _board[coord[1]][coord[0]];
+    }
 
     function _createShips(shipList)
     {
@@ -29,7 +34,7 @@ export function GameBoard(shipList, boardSize)
         updateMissed();
         updateShip();
         updateDamage();
-        console.table(board)
+        console.table(_board)
     }
 
     function _initBoard(size, shipList)
@@ -42,7 +47,7 @@ export function GameBoard(shipList, boardSize)
             {
                 row.push(PINS.empty)
             }
-            board.push(row)
+            _board.push(row)
         }
         _createShips(shipList);
         updateBoard();
@@ -60,7 +65,7 @@ export function GameBoard(shipList, boardSize)
             ship.position.forEach(pair => {
 
                 pair = _decodeCoord(pair.coord)
-                board[pair[1]][pair[0]] = ship;
+                _board[pair[1]][pair[0]] = ship;
             });
         });
     }
@@ -71,7 +76,7 @@ export function GameBoard(shipList, boardSize)
         {
             for (let y = 0; y < boardSize; y ++)
             {
-                board[y][x] = PINS.empty;
+                _board[y][x] = PINS.empty;
             }
         }
     }
@@ -80,7 +85,7 @@ export function GameBoard(shipList, boardSize)
     {
         _missed.forEach(miss => {
 
-            board[miss[1]][miss[0]] = PINS.missed;
+            _board[miss[1]][miss[0]] = PINS.missed;
         });
     }
 
@@ -93,7 +98,7 @@ export function GameBoard(shipList, boardSize)
                 if (square.isDamaged)
                 {
                     let decoded = _decodeCoord(square.coord);
-                    board[decoded[1]][decoded[0]] = PINS.damaged;
+                    _board[decoded[1]][decoded[0]] = PINS.damaged;
                 }
             });
         });
@@ -121,14 +126,14 @@ export function GameBoard(shipList, boardSize)
         {
             for (let i = 0; i < ship.LENGTH; i ++)
             {
-                if (board[ship.pivot[1] + i][ship.pivot[0]] !== PINS.empty && board[ship.pivot[1] + i][ship.pivot[0]] !== ship) return true
+                if (_board[ship.pivot[1] + i][ship.pivot[0]] !== PINS.empty && _board[ship.pivot[1] + i][ship.pivot[0]] !== ship) return true
             }
         }
         else
         {
             for (let i = 0; i < ship.LENGTH; i ++)
             {
-                if (board[ship.pivot[1]][ship.pivot[0] + i] !== PINS.empty && board[ship.pivot[1]][ship.pivot[0] + i] !== ship) return true
+                if (_board[ship.pivot[1]][ship.pivot[0] + i] !== PINS.empty && _board[ship.pivot[1]][ship.pivot[0] + i] !== ship) return true
             }
         }
 
@@ -141,14 +146,14 @@ export function GameBoard(shipList, boardSize)
         {
             for (let i = 0; i < ship.LENGTH; i ++)
             {
-                if (board[newPivot[1] + i][newPivot[0]] !== PINS.empty && board[newPivot[1] + i][newPivot[0]] !== ship) return true
+                if (_board[newPivot[1] + i][newPivot[0]] !== PINS.empty && _board[newPivot[1] + i][newPivot[0]] !== ship) return true
             }
         }
         else
         {
             for (let i = 0; i < ship.LENGTH; i ++)
             {
-                if (board[newPivot[1]][newPivot[0] + i] !== PINS.empty && board[newPivot[1]][newPivot[0] + i] !== ship) return true
+                if (_board[newPivot[1]][newPivot[0] + i] !== PINS.empty && _board[newPivot[1]][newPivot[0] + i] !== ship) return true
             }
         }
 
@@ -160,13 +165,13 @@ export function GameBoard(shipList, boardSize)
         //forEach cannot be early terminated using return or break
         for (const hit of hits) 
         {
-            if (board[hit[1]][hit[0]] === PINS.empty)
+            if (_board[hit[1]][hit[0]] === PINS.empty)
             {
                 _missed.push([hit[0], hit[1]]);
             }
-            else if (board[hit[1]][hit[0]] !== PINS.empty)
+            else if (_board[hit[1]][hit[0]] !== PINS.empty)
             {
-                board[hit[1]][hit[0]].receiveDamage([hit]);
+                _board[hit[1]][hit[0]].receiveDamage([hit]);
             }
             
             updateBoard();
@@ -186,11 +191,11 @@ export function GameBoard(shipList, boardSize)
     }
 
     return {
-        get board(){ return board },
         get PINS(){ return PINS },
 
         moveShip,
         receiveAttack,
-        rotateShip
+        rotateShip,
+        getSquareAt
     }
 }
