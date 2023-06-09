@@ -5,6 +5,7 @@ import { Ship } from "./ship";
 export function GameBoard(shipList, boardSize)
 {
     const _ships = [];
+    const _missed = [];
     let board = [];
     const TOKENS = {
         damaged: "D",
@@ -25,6 +26,7 @@ export function GameBoard(shipList, boardSize)
     function updateBoard()
     {
         updateEmpty(); //in case a ship is moved
+        updateMissed();
         updateShip();
         updateDamage();
     }
@@ -73,9 +75,27 @@ export function GameBoard(shipList, boardSize)
         });
     }
 
+    function updateMissed()
+    {
+        _missed.forEach(miss => {
+
+            board[miss[1]][miss[0]] = TOKENS.missed;
+        });
+    }
+
     function updateDamage()
     {
+        _ships.forEach(ship => {
 
+            ship.position.forEach(square => {
+
+                if (square.isDamaged)
+                {
+                    let decoded = _decodeCoord(square.coord);
+                    board[decoded[1]][decoded[0]] = TOKENS.damaged;
+                }
+            });
+        });
     }
 
     function moveShip(ship, newPivot)
@@ -88,10 +108,28 @@ export function GameBoard(shipList, boardSize)
 
     }
 
+    function receiveAttack(hits)
+    {
+        hits.forEach(hit => {
+
+            if (board[hit[1]][hit[0]] === TOKENS.empty)
+            {
+                _missed.push([hit[0], hit[1]]);
+            }
+            else if (board[hit[1]][hit[0]] instanceof Object)
+            {
+                board[hit[1]][hit[0]].receiveDamage([hit]);
+            }
+        });
+
+        updateBoard();
+    }
+
     return {
         get board(){ return board },
         get TOKENS() { return TOKENS },
 
         moveShip,
+        receiveAttack
     }
 }
