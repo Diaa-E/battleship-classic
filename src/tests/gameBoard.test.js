@@ -150,3 +150,16 @@ test("Board moves a ship to a location along it's old position", () => {
         expect(board1.board[i][0].NAME).toStrictEqual(DEFAULT_SHIP_LIST[0].shipName);
     }
 });
+
+// 10
+test("Game is over when a board's entire fleet is sunk.", () => {
+
+    const board1 = GameBoard(DEFAULT_SHIP_LIST, 10);
+    board1.receiveAttack([[0, 0], [0, 1], [0, 2], [0, 3], [0, 4]]);
+    board1.receiveAttack([[1, 0], [1, 1], [1, 2], [1, 3]]);
+    board1.receiveAttack([[2, 0], [2, 1], [2, 2]]);
+    board1.receiveAttack([[3, 0], [3, 1], [3, 2]]);
+    board1.receiveAttack([[4, 0], [4, 1], [9, 9]]);
+
+    expect(board1.board[9][9]).toStrictEqual(board1.PINS.empty);
+});
