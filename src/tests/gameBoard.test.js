@@ -50,7 +50,7 @@ test("Board handles missed shots correctly.", () => {
     board1.receiveAttack([[6, 6], [6, 7], [9, 9]]);
 
     expect(board1.board[6][6]).toStrictEqual(board1.TOKENS.missed);
-    expect(board1.board[6][7]).toStrictEqual(board1.TOKENS.missed);
+    expect(board1.board[7][6]).toStrictEqual(board1.TOKENS.missed);
     expect(board1.board[9][9]).toStrictEqual(board1.TOKENS.missed);
 });
 
