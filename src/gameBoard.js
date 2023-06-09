@@ -119,16 +119,16 @@ export function GameBoard(shipList, boardSize)
     {
         if (!ship.isVertical)
         {
-            for (let i = 1; i < ship.LENGTH; i ++) //start at 1 to ignore checking ship's own pivot for conflict
+            for (let i = 0; i < ship.LENGTH; i ++)
             {
-                if (board[ship.pivot[1] + i][ship.pivot[0]] !== PINS.empty) return true
+                if (board[ship.pivot[1] + i][ship.pivot[0]] !== PINS.empty && board[ship.pivot[1] + i][ship.pivot[0]] !== ship) return true
             }
         }
         else
         {
-            for (let i = 1; i < ship.LENGTH; i ++)
+            for (let i = 0; i < ship.LENGTH; i ++)
             {
-                if (board[ship.pivot[1]][ship.pivot[0] + i] !== PINS.empty) return true
+                if (board[ship.pivot[1]][ship.pivot[0] + i] !== PINS.empty && board[ship.pivot[1]][ship.pivot[0] + i] !== ship) return true
             }
         }
 
