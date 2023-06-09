@@ -157,8 +157,9 @@ export function GameBoard(shipList, boardSize)
 
     function receiveAttack(hits)
     {
-        hits.forEach(hit => {
-
+        //forEach cannot be early terminated using return or break
+        for (const hit of hits) 
+        {
             if (board[hit[1]][hit[0]] === PINS.empty)
             {
                 _missed.push([hit[0], hit[1]]);
@@ -167,14 +168,26 @@ export function GameBoard(shipList, boardSize)
             {
                 board[hit[1]][hit[0]].receiveDamage([hit]);
             }
-        });
+            
+            updateBoard();
+            
+            if (gameOver()) return;
+        }
+    }
 
-        updateBoard();
+    function gameOver()
+    {
+        for (const ship of _ships)
+        {
+            if (!ship.isSunk) return false;
+        }
+
+        return true;
     }
 
     return {
         get board(){ return board },
-        get PINS() { return PINS },
+        get PINS(){ return PINS },
 
         moveShip,
         receiveAttack,
