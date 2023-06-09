@@ -171,11 +171,11 @@ export function GameBoard(shipList, boardSize)
             
             updateBoard();
             
-            if (gameOver()) return;
+            if (_gameOver()) return;
         }
     }
 
-    function gameOver()
+    function _gameOver()
     {
         for (const ship of _ships)
         {
