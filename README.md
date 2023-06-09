@@ -94,6 +94,7 @@ Battleship game with the original board game's rules.
         14. `_decodeCoord(coord)`: converts coordinate pair from `"x,y"` format to `[x, y]`.
         15. `rotateShip(ship)`: rotates ship if no rotation conflict is detected.
         16. `_rotationConflict()`: checks for rotation conflict.
+        17. `getSquareAt(coord)`: returns board element at specified coordinate pair, no need to switch x and y when traversing `_board`.
 
     * #### **Tests**
         1. Board places ships vertically next to each other starting at (0, 0) after object is initialized.
