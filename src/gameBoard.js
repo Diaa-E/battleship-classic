@@ -1,6 +1,7 @@
 "use strict";
 
 import { Ship } from "./ship";
+import { decodeCoord } from "./coordConverter";
 
 export function GameBoard(shipList, boardSize)
 {
@@ -53,18 +54,13 @@ export function GameBoard(shipList, boardSize)
         updateBoard();
     }
 
-    function _decodeCoord(newCoord)
-    {
-        return newCoord.split(",");
-    }
-
     function updateShip()
     {
         _ships.forEach(ship => {
 
             ship.position.forEach(pair => {
 
-                pair = _decodeCoord(pair.coord)
+                pair = decodeCoord(pair.coord)
                 _board[pair[1]][pair[0]] = ship;
             });
         });
@@ -97,7 +93,7 @@ export function GameBoard(shipList, boardSize)
 
                 if (square.isDamaged)
                 {
-                    let decoded = _decodeCoord(square.coord);
+                    let decoded = decodeCoord(square.coord);
                     _board[decoded[1]][decoded[0]] = PINS.damaged;
                 }
             });

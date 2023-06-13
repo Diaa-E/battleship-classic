@@ -1,5 +1,7 @@
 "use strict";
 
+import { encodeCoord } from "./coordConverter";
+
 export function Ship(name, length, startPivot, startVertical)
 {
     let position = [];
@@ -11,18 +13,13 @@ export function Ship(name, length, startPivot, startVertical)
 
     _drawShip(pivot);
 
-    function _encodeCoord(newCoord)
-    {
-        return newCoord.join(",");
-    }
-
     function receiveDamage(hits)
     {
         hits.forEach(hit => {
 
             position.find(element => {
 
-                if (element.coord === _encodeCoord(hit))
+                if (element.coord === encodeCoord(hit))
                 {
                     element.isDamaged = true;
                 }
@@ -48,14 +45,14 @@ export function Ship(name, length, startPivot, startVertical)
             if (isVertical) 
             {
                 newPosition.push({
-                    coord: _encodeCoord([newPivot[0], newPivot[1] + i]),
+                    coord: encodeCoord([newPivot[0], newPivot[1] + i]),
                     isDamaged: false
                 });
             }
             else
             {
                 newPosition.push({
-                    coord: _encodeCoord([newPivot[0] + i, newPivot[1]]),
+                    coord: encodeCoord([newPivot[0] + i, newPivot[1]]),
                     isDamaged: false
                 });
             }
