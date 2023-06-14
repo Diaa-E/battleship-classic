@@ -6,6 +6,7 @@ export {
     encodeCoord,
     findCoordPair,
     checkSunk,
+    positionConflict
 };
 
 function generatePosition(newPivot, isVertical, length)
@@ -57,4 +58,21 @@ function findCoordPair(pair, positionArray)
 function checkSunk(positionArray)
 {
     return positionArray.every(element => element.isDamaged === true);
+}
+
+function positionConflict(ship, newPivot, board, emptyPin, boardSize)
+{
+    if (newPivot[0] >= boardSize || newPivot[1] >= boardSize) return true;
+
+    const newPosition = generatePosition(newPivot, ship.isVertical, ship.LENGTH).map(position => position.coord);
+
+    for (let pair of newPosition)
+    {
+        pair = decodeCoord(pair);
+
+        if (pair[0] >= boardSize || pair[1] >= boardSize) return true;
+        if (board[pair[1]][pair[0]] !== emptyPin && board[pair[1]][pair[0]] !== ship) return true;
+    }
+
+    return false;
 }
