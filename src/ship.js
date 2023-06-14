@@ -1,64 +1,29 @@
 "use strict";
 
-import { encodeCoord } from "./coordConverter";
+import { generatePosition, findCoordPair, checkSunk } from "./positionUtility";
+export { Ship };
 
-export function Ship(name, length, startPivot, startVertical)
+function Ship(name, length, startPivot, startVertical)
 {
-    let position = [];
+    let position = Array.from(generatePosition(startPivot, startVertical, length));
     const NAME = name;
     const LENGTH = length;
     let isVertical = startVertical;
     let pivot = startPivot;
     let isSunk = false;
 
-    _drawShip(pivot);
-
-    function receiveDamage(hits)
+    function receiveDamage(hit)
     {
-        hits.forEach(hit => {
+        findCoordPair(hit, position).isDamaged = true;
 
-            position.find(element => {
-
-                if (element.coord === encodeCoord(hit))
-                {
-                    element.isDamaged = true;
-                }
-            });
-        });
-
-        if (position.every(element => element.isDamaged === true)) isSunk = true;
+        isSunk = checkSunk(position);
     }
 
     function changePosition(newPivot, rotate)
     {
         if (rotate) isVertical = !isVertical;
 
-        _drawShip(newPivot);
-    }
-
-    function _drawShip(newPivot)
-    {
-        const newPosition = [];
-
-        for (let i = 0; i < LENGTH; i++)
-        {
-            if (isVertical) 
-            {
-                newPosition.push({
-                    coord: encodeCoord([newPivot[0], newPivot[1] + i]),
-                    isDamaged: false
-                });
-            }
-            else
-            {
-                newPosition.push({
-                    coord: encodeCoord([newPivot[0] + i, newPivot[1]]),
-                    isDamaged: false
-                });
-            }
-        }
-
-        position = Array.from(newPosition);
+        position = Array.from(generatePosition(newPivot, isVertical, LENGTH));
     }
 
     return {
