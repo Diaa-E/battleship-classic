@@ -6,6 +6,7 @@ import {
     findCoordPair,
     checkSunk,
     positionConflict,
+    rotationConflict,
 } from '../positionUtility';
 import { Ship } from '../ship';
 
@@ -92,7 +93,7 @@ test("Position conflict is detected when moving a ship over another ship", () =>
         [emptyPin, emptyPin, emptyPin, emptyPin]
     ];
 
-    expect(positionConflict(boat, [1, 0], board, emptyPin, 4)).toStrictEqual(true);
+    expect(positionConflict(boat, [1, 0], board, emptyPin, 4, true)).toStrictEqual(true);
 });
 
 test("Position conflict is detected when moving a ship out of the board's boundaries", () => {
@@ -106,11 +107,11 @@ test("Position conflict is detected when moving a ship out of the board's bounda
         [emptyPin, emptyPin, emptyPin, emptyPin]
     ];
 
-    expect(positionConflict(boat, [0, 10], board, emptyPin, 4)).toStrictEqual(true);
-    expect(positionConflict(boat, [0, 4], board, emptyPin, 4)).toStrictEqual(true);
-    expect(positionConflict(boat, [10, 0], board, emptyPin, 4)).toStrictEqual(true);
-    expect(positionConflict(boat, [4, 0], board, emptyPin, 4)).toStrictEqual(true);
-    expect(positionConflict(boat, [3, 3], board, emptyPin, 4)).toStrictEqual(true);
+    expect(positionConflict(boat, [0, 10], board, emptyPin, 4, true)).toStrictEqual(true);
+    expect(positionConflict(boat, [0, 4], board, emptyPin, 4, true)).toStrictEqual(true);
+    expect(positionConflict(boat, [10, 0], board, emptyPin, 4, true)).toStrictEqual(true);
+    expect(positionConflict(boat, [4, 0], board, emptyPin, 4, true)).toStrictEqual(true);
+    expect(positionConflict(boat, [3, 3], board, emptyPin, 4, true)).toStrictEqual(true);
 });
 
 test("No position conflict is detected when moving a ship to an empty place", () => {
@@ -124,7 +125,7 @@ test("No position conflict is detected when moving a ship to an empty place", ()
         [emptyPin, emptyPin, emptyPin, emptyPin]
     ];
 
-    expect(positionConflict(boat, [0, 2], board, emptyPin, 4)).toStrictEqual(false);
+    expect(positionConflict(boat, [0, 2], board, emptyPin, 4, true)).toStrictEqual(false);
 
 });
 
@@ -139,5 +140,49 @@ test("No position conflict is detected when moving a ship over its old position"
         [emptyPin, emptyPin, emptyPin, emptyPin]
     ];
 
-    expect(positionConflict(boat, [1, 1], board, emptyPin, 4)).toStrictEqual(false);
+    expect(positionConflict(boat, [1, 1], board, emptyPin, 4, true)).toStrictEqual(false);
+});
+
+test("Rotation conflict is detected when rotating a ship over another ship", () => {
+
+    const boat = Ship("boat", 2, [0, 0], true);
+    const anotherBoat = Ship("another boat", 3, [1, 0], true);
+    const emptyPin = "E"
+    const board = [
+        [boat, anotherBoat, emptyPin, emptyPin],
+        [boat, anotherBoat, emptyPin, emptyPin],
+        [emptyPin, anotherBoat, emptyPin, emptyPin],
+        [emptyPin, emptyPin, emptyPin, emptyPin]
+    ];
+
+    expect(rotationConflict(boat, board, emptyPin, 4)).toStrictEqual(true);
+});
+
+test("Rotation conflict is detected when rotating a ship out of the board's boundaries", () => {
+
+    const boat = Ship("boat", 2, [3, 0], true);
+    const emptyPin = "E"
+    const board = [
+        [emptyPin, emptyPin, emptyPin, boat],
+        [emptyPin, emptyPin, emptyPin, boat],
+        [emptyPin, emptyPin, emptyPin, emptyPin],
+        [emptyPin, emptyPin, emptyPin, emptyPin]
+    ];
+
+    expect(rotationConflict(boat, board, emptyPin, 4)).toStrictEqual(true);
+});
+
+test("No rotation conflict is detected when rotating a ship to an empty place", () => {
+
+    const boat = Ship("boat", 2, [0, 0], true);
+    const emptyPin = "E"
+    const board = [
+        [boat, emptyPin, emptyPin, emptyPin],
+        [boat, emptyPin, emptyPin, emptyPin],
+        [emptyPin, emptyPin, emptyPin, emptyPin],
+        [emptyPin, emptyPin, emptyPin, emptyPin]
+    ];
+
+    expect(rotationConflict(boat, board, emptyPin, 4)).toStrictEqual(false);
+
 });

@@ -6,7 +6,8 @@ export {
     encodeCoord,
     findCoordPair,
     checkSunk,
-    positionConflict
+    positionConflict,
+    rotationConflict,
 };
 
 function generatePosition(newPivot, isVertical, length)
@@ -60,11 +61,11 @@ function checkSunk(positionArray)
     return positionArray.every(element => element.isDamaged === true);
 }
 
-function positionConflict(ship, newPivot, board, emptyPin, boardSize)
+function positionConflict(ship, newPivot, board, emptyPin, boardSize, shipIsVertical)
 {
     if (newPivot[0] >= boardSize || newPivot[1] >= boardSize) return true;
 
-    const newPosition = generatePosition(newPivot, ship.isVertical, ship.LENGTH).map(position => position.coord);
+    const newPosition = generatePosition(newPivot, shipIsVertical, ship.LENGTH).map(position => position.coord);
 
     for (let pair of newPosition)
     {
@@ -75,4 +76,9 @@ function positionConflict(ship, newPivot, board, emptyPin, boardSize)
     }
 
     return false;
+}
+
+function rotationConflict(ship, board, emptyPin, boardSize)
+{
+    return positionConflict(ship, ship.pivot, board, emptyPin, boardSize, !ship.isVertical);
 }
