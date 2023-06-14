@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import { createFleet, updateFleet } from '../fleet';
+import { createFleet, updateFleet, checkFleetDestroyed } from '../fleet';
 import { Ship } from '../ship';
 
 test("Fleet is initialized vertically in a row starting at (0, 0)", () => {
@@ -68,3 +68,26 @@ test("Damaged fleet is placed correctly on game board", () => {
         [emptyPin, emptyPin, emptyPin, emptyPin]
     ]);
 });
+
+test("Fleet is destroyed when all ships are sunk", () => {
+
+    const boat = Ship("boat", 2, [0,0], true);
+    const boat2 = Ship("boat", 3, [1,0], true);
+    boat.receiveDamage([0, 0]);
+    boat.receiveDamage([0, 1]);
+    boat2.receiveDamage([1, 0]);
+    boat2.receiveDamage([1, 1]);
+    boat2.receiveDamage([1, 2]);
+
+    expect(checkFleetDestroyed([boat, boat2])).toStrictEqual(true);
+});
+
+test("Fleet is not destroyed when some ships are sunk", () => {
+
+    const boat = Ship("boat", 2, [0,0], true);
+    const boat2 = Ship("boat", 3, [1,0], true);
+    boat.receiveDamage([0, 0]);
+    boat.receiveDamage([0, 1]);
+
+    expect(checkFleetDestroyed([boat, boat2])).toStrictEqual(false);
+})

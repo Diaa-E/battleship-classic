@@ -2,7 +2,7 @@
 
 import { decodeCoord } from "./positionUtility";
 import { Ship } from "./ship";
-export { createFleet, updateFleet };
+export { createFleet, updateFleet, checkFleetDestroyed };
 
 function createFleet(shipList)
 {
@@ -36,4 +36,14 @@ function updateFleet(ships, board, damagedPin)
     }
 
     return board;
+}
+
+function checkFleetDestroyed(ships)
+{
+    for (const ship of ships)
+    {
+        if (!ship.isSunk) return false;
+    }
+
+    return true;
 }
