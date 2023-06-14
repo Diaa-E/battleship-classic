@@ -1,7 +1,6 @@
 "use strict";
 
 import { Ship } from "./ship";
-import { decodeCoord } from "./coordConverter";
 
 export function GameBoard(shipList, boardSize)
 {
@@ -114,46 +113,6 @@ export function GameBoard(shipList, boardSize)
 
         ship.changePosition(ship.pivot, true);
         updateBoard();
-    }
-
-    function _rotationConflict(ship)
-    {
-        if (!ship.isVertical)
-        {
-            for (let i = 0; i < ship.LENGTH; i ++)
-            {
-                if (_board[ship.pivot[1] + i][ship.pivot[0]] !== PINS.empty && _board[ship.pivot[1] + i][ship.pivot[0]] !== ship) return true
-            }
-        }
-        else
-        {
-            for (let i = 0; i < ship.LENGTH; i ++)
-            {
-                if (_board[ship.pivot[1]][ship.pivot[0] + i] !== PINS.empty && _board[ship.pivot[1]][ship.pivot[0] + i] !== ship) return true
-            }
-        }
-
-        return false
-    }
-
-    function _positionConflict(ship, newPivot)
-    {
-        if (ship.isVertical)
-        {
-            for (let i = 0; i < ship.LENGTH; i ++)
-            {
-                if (_board[newPivot[1] + i][newPivot[0]] !== PINS.empty && _board[newPivot[1] + i][newPivot[0]] !== ship) return true
-            }
-        }
-        else
-        {
-            for (let i = 0; i < ship.LENGTH; i ++)
-            {
-                if (_board[newPivot[1]][newPivot[0] + i] !== PINS.empty && _board[newPivot[1]][newPivot[0] + i] !== ship) return true
-            }
-        }
-
-        return false
     }
 
     function receiveAttack(hits)
