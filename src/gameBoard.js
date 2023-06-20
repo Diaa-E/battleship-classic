@@ -1,14 +1,14 @@
 "use strict";
 
 import { Ship } from "./ship";
-export { GameBoard, emptyBoard }
+export { GameBoard, EmptyBoard, pinBox }
 
 function GameBoard(shipList, boardSize)
 {
     
 }
 
-function emptyBoard(boardSize, emptyPin)
+function EmptyBoard(boardSize, emptyPin)
 {
     const board = []
 
@@ -25,4 +25,13 @@ function emptyBoard(boardSize, emptyPin)
     }
 
     return board;
+}
+
+function pinBox(emptyPin, missedPin, hitPin)
+{
+    return {
+        empty: emptyPin,
+        missed: missedPin,
+        hit: hitPin
+    };
 }
