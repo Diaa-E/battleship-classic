@@ -85,7 +85,7 @@ function processShot(board, coord, missedShots)
     }
     else
     {
-        missedShots.push(encodeCoord(coord));
+        missedShots.push(coord);
     }
 
     return missedShots;
