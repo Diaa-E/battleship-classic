@@ -8,6 +8,7 @@ export {
     checkSunk,
     positionConflict,
     rotationConflict,
+    updateMissed,
 };
 
 function generatePosition(newPivot, isVertical, length)
@@ -81,4 +82,14 @@ function positionConflict(ship, newPivot, board, emptyPin, boardSize, shipIsVert
 function rotationConflict(ship, board, emptyPin, boardSize)
 {
     return positionConflict(ship, ship.pivot, board, emptyPin, boardSize, !ship.isVertical);
+}
+
+function updateMissed(board, missedShots, missedPin)
+{
+    for (const shot of missedShots)
+    {
+        board[shot[1]][shot[0]] = missedPin;
+    }
+
+    return board;
 }
