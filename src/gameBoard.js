@@ -1,7 +1,7 @@
 "use strict";
 
 import { createFleet, updateFleet } from "./fleet";
-import { encodeCoord } from "./positionUtility";
+import { updateMissed } from "./positionUtility";
 export { GameBoard, EmptyBoard, pinBox, processShot}
 
 function GameBoard(shipList, boardSize)
@@ -21,15 +21,22 @@ function GameBoard(shipList, boardSize)
         board = Array.from(updateFleet(fleet, board, pinBox.hit));
     }
 
+    function _placeMissedPins()
+    {
+        board = Array.from(updateMissed(board, missedShots, pinBox.missed));
+    }
+
     function clearAndUpdate()
     {
         _clearBoard();
+        _placeMissedPins();
         _placeShipPins();
     }
 
     function update()
     {
         _placeShipPins();
+        _placeMissedPins();
     }
 
     function receiveAttack(coord)
