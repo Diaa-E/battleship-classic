@@ -1,11 +1,52 @@
 "use strict";
 
-import { Ship } from "./ship";
-export { GameBoard, EmptyBoard, pinBox }
+import { createFleet, updateFleet } from "./fleet";
+import { encodeCoord } from "./positionUtility";
+export { GameBoard, EmptyBoard, pinBox, processShot}
 
 function GameBoard(shipList, boardSize)
 {
-    
+    let missedShots = []
+    let pinBox = pinBox("E", "M", "H");
+    let board = EmptyBoard(boardSize, pinBox.empty);
+    let fleet = createFleet(shipList);
+
+    function _clearBoard()
+    {
+        board = Array.from(EmptyBoard(boardSize, pinBox.empty));
+    }
+
+    function _placeShipPins()
+    {
+        board = Array.from(updateFleet(fleet, board, pinBox.hit));
+    }
+
+    function clearAndUpdate()
+    {
+        _clearBoard();
+        _placeShipPins();
+    }
+
+    function update()
+    {
+        _placeShipPins();
+    }
+
+    function receiveAttack(coord)
+    {
+        missedShots = Array.from(processShot(board, coord, missedShots));
+        update();
+    }
+
+    return {
+        get board(){ return board },
+        get pinBox(){ return pinBox },
+        get fleet(){ return fleet },
+
+        clearAndUpdate,
+        update,
+        receiveAttack,
+    }
 }
 
 function EmptyBoard(boardSize, emptyPin)
@@ -34,4 +75,18 @@ function pinBox(emptyPin, missedPin, hitPin)
         missed: missedPin,
         hit: hitPin
     };
+}
+
+function processShot(board, coord, missedShots)
+{
+    if (board[coord[1]][coord[0]] instanceof Object)
+    {
+        board[coord[1]][coord[0]].receiveDamage(coord);
+    }
+    else
+    {
+        missedShots.push(encodeCoord(coord));
+    }
+
+    return missedShots;
 }
