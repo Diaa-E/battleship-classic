@@ -7,6 +7,7 @@ import {
     checkSunk,
     positionConflict,
     rotationConflict,
+    updateMissed,
 } from '../positionUtility';
 import { Ship } from '../ship';
 
@@ -185,4 +186,9 @@ test("No rotation conflict is detected when rotating a ship to an empty place", 
 
     expect(rotationConflict(boat, board, emptyPin, 4)).toStrictEqual(false);
 
+});
+
+test("Missed shots are placed on board correctly", () => {
+
+    expect(updateMissed([["E", "E"], ["E", "E"]], [[0, 0], [0, 1]], "M")).toStrictEqual([["M", "E"], ["M", "E"]]);
 });
