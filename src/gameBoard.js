@@ -1,8 +1,8 @@
 "use strict";
 
 import { createFleet, updateFleet } from "./fleet";
-import { updateMissed } from "./positionUtility";
-export { GameBoard, EmptyBoard, pinBox, processShot}
+import { decodeCoord, positionConflict, rotationConflict, updateMissed } from "./positionUtility";
+export { GameBoard, EmptyBoard, pinBox, processShot};
 
 function GameBoard(shipList, boardSize)
 {
@@ -26,14 +26,14 @@ function GameBoard(shipList, boardSize)
         board = Array.from(updateMissed(board, missedShots, pinBox.missed));
     }
 
-    function clearAndUpdate()
+    function _clearAndUpdate()
     {
         _clearBoard();
         _placeMissedPins();
         _placeShipPins();
     }
 
-    function update()
+    function _update()
     {
         _placeShipPins();
         _placeMissedPins();
@@ -42,7 +42,32 @@ function GameBoard(shipList, boardSize)
     function receiveAttack(coord)
     {
         missedShots = Array.from(processShot(board, coord, missedShots));
-        update();
+        _update();
+    }
+
+    function moveShip(encodedCoord, encodedNewPivot)
+    {
+        const decodedNewPivot = decodeCoord(encodedNewPivot)
+        const decodedCoord = decodeCoord(encodedCoord);
+        const ship = board[decodedCoord[1]][decodedCoord[0]];
+
+        if (!positionConflict(ship, decodedNewPivot, board, pinBox.empty, boardSize, ship.isVertical))
+        {
+            ship.changePosition(decodedNewPivot, false);
+            _clearAndUpdate();
+        }
+    }
+
+    function rotateShip(encodedCoord)
+    {
+        const decodedCoord = decodeCoord(encodedCoord);
+        const ship = board[decodedCoord[1]][decodedCoord[0]];
+
+        if (!rotationConflict(ship, board, pinBox.empty, boardSize))
+        {
+            ship.changePosition(ship.pivot, true);
+            _clearAndUpdate();
+        }
     }
 
     return {
@@ -50,9 +75,9 @@ function GameBoard(shipList, boardSize)
         get pinBox(){ return pinBox },
         get fleet(){ return fleet },
 
-        clearAndUpdate,
-        update,
         receiveAttack,
+        moveShip,
+        rotateShip,
     }
 }
 
