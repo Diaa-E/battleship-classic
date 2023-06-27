@@ -1,6 +1,7 @@
 "use strict";
 
 import { GameBoard } from "./gameBoard";
+import { decodeCoord } from "./positionUtility";
 
 export function Player(playerName, isAi, rules)
 {
@@ -17,13 +18,18 @@ export function Player(playerName, isAi, rules)
         gameBoard.rotateShip(encodedCoord);
     }
 
+    function receiveAttack(encodedCoord)
+    {
+        gameBoard.receiveAttack(decodeCoord(encodedCoord));
+    }
+
     return {
         get NAME(){ return NAME },
         get board(){ return gameBoard.board },
         get fleet(){ return gameBoard.fleet },
         get pinBox(){ return gameBoard.pinBox },
 
-        receiveAttack : gameBoard.receiveAttack,
+        receiveAttack,
         moveShip,
         rotateShip,
     };
