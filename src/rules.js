@@ -1,5 +1,7 @@
 "use strict";
 
+export {RulesClassic, pickGameMode};
+
 export function RulesClassic(salvo = false)
 {
     const BOARD_SIZE = 10;
@@ -31,5 +33,14 @@ export function RulesClassic(salvo = false)
         get BOARD_SIZE(){ return BOARD_SIZE },
         get SHIP_LIST(){ return SHIP_LIST },
         get ADVANCED_MODE(){ return ADVANCED_MODE },
+    }
+}
+
+function pickGameMode(gameModeNumber)
+{
+    switch (gameModeNumber)
+    {
+        case 0: return RulesClassic(false);
+        case 1: return RulesClassic(true);
     }
 }
