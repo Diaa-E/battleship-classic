@@ -17,7 +17,7 @@ test("A shot is marked as missed when the target is an empty square", () => {
 
     const board = [["E", "E"], ["E", "E"]];
 
-    expect(processShot(board, [0, 0], [])).toStrictEqual(["0,0"]);
+    expect(processShot(board, [0, 0], [])).toStrictEqual([[0, 0]]);
 });
 
 test("A shot passes damage to ship if a ship exists at the target coordinates", () => {
