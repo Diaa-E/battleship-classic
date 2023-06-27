@@ -12,7 +12,6 @@ test("AI Brain sorts empty squares correctly", () => {
     expect(sortBoard(board, "E", "D")).toStrictEqual({
         availableSquares: ["0,0", "0,1", "0,2", "1,0", "1,1", "1,2", "2,0", "2,1", "2,2"],
         damagedSquares: [],
-        otherSquares: [],
     });
 });
 
@@ -27,7 +26,6 @@ test("AI Brain sorts damaged squares correctly", () => {
     expect(sortBoard(board, "E", "D")).toStrictEqual({
         availableSquares: ["0,0", "0,2", "1,1", "1,2", "2,0", "2,2"],
         damagedSquares: ["0,1", "1,0", "2,1"],
-        otherSquares: [],
     })
 });
 
@@ -42,6 +40,5 @@ test("AI Brain ignores ship and missed squares", () => {
     expect(sortBoard(board, "E", "D")).toStrictEqual({
         availableSquares: ["0,0", "2,0", "2,2"],
         damagedSquares: ["0,1", "2,1"],
-        otherSquares: ["0,2", "1,0", "1,1", "1,2"],
     });
 })

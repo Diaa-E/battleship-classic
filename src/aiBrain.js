@@ -17,7 +17,6 @@ function sortBoard(board, emptyPin, damagedPin)
 {
     const availableSquares = [];
     const damagedSquares = [];
-    const otherSquares = []; //sunken ships and missed shots, they don't affect decision making
 
     for (let x = 0; x < board.length; x++)
     {
@@ -31,16 +30,11 @@ function sortBoard(board, emptyPin, damagedPin)
             {
                 damagedSquares.push(encodeCoord([x, y]));
             }
-            else
-            {
-                otherSquares.push(encodeCoord([x, y]));
-            }
         }
     }
 
     return {
         availableSquares: availableSquares,
         damagedSquares: damagedSquares,
-        otherSquares: otherSquares
     }
 }
