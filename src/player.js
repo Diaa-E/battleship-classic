@@ -7,6 +7,7 @@ export function Player(playerName, isAi, rules)
 {
     const NAME = isAi? _generateAiName() : playerName;
     const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE);
+    let availableShots = rules.ADVANCED_MODE ? rules.SHIP_LIST.length : 1;
 
     function moveShip(encodedCoord, encodedNewIvot)
     {
@@ -21,6 +22,12 @@ export function Player(playerName, isAi, rules)
     function receiveAttack(encodedCoord)
     {
         gameBoard.receiveAttack(decodeCoord(encodedCoord));
+        if (rules.ADVANCED_MODE) updateAvailableShots();
+    }
+
+    function updateAvailableShots()
+    {
+        availableShots = gameBoard.calculateAvailableShots();
     }
 
     function _generateAiName()
