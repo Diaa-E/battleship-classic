@@ -2,7 +2,7 @@
 
 import { createFleet, updateFleet } from "./fleet";
 import { decodeCoord, positionConflict, rotationConflict, updateMissed } from "./positionUtility";
-export { GameBoard, EmptyBoard, pinBox, processShot, calculateAvailableShots};
+export { GameBoard, EmptyBoard, pinBox, processShot, countIntactShips};
 
 function GameBoard(shipList, boardSize)
 {
@@ -134,7 +134,7 @@ function countIntactShips(fleet)
 
     for (const ship of fleet)
     {
-        if (ship.isSunk) shots++;
+        if (!ship.isSunk) shots++;
     }
 
     return shots
