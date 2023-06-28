@@ -2,7 +2,7 @@
 
 import { encodeCoord } from "./positionUtility";
 
-export {AiBrain, checkerEmptySquares};
+export {AiBrain, checkerEmptySquares, scrapeDamagedSquares};
 
 function AiBrain(rules)
 {
@@ -26,4 +26,19 @@ function checkerEmptySquares(board, emptyPin, skipTopLeft)
     }
 
     return checkeredBoard;
+}
+
+function scrapeDamagedSquares(board, damagedPin)
+{
+    const damaged = []
+
+    for (let x = 0; x < board.length; x++)
+    {
+        for (let y = 0; y < board.length; y++)
+        {
+            if (board[y][x] === damagedPin) damaged.push(encodeCoord([x, y]));
+        }
+    }
+
+    return damaged;
 }
