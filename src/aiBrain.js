@@ -11,7 +11,7 @@ function AiBrain(rules)
     }
 }
 
-function checkerEmptySquares(board, emptyPin, skipTopLeft = Boolean(Math.round(Math.random())))
+function checkerEmptySquares(board, emptyPin, skipTopLeft)
 {
     const checkeredBoard = [];
     let skipFirst = skipTopLeft;
