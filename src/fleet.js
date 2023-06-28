@@ -16,21 +16,32 @@ function createFleet(shipList)
     return ships;
 }
 
-function updateFleet(ships, board, damagedPin)
+function updateFleet(ships, board, damagedPin, sunkPin)
 {
     for (const ship of ships)
     {
-        for (const position of ship.position)
+        if (ship.isSunk)
         {
-            const pair = decodeCoord(position.coord);
-
-            if (position.isDamaged)
+            for (const position of ship.position)
             {
-                board[pair[1]][pair[0]] = damagedPin;
+                const pair = decodeCoord(position.coord);
+                board[pair[1]][pair[0]] = sunkPin;
             }
-            else
+        }
+        else
+        {
+            for (const position of ship.position)
             {
-                board[pair[1]][pair[0]] = ship;
+                const pair = decodeCoord(position.coord);
+
+                if (position.isDamaged)
+                {
+                    board[pair[1]][pair[0]] = damagedPin;
+                }
+                else
+                {
+                    board[pair[1]][pair[0]] = ship;
+                }
             }
         }
     }

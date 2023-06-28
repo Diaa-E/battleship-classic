@@ -7,7 +7,7 @@ export { GameBoard, EmptyBoard, pinBox, processShot, countIntactShips};
 function GameBoard(shipList, boardSize)
 {
     let missedShots = []
-    let pinBox = pinBox("E", "M", "H");
+    let pinBox = pinBox("E", "M", "H", "S");
     let board = EmptyBoard(boardSize, pinBox.empty);
     let fleet = createFleet(shipList);
 
@@ -18,7 +18,7 @@ function GameBoard(shipList, boardSize)
 
     function _placeShipPins()
     {
-        board = Array.from(updateFleet(fleet, board, pinBox.hit));
+        board = Array.from(updateFleet(fleet, board, pinBox.hit, pinBox.sunk));
     }
 
     function _placeMissedPins()
@@ -105,12 +105,13 @@ function EmptyBoard(boardSize, emptyPin)
     return board;
 }
 
-function pinBox(emptyPin, missedPin, hitPin)
+function pinBox(emptyPin, missedPin, hitPin, sunkPin)
 {
     return {
         empty: emptyPin,
         missed: missedPin,
-        hit: hitPin
+        hit: hitPin,
+        sunk: sunkPin,
     };
 }
 

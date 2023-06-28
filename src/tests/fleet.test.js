@@ -39,7 +39,7 @@ test("Fleet is placed correctly on game board", () => {
         [emptyPin, emptyPin, emptyPin, emptyPin]
     ];
 
-    expect(updateFleet([boat], board, "D")).toStrictEqual([
+    expect(updateFleet([boat], board, "D", "S")).toStrictEqual([
         [emptyPin, boat, boat, emptyPin],
         [emptyPin, emptyPin, emptyPin, emptyPin],
         [emptyPin, emptyPin, emptyPin, emptyPin],
@@ -61,7 +61,7 @@ test("Damaged fleet is placed correctly on game board", () => {
         [emptyPin, emptyPin, emptyPin, emptyPin]
     ];
 
-    expect(updateFleet([boat], board, damagedPin)).toStrictEqual([
+    expect(updateFleet([boat], board, damagedPin, "S")).toStrictEqual([
         [emptyPin, damagedPin, boat, emptyPin],
         [emptyPin, emptyPin, emptyPin, emptyPin],
         [emptyPin, emptyPin, emptyPin, emptyPin],
@@ -90,4 +90,24 @@ test("Fleet is not destroyed when some ships are sunk", () => {
     boat.receiveDamage([0, 1]);
 
     expect(checkFleetDestroyed([boat, boat2])).toStrictEqual(false);
-})
+});
+
+test("Sunken ship pins are placed correctly", () => {
+
+    const boat = Ship("boat", 2, [0,0], true);
+    const boat2 = Ship("boat", 3, [1,0], true);
+    boat.receiveDamage([0, 0]);
+    boat.receiveDamage([0, 1]);
+
+    const board = [
+        ["E", "E", "E"],
+        ["E", "E", "E"],
+        ["E", "E", "E"],
+    ];
+
+    expect(updateFleet([boat, boat2], board, "D", "S")).toStrictEqual([
+        ["S", boat2, "E"],
+        ["S", boat2, "E"],
+        ["E", boat2, "E"]
+    ]);
+});
