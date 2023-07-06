@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import { checkerEmptySquares, scrapeDamagedSquares } from '../aiBrain';
+import { checkerEmptySquares, scrapeDamagedSquares, bustRows, bustColumns, createWeightedBoard } from '../aiBrain';
 
 test("AI Brain halves the gameboard by checkering", () => {
 
@@ -58,4 +58,106 @@ test("AI Brain scrapes an empty array when there is no damage on the board", () 
     ];
 
     expect(scrapeDamagedSquares(board, "D")).toStrictEqual([]);
+});
+
+test("Weighted board assigns weight correctly to empty squares", () => {
+
+    const MAX = 100;
+    const E = "E";
+    const D = "D";
+    const M = "M";
+    const board = [
+        [E, E, E],
+        [E, E, E],
+        [E, E, E]
+    ];
+
+    expect(createWeightedBoard(MAX, board, D, M)).toStrictEqual([
+        [MAX/2, MAX/2, MAX/2],
+        [MAX/2, MAX/2, MAX/2],
+        [MAX/2, MAX/2, MAX/2]
+    ])
+});
+
+test("Weighted board assigns weight correctly to mixed squares", () => {
+
+    const MAX = 100;
+    const E = "E";
+    const D = "D";
+    const M = "M";
+    const board = [
+        [D, E, M],
+        [E, { }, { }],
+        [E, M, E]
+    ];
+
+    expect(createWeightedBoard(MAX, board, D, M)).toStrictEqual([
+        [0, MAX/2, 0],
+        [MAX/2, MAX/2, MAX/2],
+        [MAX/2, 0, MAX/2]
+    ])
+});
+
+test("Picks last square of a row of empty squares of a specified length (ideal case)", () => {
+
+    const MAX = 100;
+    const weightedBoard = [
+        [MAX/2, MAX/2, 0],
+        [MAX/2, 0, MAX/2],
+        [0, MAX/2 ,MAX/2],
+    ];
+
+    expect(bustRows(2, weightedBoard, MAX)).toStrictEqual([
+        [MAX/2, MAX, 0],
+        [MAX/2, 0, MAX/2],
+        [0, MAX/2, MAX]
+    ]);
+});
+
+test("Picks last square of a column of empty squares of a specified length (ideal case)", () => {
+
+    const MAX = 100;
+    const weightedBoard = [
+        [MAX/2, MAX/2, 0],
+        [MAX/2, 0, MAX/2],
+        [0, MAX/2 ,MAX/2],
+    ];
+
+    expect(bustColumns(2, weightedBoard, MAX)).toStrictEqual([
+        [MAX/2, MAX/2, 0],
+        [MAX, 0, MAX/2],
+        [0, MAX/2, MAX]
+    ]);
+});
+
+test("Picks last square of a row of empty squares of a specified length (ignores already existing max weight)", () => {
+
+    const MAX = 100;
+    const weightedBoard = [
+        [MAX/2, MAX/2, MAX],
+        [MAX/2, MAX, MAX/2],
+        [0, MAX/2 ,MAX/2],
+    ];
+
+    expect(bustRows(2, weightedBoard, MAX)).toStrictEqual([
+        [MAX/2, MAX, MAX],
+        [MAX/2, MAX, MAX/2],
+        [0, MAX/2, MAX]
+    ]);
+});
+
+test("Picks last square of a column of empty squares of a specified length (ignores already existing max weight)", () => {
+
+    const MAX = 100;
+    const weightedBoard = [
+        [MAX/2, MAX/2, MAX],
+        [MAX/2, MAX, MAX/2],
+        [0, MAX/2 ,MAX/2],
+    ];
+
+    expect(bustColumns(2, weightedBoard, MAX)).toStrictEqual([
+        [MAX/2, MAX/2, MAX],
+        [MAX, MAX, MAX/2],
+        [0, MAX/2, MAX]
+    ]);
 });
