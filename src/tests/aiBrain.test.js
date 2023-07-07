@@ -67,13 +67,14 @@ test("Weighted board assigns weight correctly to empty squares", () => {
     const E = "E";
     const D = "D";
     const M = "M";
+    const S = "S";
     const board = [
         [E, E, E],
         [E, E, E],
         [E, E, E]
     ];
 
-    expect(createWeightedBoard(RANDOM_SHOT, NO_SHOT, board, D, M)).toStrictEqual([
+    expect(createWeightedBoard(RANDOM_SHOT, NO_SHOT, board, D, M, S)).toStrictEqual([
         [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
         [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
         [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
@@ -87,13 +88,14 @@ test("Weighted board assigns weight correctly to mixed squares", () => {
     const E = "E";
     const D = "D";
     const M = "M";
+    const S = "S";
     const board = [
         [D, E, M],
         [E, { }, { }],
         [E, M, E]
     ];
 
-    expect(createWeightedBoard(RANDOM_SHOT, NO_SHOT, board, D, M)).toStrictEqual([
+    expect(createWeightedBoard(RANDOM_SHOT, NO_SHOT, board, D, M, S)).toStrictEqual([
         [0, RANDOM_SHOT, 0],
         [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
         [RANDOM_SHOT, 0, RANDOM_SHOT]

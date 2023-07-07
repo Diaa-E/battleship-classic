@@ -2,7 +2,7 @@
 
 import { encodeCoord } from "./positionUtility";
 
-export {AiBrain, checkerEmptySquares, scrapeDamagedSquares, bustBlocks, createWeightedBoard, bustRows, bustColumns};
+export {AiBrain, checkerEmptySquares, scrapeDamagedSquares, createWeightedBoard, bustRows, bustColumns};
 
 function AiBrain(rules)
 {
@@ -103,7 +103,7 @@ function bustColumns(blockLength, weightedBoard, randomShotWeight, bustingShotWe
     return weightedBoard;
 }
 
-function createWeightedBoard(randomShotWeight, noShotWeight, originalBoard, damagedPin, missedPin)
+function createWeightedBoard(randomShotWeight, noShotWeight, originalBoard, damagedPin, missedPin, sunkPin)
 {
     let weightedBoard = [];
 
@@ -113,7 +113,7 @@ function createWeightedBoard(randomShotWeight, noShotWeight, originalBoard, dama
 
         for (let x = 0; x < originalBoard.length; x++)
         {
-            if (originalBoard[y][x] === damagedPin || originalBoard[y][x] === missedPin)
+            if (originalBoard[y][x] === damagedPin || originalBoard[y][x] === missedPin || originalBoard[y][x] === sunkPin)
             {
                 weightedBoard[y].push(noShotWeight);
             }
