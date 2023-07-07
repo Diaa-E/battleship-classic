@@ -6,10 +6,13 @@ export {AiBrain, checkerEmptySquares, scrapeDamagedSquares, createWeightedBoard,
 
 function AiBrain(rules)
 {
-    const MAX_WEIGHT = 100;
-    const BUSTING_SHOT_WEIGHT = MAX_WEIGHT / 2;
-    const RANDOM_SHOT_WEIGHT = MAX_WEIGHT / 4;
-    const NO_SHOT_WEIGHT = 0;
+    const WEIGHTS = {
+        HUNT: 100,
+        BUST: 50,
+        RANDOM: 25,
+        DAMAGE: 10,
+        NONE: 0,
+    };
 
     return {
 
@@ -48,7 +51,7 @@ function scrapeDamagedSquares(board, damagedPin)
     return damaged;
 }
 
-function bustRows(blockLength, weightedBoard, randomShotWeight, bustingShotWeight)
+function bustRows(blockLength, weightedBoard, weights)
 {
     for (let y = 0; y < weightedBoard.length; y++)
     {
@@ -56,13 +59,13 @@ function bustRows(blockLength, weightedBoard, randomShotWeight, bustingShotWeigh
 
         for (let x = 0; x < weightedBoard.length; x++)
         {
-            if (weightedBoard[y][x] === randomShotWeight)
+            if (weightedBoard[y][x] === weights.RANDOM)
             {
                 streak++;
                 if (streak === blockLength)
                 {
                     streak = 0;
-                    weightedBoard[y][x] = bustingShotWeight;
+                    weightedBoard[y][x] = weights.BUST;
                 }
             }
             else
@@ -75,7 +78,7 @@ function bustRows(blockLength, weightedBoard, randomShotWeight, bustingShotWeigh
     return weightedBoard;
 }
 
-function bustColumns(blockLength, weightedBoard, randomShotWeight, bustingShotWeight)
+function bustColumns(blockLength, weightedBoard, weights)
 {
     for (let x = 0; x < weightedBoard.length; x++)
     {
@@ -83,13 +86,13 @@ function bustColumns(blockLength, weightedBoard, randomShotWeight, bustingShotWe
 
         for (let y = 0; y < weightedBoard.length; y++)
         {
-            if (weightedBoard[y][x] === randomShotWeight)
+            if (weightedBoard[y][x] === weights.RANDOM)
             {
                 streak++;
                 if (streak === blockLength)
                 {
                     streak = 0;
-                    weightedBoard[y][x] = bustingShotWeight;
+                    weightedBoard[y][x] = weights.BUST;
                 }
             }
             else
@@ -103,7 +106,7 @@ function bustColumns(blockLength, weightedBoard, randomShotWeight, bustingShotWe
     return weightedBoard;
 }
 
-function createWeightedBoard(randomShotWeight, noShotWeight, originalBoard, damagedPin, missedPin, sunkPin)
+function createWeightedBoard(weights, originalBoard, pinBox)
 {
     let weightedBoard = [];
 
@@ -113,13 +116,17 @@ function createWeightedBoard(randomShotWeight, noShotWeight, originalBoard, dama
 
         for (let x = 0; x < originalBoard.length; x++)
         {
-            if (originalBoard[y][x] === damagedPin || originalBoard[y][x] === missedPin || originalBoard[y][x] === sunkPin)
+            if (originalBoard[y][x] === pinBox.missed || originalBoard[y][x] === pinBox.sunk)
             {
-                weightedBoard[y].push(noShotWeight);
+                weightedBoard[y].push(weights.NONE);
+            }
+            else if (originalBoard[y][x] === pinBox.hit)
+            {
+                weightedBoard[y].push(weights.DAMAGE);
             }
             else
             {
-                weightedBoard[y].push(randomShotWeight);
+                weightedBoard[y].push(weights.RANDOM);
             }
         }
     }

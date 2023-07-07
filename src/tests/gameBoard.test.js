@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import {GameBoard, EmptyBoard, pinBox, processShot, countIntactShips} from "../gameBoard";
+import {GameBoard, EmptyBoard, PinBox, processShot, countIntactShips} from "../gameBoard";
 import { Ship } from '../ship';
 import { updateFleet } from '../fleet';
 
@@ -10,7 +10,7 @@ test("EmptyBoard returns a square 2D array filled with an empty pin character", 
 
 test("pinBox returns an object with pins for empty, missed and hit squares", () => {
 
-    expect(pinBox("E", "M", "H", "S")).toStrictEqual({empty: "E", missed: "M", hit: "H", sunk: "S"});
+    expect(PinBox("E", "M", "H", "S")).toStrictEqual({empty: "E", missed: "M", hit: "H", sunk: "S"});
 });
 
 test("A shot is marked as missed when the target is an empty square", () => {

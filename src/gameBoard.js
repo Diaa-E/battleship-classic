@@ -2,7 +2,7 @@
 
 import { createFleet, updateFleet } from "./fleet";
 import { decodeCoord, positionConflict, rotationConflict, updateMissed } from "./positionUtility";
-export { GameBoard, EmptyBoard, pinBox, processShot, countIntactShips};
+export { GameBoard, EmptyBoard, PinBox, processShot, countIntactShips};
 
 function GameBoard(shipList, boardSize)
 {
@@ -105,7 +105,7 @@ function EmptyBoard(boardSize, emptyPin)
     return board;
 }
 
-function pinBox(emptyPin, missedPin, hitPin, sunkPin)
+function PinBox(emptyPin, missedPin, hitPin, sunkPin)
 {
     return {
         empty: emptyPin,

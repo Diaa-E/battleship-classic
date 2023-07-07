@@ -1,6 +1,21 @@
 import {expect, jest, test} from '@jest/globals';
 import { checkerEmptySquares, scrapeDamagedSquares, bustRows, bustColumns, createWeightedBoard } from '../aiBrain';
 
+const WEIGHTS = {
+    HUNT: 100,
+    BUST: 50,
+    RANDOM: 25,
+    DAMAGE: 10,
+    NONE: 0,
+};
+
+const PIN_BOX = {
+    empty: "E",
+    missed: "M",
+    hit: "D",
+    sunk: "S",
+};
+
 test("AI Brain halves the gameboard by checkering", () => {
 
     const board = [
@@ -62,114 +77,90 @@ test("AI Brain scrapes an empty array when there is no damage on the board", () 
 
 test("Weighted board assigns weight correctly to empty squares", () => {
 
-    const RANDOM_SHOT = 25;
-    const NO_SHOT = 0;
-    const E = "E";
-    const D = "D";
-    const M = "M";
-    const S = "S";
     const board = [
-        [E, E, E],
-        [E, E, E],
-        [E, E, E]
+        [PIN_BOX.empty, PIN_BOX.empty, PIN_BOX.empty],
+        [PIN_BOX.empty, PIN_BOX.empty, PIN_BOX.empty],
+        [PIN_BOX.empty, PIN_BOX.empty, PIN_BOX.empty]
     ];
 
-    expect(createWeightedBoard(RANDOM_SHOT, NO_SHOT, board, D, M, S)).toStrictEqual([
-        [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
-        [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
-        [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
+    expect(createWeightedBoard(WEIGHTS, board, PIN_BOX)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM]
     ])
 });
 
 test("Weighted board assigns weight correctly to mixed squares", () => {
 
-    const RANDOM_SHOT = 25;
-    const NO_SHOT = 0;
-    const E = "E";
-    const D = "D";
-    const M = "M";
-    const S = "S";
     const board = [
-        [D, E, M],
-        [E, { }, { }],
-        [E, M, E]
+        [PIN_BOX.hit, PIN_BOX.empty, PIN_BOX.missed],
+        [PIN_BOX.empty, { }, { }],
+        [PIN_BOX.empty, PIN_BOX.missed, PIN_BOX.empty]
     ];
 
-    expect(createWeightedBoard(RANDOM_SHOT, NO_SHOT, board, D, M, S)).toStrictEqual([
-        [0, RANDOM_SHOT, 0],
-        [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
-        [RANDOM_SHOT, 0, RANDOM_SHOT]
+    expect(createWeightedBoard(WEIGHTS, board, PIN_BOX)).toStrictEqual([
+        [WEIGHTS.DAMAGE, WEIGHTS.RANDOM, WEIGHTS.NONE],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.NONE, WEIGHTS.RANDOM]
     ])
 });
 
 test("Picks last square of a row of empty squares of a specified length (ideal case)", () => {
 
-    const BUSTING_SHOT = 50;
-    const RANDOM_SHOT = 25;
-    const NO_SHOT = 0;
     const weightedBoard = [
-        [RANDOM_SHOT, RANDOM_SHOT, NO_SHOT],
-        [RANDOM_SHOT, NO_SHOT, RANDOM_SHOT],
-        [NO_SHOT, RANDOM_SHOT ,RANDOM_SHOT],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.NONE],
+        [WEIGHTS.RANDOM, WEIGHTS.NONE, WEIGHTS.RANDOM],
+        [WEIGHTS.NONE, WEIGHTS.RANDOM ,WEIGHTS.RANDOM],
     ];
 
-    expect(bustRows(2, weightedBoard, RANDOM_SHOT, BUSTING_SHOT)).toStrictEqual([
-        [RANDOM_SHOT, BUSTING_SHOT, NO_SHOT],
-        [RANDOM_SHOT, NO_SHOT, RANDOM_SHOT],
-        [NO_SHOT, RANDOM_SHOT, BUSTING_SHOT]
+    expect(bustRows(2, weightedBoard, WEIGHTS)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.BUST, WEIGHTS.NONE],
+        [WEIGHTS.RANDOM, WEIGHTS.NONE, WEIGHTS.RANDOM],
+        [WEIGHTS.NONE, WEIGHTS.RANDOM, WEIGHTS.BUST]
     ]);
 });
 
 test("Picks last square of a column of empty squares of a specified length (ideal case)", () => {
 
-    const BUSTING_SHOT = 50;
-    const RANDOM_SHOT = 25;
-    const NO_SHOT = 0;
     const weightedBoard = [
-        [RANDOM_SHOT, RANDOM_SHOT, NO_SHOT],
-        [RANDOM_SHOT, NO_SHOT, RANDOM_SHOT],
-        [NO_SHOT, RANDOM_SHOT ,RANDOM_SHOT],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.NONE],
+        [WEIGHTS.RANDOM, WEIGHTS.NONE, WEIGHTS.RANDOM],
+        [WEIGHTS.NONE, WEIGHTS.RANDOM ,WEIGHTS.RANDOM],
     ];
 
-    expect(bustColumns(2, weightedBoard, RANDOM_SHOT, BUSTING_SHOT)).toStrictEqual([
-        [RANDOM_SHOT, RANDOM_SHOT, NO_SHOT],
-        [BUSTING_SHOT, NO_SHOT, RANDOM_SHOT],
-        [NO_SHOT, RANDOM_SHOT, BUSTING_SHOT]
+    expect(bustColumns(2, weightedBoard, WEIGHTS)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.NONE],
+        [WEIGHTS.BUST, WEIGHTS.NONE, WEIGHTS.RANDOM],
+        [WEIGHTS.NONE, WEIGHTS.RANDOM, WEIGHTS.BUST]
     ]);
 });
 
-test("Picks last square of a row of empty squares of a specified length (ignores already existing max weight)", () => {
+test("Picks last square of a row of empty squares of a specified length (ignores already existing busting shots)", () => {
 
-    const BUSTING_SHOT = 50;
-    const RANDOM_SHOT = 25;
-    const NO_SHOT = 0;
     const weightedBoard = [
-        [RANDOM_SHOT, RANDOM_SHOT, BUSTING_SHOT],
-        [RANDOM_SHOT, BUSTING_SHOT, RANDOM_SHOT],
-        [NO_SHOT, RANDOM_SHOT ,RANDOM_SHOT],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.BUST],
+        [WEIGHTS.RANDOM, WEIGHTS.BUST, WEIGHTS.RANDOM],
+        [WEIGHTS.NONE, WEIGHTS.RANDOM ,WEIGHTS.RANDOM],
     ];
 
-    expect(bustRows(2, weightedBoard, RANDOM_SHOT, BUSTING_SHOT)).toStrictEqual([
-        [RANDOM_SHOT, BUSTING_SHOT, BUSTING_SHOT],
-        [RANDOM_SHOT, BUSTING_SHOT, RANDOM_SHOT],
-        [NO_SHOT, RANDOM_SHOT, BUSTING_SHOT]
+    expect(bustRows(2, weightedBoard, WEIGHTS)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.BUST, WEIGHTS.BUST],
+        [WEIGHTS.RANDOM, WEIGHTS.BUST, WEIGHTS.RANDOM],
+        [WEIGHTS.NONE, WEIGHTS.RANDOM, WEIGHTS.BUST]
     ]);
 });
 
-test("Picks last square of a column of empty squares of a specified length (ignores already existing max weight)", () => {
+test("Picks last square of a column of empty squares of a specified length (ignores already existing busting shots)", () => {
 
-    const BUSTING_SHOT = 50;
-    const RANDOM_SHOT = 25;
-    const NO_SHOT = 0;
     const weightedBoard = [
-        [RANDOM_SHOT, RANDOM_SHOT, BUSTING_SHOT],
-        [RANDOM_SHOT, BUSTING_SHOT, RANDOM_SHOT],
-        [NO_SHOT, RANDOM_SHOT, RANDOM_SHOT],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.BUST],
+        [WEIGHTS.RANDOM, WEIGHTS.BUST, WEIGHTS.RANDOM],
+        [WEIGHTS.NONE, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ];
 
-    expect(bustColumns(2, weightedBoard, RANDOM_SHOT, BUSTING_SHOT)).toStrictEqual([
-        [RANDOM_SHOT, RANDOM_SHOT, BUSTING_SHOT],
-        [BUSTING_SHOT, BUSTING_SHOT, RANDOM_SHOT],
-        [NO_SHOT, RANDOM_SHOT, BUSTING_SHOT]
+    expect(bustColumns(2, weightedBoard, WEIGHTS)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.BUST],
+        [WEIGHTS.BUST, WEIGHTS.BUST, WEIGHTS.RANDOM],
+        [WEIGHTS.NONE, WEIGHTS.RANDOM, WEIGHTS.BUST]
     ]);
 });
