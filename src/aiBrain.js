@@ -2,7 +2,7 @@
 
 import { encodeCoord } from "./positionUtility";
 
-export {AiBrain, createWeightedBoard, bustRows, bustColumns};
+export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares};
 
 function AiBrain(rules)
 {
@@ -17,6 +17,24 @@ function AiBrain(rules)
     return {
 
     }
+}
+
+function getDamagedSquares(weightedBoard, weights)
+{
+    const damagedSquares = [];
+
+    for (let y = 0; y < weightedBoard.length; y++)
+    {
+        for (let x = 0; x < weightedBoard.length; x++)
+        {
+            if (weightedBoard[y][x] === weights.DAMAGE)
+            {
+                damagedSquares.push(encodeCoord([x, y]));
+            }
+        }
+    }
+
+    return damagedSquares;
 }
 
 function bustRows(blockLength, weightedBoard, weights)

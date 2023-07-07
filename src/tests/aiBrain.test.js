@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import {bustRows, bustColumns, createWeightedBoard } from '../aiBrain';
+import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares } from '../aiBrain';
 
 const WEIGHTS = {
     HUNT: 100,
@@ -104,4 +104,15 @@ test("Picks last square of a column of empty squares of a specified length (igno
         [WEIGHTS.BUST, WEIGHTS.BUST, WEIGHTS.RANDOM],
         [WEIGHTS.NONE, WEIGHTS.RANDOM, WEIGHTS.BUST]
     ]);
+});
+
+test("Damaged squares are retreived correctly (parsing starts with rows)", () => {
+
+    const weightedBoard = [
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.NONE],
+        [WEIGHTS.HUNT, WEIGHTS.BUST, WEIGHTS.NONE],
+        [WEIGHTS.DAMAGE, WEIGHTS.DAMAGE, WEIGHTS.NONE]
+    ];
+
+    expect(getDamagedSquares(weightedBoard, WEIGHTS)).toStrictEqual(["1,0", "0,2", "1,2"]);
 });
