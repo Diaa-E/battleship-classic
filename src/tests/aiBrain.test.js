@@ -62,7 +62,8 @@ test("AI Brain scrapes an empty array when there is no damage on the board", () 
 
 test("Weighted board assigns weight correctly to empty squares", () => {
 
-    const MAX = 100;
+    const RANDOM_SHOT = 25;
+    const NO_SHOT = 0;
     const E = "E";
     const D = "D";
     const M = "M";
@@ -72,16 +73,17 @@ test("Weighted board assigns weight correctly to empty squares", () => {
         [E, E, E]
     ];
 
-    expect(createWeightedBoard(MAX, board, D, M)).toStrictEqual([
-        [MAX/2, MAX/2, MAX/2],
-        [MAX/2, MAX/2, MAX/2],
-        [MAX/2, MAX/2, MAX/2]
+    expect(createWeightedBoard(RANDOM_SHOT, NO_SHOT, board, D, M)).toStrictEqual([
+        [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
+        [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
+        [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
     ])
 });
 
 test("Weighted board assigns weight correctly to mixed squares", () => {
 
-    const MAX = 100;
+    const RANDOM_SHOT = 25;
+    const NO_SHOT = 0;
     const E = "E";
     const D = "D";
     const M = "M";
@@ -91,73 +93,81 @@ test("Weighted board assigns weight correctly to mixed squares", () => {
         [E, M, E]
     ];
 
-    expect(createWeightedBoard(MAX, board, D, M)).toStrictEqual([
-        [0, MAX/2, 0],
-        [MAX/2, MAX/2, MAX/2],
-        [MAX/2, 0, MAX/2]
+    expect(createWeightedBoard(RANDOM_SHOT, NO_SHOT, board, D, M)).toStrictEqual([
+        [0, RANDOM_SHOT, 0],
+        [RANDOM_SHOT, RANDOM_SHOT, RANDOM_SHOT],
+        [RANDOM_SHOT, 0, RANDOM_SHOT]
     ])
 });
 
 test("Picks last square of a row of empty squares of a specified length (ideal case)", () => {
 
-    const MAX = 100;
+    const BUSTING_SHOT = 50;
+    const RANDOM_SHOT = 25;
+    const NO_SHOT = 0;
     const weightedBoard = [
-        [MAX/2, MAX/2, 0],
-        [MAX/2, 0, MAX/2],
-        [0, MAX/2 ,MAX/2],
+        [RANDOM_SHOT, RANDOM_SHOT, NO_SHOT],
+        [RANDOM_SHOT, NO_SHOT, RANDOM_SHOT],
+        [NO_SHOT, RANDOM_SHOT ,RANDOM_SHOT],
     ];
 
-    expect(bustRows(2, weightedBoard, MAX)).toStrictEqual([
-        [MAX/2, MAX, 0],
-        [MAX/2, 0, MAX/2],
-        [0, MAX/2, MAX]
+    expect(bustRows(2, weightedBoard, RANDOM_SHOT, BUSTING_SHOT)).toStrictEqual([
+        [RANDOM_SHOT, BUSTING_SHOT, NO_SHOT],
+        [RANDOM_SHOT, NO_SHOT, RANDOM_SHOT],
+        [NO_SHOT, RANDOM_SHOT, BUSTING_SHOT]
     ]);
 });
 
 test("Picks last square of a column of empty squares of a specified length (ideal case)", () => {
 
-    const MAX = 100;
+    const BUSTING_SHOT = 50;
+    const RANDOM_SHOT = 25;
+    const NO_SHOT = 0;
     const weightedBoard = [
-        [MAX/2, MAX/2, 0],
-        [MAX/2, 0, MAX/2],
-        [0, MAX/2 ,MAX/2],
+        [RANDOM_SHOT, RANDOM_SHOT, NO_SHOT],
+        [RANDOM_SHOT, NO_SHOT, RANDOM_SHOT],
+        [NO_SHOT, RANDOM_SHOT ,RANDOM_SHOT],
     ];
 
-    expect(bustColumns(2, weightedBoard, MAX)).toStrictEqual([
-        [MAX/2, MAX/2, 0],
-        [MAX, 0, MAX/2],
-        [0, MAX/2, MAX]
+    expect(bustColumns(2, weightedBoard, RANDOM_SHOT, BUSTING_SHOT)).toStrictEqual([
+        [RANDOM_SHOT, RANDOM_SHOT, NO_SHOT],
+        [BUSTING_SHOT, NO_SHOT, RANDOM_SHOT],
+        [NO_SHOT, RANDOM_SHOT, BUSTING_SHOT]
     ]);
 });
 
 test("Picks last square of a row of empty squares of a specified length (ignores already existing max weight)", () => {
 
-    const MAX = 100;
+    const BUSTING_SHOT = 50;
+    const RANDOM_SHOT = 25;
+    const NO_SHOT = 0;
     const weightedBoard = [
-        [MAX/2, MAX/2, MAX],
-        [MAX/2, MAX, MAX/2],
-        [0, MAX/2 ,MAX/2],
+        [RANDOM_SHOT, RANDOM_SHOT, BUSTING_SHOT],
+        [RANDOM_SHOT, BUSTING_SHOT, RANDOM_SHOT],
+        [NO_SHOT, RANDOM_SHOT ,RANDOM_SHOT],
     ];
 
-    expect(bustRows(2, weightedBoard, MAX)).toStrictEqual([
-        [MAX/2, MAX, MAX],
-        [MAX/2, MAX, MAX/2],
-        [0, MAX/2, MAX]
+    expect(bustRows(2, weightedBoard, RANDOM_SHOT, BUSTING_SHOT)).toStrictEqual([
+        [RANDOM_SHOT, BUSTING_SHOT, BUSTING_SHOT],
+        [RANDOM_SHOT, BUSTING_SHOT, RANDOM_SHOT],
+        [NO_SHOT, RANDOM_SHOT, BUSTING_SHOT]
     ]);
 });
 
 test("Picks last square of a column of empty squares of a specified length (ignores already existing max weight)", () => {
 
-    const MAX = 100;
+    const BUSTING_SHOT = 50;
+    const RANDOM_SHOT = 25;
+    const NO_SHOT = 0;
     const weightedBoard = [
-        [MAX/2, MAX/2, MAX],
-        [MAX/2, MAX, MAX/2],
-        [0, MAX/2 ,MAX/2],
+        [RANDOM_SHOT, RANDOM_SHOT, BUSTING_SHOT],
+        [RANDOM_SHOT, BUSTING_SHOT, RANDOM_SHOT],
+        [NO_SHOT, RANDOM_SHOT, RANDOM_SHOT],
     ];
 
-    expect(bustColumns(2, weightedBoard, MAX)).toStrictEqual([
-        [MAX/2, MAX/2, MAX],
-        [MAX, MAX, MAX/2],
-        [0, MAX/2, MAX]
+    expect(bustColumns(2, weightedBoard, RANDOM_SHOT, BUSTING_SHOT)).toStrictEqual([
+        [RANDOM_SHOT, RANDOM_SHOT, BUSTING_SHOT],
+        [BUSTING_SHOT, BUSTING_SHOT, RANDOM_SHOT],
+        [NO_SHOT, RANDOM_SHOT, BUSTING_SHOT]
     ]);
 });
