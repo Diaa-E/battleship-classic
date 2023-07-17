@@ -39,10 +39,16 @@ function getDamagedSquares(weightedBoard, weights)
 
 function huntShips(damagedSquares, weightedBoard, weights, longestShipAlive)
 {
-    
+    damagedSquares.forEach(square => {
+
+        weightedBoard = scanRow(square, weightedBoard, weights, longestShipAlive);
+        weightedBoard = scanColumn(square, weightedBoard, weights, longestShipAlive);
+
+        return weightedBoard;
+    });
 }
 
-function scanRow(square, longestShipAlive, weights, weightedBoard)
+function scanRow(square, weightedBoard,  weights, longestShipAlive)
 {
     const coord = decodeCoord(square);
 
