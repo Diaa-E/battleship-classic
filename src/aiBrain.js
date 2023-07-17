@@ -2,7 +2,7 @@
 
 import { decodeCoord, encodeCoord } from "./positionUtility";
 
-export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow};
+export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow, scanColumn};
 
 function AiBrain(rules)
 {
@@ -60,6 +60,31 @@ function scanRow(square, longestShipAlive, weights, weightedBoard)
         if (weightedBoard[coord[1]][coord[0] - offset] === weights.RANDOM)
         {
             weightedBoard[coord[1]][coord[0] - offset] = weights.HUNT;
+            break;
+        }
+    }
+
+    return weightedBoard;
+}
+
+function scanColumn(square, longestShipAlive, weights, weightedBoard)
+{
+    const coord = decodeCoord(square);
+
+    for (let offset = 1; offset < longestShipAlive; offset++)
+    {
+        if (weightedBoard[coord[1] + offset]?.[coord[0]] === weights.RANDOM)
+        {
+            weightedBoard[coord[1] + offset][coord[0]] = weights.HUNT;
+            break;
+        }
+    }
+
+    for (let offset = 1; offset < longestShipAlive; offset++)
+    {
+        if (weightedBoard[coord[1] - offset]?.[coord[0]] === weights.RANDOM)
+        {
+            weightedBoard[coord[1] - offset][coord[0]] = weights.HUNT;
             break;
         }
     }

@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow } from '../aiBrain';
+import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow, scanColumn} from '../aiBrain';
 
 const WEIGHTS = {
     HUNT: 100,
@@ -138,11 +138,45 @@ test("Marks right and left of multiple damaged squares", () => {
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
         [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ];
 
     expect(scanRow("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
         [WEIGHTS.HUNT, WEIGHTS.DAMAGE, WEIGHTS.DAMAGE, WEIGHTS.HUNT],
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+    ])
+});
+
+test("Marks top and bottom of a single damaged square", () => {
+
+    const weightedBoard = [
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+    ];
+
+    expect(scanColumn("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.HUNT, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.HUNT, WEIGHTS.RANDOM],
+    ])
+});
+
+test("Marks top and bottom of multiple damaged squares", () => {
+
+    const weightedBoard = [
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+    ];
+
+    expect(scanColumn("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.HUNT, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.HUNT, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ])
 });
