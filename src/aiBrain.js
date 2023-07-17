@@ -1,8 +1,8 @@
 "use strict";
 
-import { encodeCoord } from "./positionUtility";
+import { decodeCoord, encodeCoord } from "./positionUtility";
 
-export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares};
+export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, huntShips, connectDots};
 
 function AiBrain(rules)
 {
@@ -35,6 +35,86 @@ function getDamagedSquares(weightedBoard, weights)
     }
 
     return damagedSquares;
+}
+
+function huntShips(damagedSquares, weightedBoard, weights, longestShipAlive)
+{
+    
+}
+
+function connectDots(square, weightedBoard, weights, longestShipAlive)
+{
+    const coord = decodeCoord(square);
+
+    for (let offset = 1; offset < longestShipAlive; offset++)
+    {
+        if (weightedBoard[coord[1]][coord[0] + offset] === weights.NONE)
+        {
+            break;
+        }
+
+        for (let i = coord[0] + 1; i < offset; i++)
+        {
+            if (weightedBoard[coord[1]][coord[0] + offset] === weights.DAMAGE)
+            {
+                weightedBoard[coord[1]][coord[0] + i] = weights.HUNT;
+                return weightedBoard;
+            }
+        }
+    }
+
+    for (let offset = 1; offset < longestShipAlive; offset++)
+    {
+        if (weightedBoard[coord[1]][coord[0] - offset] === weights.NONE)
+        {
+            break;
+        }
+
+        for (let i = coord[0] + 1; i < offset; i++)
+        {
+            if (weightedBoard[coord[1]][coord[0] - offset] === weights.DAMAGE)
+            {
+                weightedBoard[coord[1]][coord[0] - i] = weights.HUNT;
+                return weightedBoard;
+            }
+        }
+    }
+
+    for (let offset = 1; offset < longestShipAlive; offset++)
+    {
+        if (weightedBoard[coord[1] + offset]?.[coord[0]] === weights.NONE)
+        {
+            break;
+        }
+
+        for (let i = [coord[1]] + 1; i < offset; i++)
+        {
+            if (weightedBoard[coord[1] + offset]?.[coord[0]] === weights.DAMAGE)
+            {
+                weightedBoard[coord[1] + i][coord[0]] = weights.HUNT;
+                return weightedBoard;
+            }
+        }
+    }
+
+    for (let offset = 1; offset < longestShipAlive; offset++)
+    {
+        if (weightedBoard[coord[1] - offset]?.[coord[0]] === weights.NONE)
+        {
+            break;
+        }
+
+        for (let i = coord[1] + 1; i < offset; i++)
+        {
+            if (weightedBoard[coord[1] - offset]?.[coord[0]] === weights.DAMAGE)
+            {
+                weightedBoard[coord[1] - i][coord[0]] = weights.HUNT;
+                return weightedBoard;
+            }
+        }
+    }
+
+    return false;
 }
 
 function bustRows(blockLength, weightedBoard, weights)
