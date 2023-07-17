@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, huntShips, connectDots } from '../aiBrain';
+import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow } from '../aiBrain';
 
 const WEIGHTS = {
     HUNT: 100,
@@ -117,54 +117,32 @@ test("Damaged squares are retreived correctly (parsing starts with rows)", () =>
     expect(getDamagedSquares(weightedBoard, WEIGHTS)).toStrictEqual(["1,0", "0,2", "1,2"]);
 });
 
-test("Connects dots if a damaged square is at a distance shorter than the longest ship alive (H)", () => {
+test("Marks right and left of a single damaged square", () => {
 
     const weightedBoard = [
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.DAMAGE,WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ];
-    expect(connectDots("0,1", weightedBoard, WEIGHTS, 3)).toStrictEqual([
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.DAMAGE,WEIGHTS.HUNT, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-    ]);
+
+    expect(scanRow("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.HUNT, WEIGHTS.DAMAGE, WEIGHTS.HUNT],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+    ])
 });
 
-test("Returns false when no damaged squares exist at a distance shorter than the longest ship alive (H)", () => {
+test("Marks right and left of multiple damaged squares", () => {
 
     const weightedBoard = [
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.DAMAGE,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ];
 
-    expect(connectDots("0,1", weightedBoard, WEIGHTS, 3)).toStrictEqual(false);
-});
-
-test("Ignores damaged squares at distance further than longest ship alive (H)", () => {
-
-    const weightedBoard = [
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.DAMAGE,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.DAMAGE],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-    ];
-
-    expect(connectDots("0,1", weightedBoard, WEIGHTS, 3)).toStrictEqual(false);
-});
-
-test("Ignores damaged squares at distance shorter than longest ship alive, but blocked by a used square", () => {
-
-    const weightedBoard = [
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.DAMAGE,WEIGHTS.NONE, WEIGHTS.RANDOM, WEIGHTS.DAMAGE],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-        [WEIGHTS.RANDOM,WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
-    ];
-
-    expect(connectDots("0,1", weightedBoard, WEIGHTS, 4)).toStrictEqual(false);
+    expect(scanRow("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.HUNT, WEIGHTS.DAMAGE, WEIGHTS.DAMAGE, WEIGHTS.HUNT],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+    ])
 });
