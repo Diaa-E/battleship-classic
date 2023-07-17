@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow, scanColumn} from '../aiBrain';
+import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow, scanColumn, getAllMoves} from '../aiBrain';
 
 const WEIGHTS = {
     HUNT: 100,
@@ -179,4 +179,19 @@ test("Marks top and bottom of multiple damaged squares", () => {
         [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
         [WEIGHTS.RANDOM, WEIGHTS.HUNT, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ])
+});
+
+test("Sorts weighted board into 3 sets of priority encoded coordinates", () => {
+
+    const weightedBoard = [
+        [WEIGHTS.RANDOM, WEIGHTS.BUST, WEIGHTS.HUNT],
+        [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.HUNT],
+        [WEIGHTS.BUST, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
+    ];
+
+    expect(getAllMoves(weightedBoard, WEIGHTS)).toStrictEqual({
+        high: ["2,0", "2,1"],
+        medium: ["0,2", "1,0"],
+        low: ["0,0", "0,1", "2,2"]
+    })
 });

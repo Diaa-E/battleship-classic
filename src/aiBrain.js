@@ -2,7 +2,7 @@
 
 import { decodeCoord, encodeCoord } from "./positionUtility";
 
-export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow, scanColumn};
+export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow, scanColumn, getAllMoves};
 
 function AiBrain(rules)
 {
@@ -179,4 +179,36 @@ function createWeightedBoard(weights, originalBoard, pinBox)
     }
 
     return weightedBoard;
+}
+
+function getAllMoves(weightedBoard, weights)
+{
+    const high = [];
+    const medium = [];
+    const low = [];
+
+    for (let x = 0; x < weightedBoard.length; x++)
+    {
+        for (let y = 0; y < weightedBoard.length; y++)
+        {
+            if (weightedBoard[y][x] === weights.HUNT)
+            {
+                high.push(encodeCoord([x, y]));
+            }
+            else if (weightedBoard[y][x] === weights.BUST)
+            {
+                medium.push(encodeCoord([x, y]));
+            }
+            else if (weightedBoard[y][x] === weights.RANDOM)
+            {
+                low.push(encodeCoord([x, y]));
+            }
+        }
+    }
+
+    return {
+        high,
+        medium,
+        low
+    }
 }
