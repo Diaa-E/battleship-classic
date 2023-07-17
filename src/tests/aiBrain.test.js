@@ -125,7 +125,7 @@ test("Marks right and left of a single damaged square", () => {
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ];
 
-    expect(scanRow("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
+    expect(scanRow("1,1", weightedBoard, WEIGHTS, 3)).toStrictEqual([
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
         [WEIGHTS.HUNT, WEIGHTS.DAMAGE, WEIGHTS.HUNT],
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
@@ -141,7 +141,7 @@ test("Marks right and left of multiple damaged squares", () => {
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ];
 
-    expect(scanRow("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
+    expect(scanRow("1,1", weightedBoard, WEIGHTS, 3)).toStrictEqual([
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
         [WEIGHTS.HUNT, WEIGHTS.DAMAGE, WEIGHTS.DAMAGE, WEIGHTS.HUNT],
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
@@ -157,7 +157,7 @@ test("Marks top and bottom of a single damaged square", () => {
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ];
 
-    expect(scanColumn("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
+    expect(scanColumn("1,1", weightedBoard, WEIGHTS, 3)).toStrictEqual([
         [WEIGHTS.RANDOM, WEIGHTS.HUNT, WEIGHTS.RANDOM],
         [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM],
         [WEIGHTS.RANDOM, WEIGHTS.HUNT, WEIGHTS.RANDOM],
@@ -173,7 +173,7 @@ test("Marks top and bottom of multiple damaged squares", () => {
         [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
     ];
 
-    expect(scanColumn("1,1", 3, WEIGHTS, weightedBoard)).toStrictEqual([
+    expect(scanColumn("1,1", weightedBoard, WEIGHTS, 3)).toStrictEqual([
         [WEIGHTS.RANDOM, WEIGHTS.HUNT, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
         [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
         [WEIGHTS.RANDOM, WEIGHTS.DAMAGE, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
