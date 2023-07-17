@@ -14,8 +14,48 @@ function AiBrain(rules)
         NONE: 0,
     };
 
-    return {
+    const possibleMoves = {
+        high: [],
+        medium: [],
+        low: [],
+    };
 
+    function _getRandomIndex(movesArray)
+    {
+        return Math.floor(Math.random() * movesArray.length);
+    }
+
+    function getAttackCoords(availableShots)
+    {
+        const attackCoords = [];
+
+        for (let i = 0; i < availableShots; i++)
+        {
+            if (possibleMoves.high.length > 0)
+            {
+                const index = _getRandomIndex(possibleMoves.high);
+                attackCoords.push(possibleMoves.high[index]);
+                possibleMoves.high.splice(index, 1);
+            }
+            else if (possibleMoves.medium.length > 0)
+            {
+                const index = _getRandomIndex(possibleMoves.medium);
+                attackCoords.push(possibleMoves.medium[index]);
+                possibleMoves.medium.splice(index, 1);
+            }
+            else
+            {
+                const index = _getRandomIndex(possibleMoves.low);
+                attackCoords.push(possibleMoves.low[index]);
+                possibleMoves.low.splice(index, 1);
+            }
+        }
+
+        return attackCoords;
+    }
+
+    return {
+        getAttackCoords,
     }
 }
 
