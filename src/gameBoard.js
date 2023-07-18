@@ -7,7 +7,7 @@ export { GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots};
 function GameBoard(shipList, boardSize)
 {
     let missedShots = []
-    let pinBox = pinBox("E", "M", "H", "S");
+    let pinBox = PinBox("E", "M", "H", "S");
     let board = EmptyBoard(boardSize, pinBox.empty);
     let fleet = createFleet(shipList);
 
