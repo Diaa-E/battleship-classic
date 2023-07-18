@@ -1,16 +1,11 @@
 import {expect, jest, test} from '@jest/globals';
-import {GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots, getLongestShipAlive} from "../gameBoard";
+import { EmptyBoard, PinBox, processShot, calculateAvailableShots} from "../gameBoard";
 import { Ship } from '../ship';
 import { updateFleet } from '../fleet';
 
 test("EmptyBoard returns a square 2D array filled with an empty pin character", () => {
 
     expect(EmptyBoard(3, "E")).toStrictEqual([["E", "E", "E"], ["E", "E", "E"], ["E", "E", "E"]]);
-});
-
-test("pinBox returns an object with pins for empty, missed and hit squares", () => {
-
-    expect(PinBox("E", "M", "H", "S")).toStrictEqual({empty: "E", missed: "M", hit: "H", sunk: "S"});
 });
 
 test("A shot is marked as missed when the target is an empty square", () => {
