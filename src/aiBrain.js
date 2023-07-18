@@ -4,7 +4,7 @@ import { decodeCoord, encodeCoord } from "./positionUtility";
 
 export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow, scanColumn, getAllMoves, getLongestShipAlive};
 
-function AiBrain(rules)
+function AiBrain()
 {
     const WEIGHTS = {
         HUNT: 100,
@@ -14,24 +14,31 @@ function AiBrain(rules)
         NONE: 0,
     };
 
-    const possibleMoves = {
-        high: [],
-        medium: [],
-        low: [],
-    };
-
     function _getRandomIndex(movesArray)
     {
         return Math.floor(Math.random() * movesArray.length);
     }
 
-    function analyzeBoard(gameBoard, pinBox, opponentFleet)
+    function getNextAttack(board, pinBox, opponentFleet, availableShots)
     {
-        const weightedBoard = createWeightedBoard(WEIGHTS, gameBoard.board, pinBox);
-        weightedBoard = bustRows()
+        const possibleMoves = _analyzeBoard(board, pinBox, opponentFleet);
+        
+        return _getAttackCoords(availableShots, possibleMoves);
     }
 
-    function getAttackCoords(availableShots)
+    function _analyzeBoard(board, pinBox, opponentFleet)
+    {
+        const longestShipAlive = getLongestShipAlive(opponentFleet);
+        const weightedBoard = createWeightedBoard(WEIGHTS, board, pinBox);
+        const damagedSquares = getDamagedSquares(weightedBoard, WEIGHTS);
+
+        weightedBoard = bustBlocks(longestShipAlive, weightedBoard, WEIGHTS);
+        weightedBoard = huntShips(damagedSquares, weightedBoard, WEIGHTS, longestShipAlive);
+
+        return getAllMoves(weightedBoard, WEIGHTS);
+    }
+
+    function _getAttackCoords(availableShots, possibleMoves = {high: [], medium: [], low: []})
     {
         const attackCoords = [];
 
@@ -61,7 +68,7 @@ function AiBrain(rules)
     }
 
     return {
-        getAttackCoords,
+        getNextAttack,
     }
 }
 
@@ -89,9 +96,9 @@ function huntShips(damagedSquares, weightedBoard, weights, longestShipAlive)
 
         weightedBoard = scanRow(square, weightedBoard, weights, longestShipAlive);
         weightedBoard = scanColumn(square, weightedBoard, weights, longestShipAlive);
-
-        return weightedBoard;
     });
+
+    return weightedBoard;
 }
 
 function scanRow(square, weightedBoard,  weights, longestShipAlive)
@@ -140,6 +147,14 @@ function scanColumn(square, weightedBoard,  weights, longestShipAlive)
             break;
         }
     }
+
+    return weightedBoard;
+}
+
+function bustBlocks(blockLength, weightedBoard, weights)
+{
+    weightedBoard = bustRows(blockLength, weightedBoard, weights);
+    weightedBoard = bustColumns(blockLength, weightedBoard, weights);
 
     return weightedBoard;
 }
