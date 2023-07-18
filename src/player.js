@@ -2,11 +2,14 @@
 
 import { GameBoard } from "./gameBoard";
 import { decodeCoord } from "./positionUtility";
+import { AiBrain } from "./aiBrain";
 
-export function Player(playerName, isAi, rules)
+export function Player(playerName, isAi, rules, pinBox)
 {
     const NAME = isAi? _generateAiName() : playerName;
-    const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE);
+    const aiBrain = isAi?  AiBrain() : undefined;
+
+    const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE, pinBox);
     let availableShots = rules.ADVANCED_MODE ? rules.SHIP_LIST.length : 1;
 
     function moveShip(encodedCoord, encodedNewIvot)
@@ -27,7 +30,12 @@ export function Player(playerName, isAi, rules)
 
     function updateAvailableShots()
     {
-        availableShots = gameBoard.calculateAvailableShots();
+        availableShots = gameBoard.getAvailableShots();
+    }
+
+    function getAvailableShots()
+    {
+        return rules.ADVANCED_MODE ? gameBoard.getAvailableShots() : 1;
     }
 
     function _generateAiName()
@@ -53,9 +61,11 @@ export function Player(playerName, isAi, rules)
         get board(){ return gameBoard.board },
         get fleet(){ return gameBoard.fleet },
         get pinBox(){ return gameBoard.pinBox },
+        get aiBrain(){ return aiBrain },
 
         receiveAttack,
         moveShip,
         rotateShip,
+        getAvailableShots
     };
 }
