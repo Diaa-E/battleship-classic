@@ -22,14 +22,14 @@ function AiBrain()
     function getNextAttack(board, pinBox, opponentFleet, availableShots)
     {
         const possibleMoves = _analyzeBoard(board, pinBox, opponentFleet);
-        
+
         return _getAttackCoords(availableShots, possibleMoves);
     }
 
     function _analyzeBoard(board, pinBox, opponentFleet)
     {
         const longestShipAlive = getLongestShipAlive(opponentFleet);
-        const weightedBoard = createWeightedBoard(WEIGHTS, board, pinBox);
+        let weightedBoard = createWeightedBoard(WEIGHTS, board, pinBox);
         const damagedSquares = getDamagedSquares(weightedBoard, WEIGHTS);
 
         weightedBoard = bustBlocks(longestShipAlive, weightedBoard, WEIGHTS);
