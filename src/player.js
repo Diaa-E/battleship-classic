@@ -10,7 +10,6 @@ export function Player(playerName, isAi, rules, pinBox)
     const aiBrain = isAi?  AiBrain() : undefined;
 
     const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE, pinBox);
-    let availableShots = rules.ADVANCED_MODE ? rules.SHIP_LIST.length : 1;
 
     function moveShip(encodedCoord, encodedNewIvot)
     {
@@ -24,13 +23,7 @@ export function Player(playerName, isAi, rules, pinBox)
 
     function receiveAttack(encodedCoord)
     {
-        gameBoard.receiveAttack(decodeCoord(encodedCoord));
-        if (rules.ADVANCED_MODE) updateAvailableShots();
-    }
-
-    function updateAvailableShots()
-    {
-        availableShots = gameBoard.getAvailableShots();
+        gameBoard.receiveAttack(decodeCoord(encodedCoord));;
     }
 
     function getAvailableShots()
