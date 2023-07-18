@@ -9,10 +9,10 @@ export function Game(playerName, gameModeNumber)
     const rules = pickGameMode(gameModeNumber);
     let aiTurn = pickRandomTurn === 0 ? false : true;
     let gameOver = false;
-    const players = [
-        Player(playerName, false, rules, pinBox),
-        Player("Player2", true, rules, pinBox)
-    ]
+    const players ={
+        human: Player(playerName, false, rules, pinBox),
+        ai: Player("Player2", true, rules, pinBox)
+    }
     
     function switchTurn()
     {
@@ -21,10 +21,10 @@ export function Game(playerName, gameModeNumber)
 
     function aiPlay()
     {
-        const attacks = players[1].aiBrain.getNextAttack(players[0].board, pinBox, players[0].fleet, players[1].getAvailableShots());
+        const attacks = players.ai.aiBrain.getNextAttack(players.human.board, pinBox, players.human.fleet, players.ai.getAvailableShots());
         
         attacks.forEach(attack => {
-            players[0].receiveAttack(attack);
+            players.human.receiveAttack(attack);
         });
         switchTurn();
     }
@@ -37,6 +37,8 @@ export function Game(playerName, gameModeNumber)
     return {
         get aiTurn(){ return aiTurn },
         get gameOver(){ return gameOver },
+        get aiBoard(){ return players.ai.board},
+        get humanBoard(){ return players.human.board },
 
         switchTurn,
         aiPlay,
