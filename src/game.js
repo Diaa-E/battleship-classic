@@ -47,6 +47,7 @@ export function Game(playerName, gameModeNumber)
         get aiBoard(){ return players.ai.board},
         get humanBoard(){ return players.human.board },
         get humanAvailableShots(){ return players.human.getAvailableShots() },
+        get pinBox(){ return pinBox },
 
         switchTurn,
         aiPlay,
