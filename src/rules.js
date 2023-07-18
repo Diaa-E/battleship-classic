@@ -5,6 +5,7 @@ export {RulesClassic, pickGameMode};
 export function RulesClassic(salvo = false)
 {
     const BOARD_SIZE = 10;
+    //ships must be sorted by length in descending order for analyzing longest ship alive later.
     const SHIP_LIST = [
         {
             shipName: "Carrier",

@@ -2,7 +2,7 @@
 
 import { createFleet, updateFleet } from "./fleet";
 import { decodeCoord, positionConflict, rotationConflict, updateMissed } from "./positionUtility";
-export { GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots};
+export { GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots, getLongestShipAlive};
 
 function GameBoard(shipList, boardSize)
 {
@@ -75,6 +75,11 @@ function GameBoard(shipList, boardSize)
         return calculateAvailableShots(fleet);
     }
 
+    function getBlockBustLength()
+    {
+        return getLongestShipAlive(fleet);
+    }
+
     return {
         get board(){ return board },
         get pinBox(){ return pinBox },
@@ -84,6 +89,7 @@ function GameBoard(shipList, boardSize)
         moveShip,
         rotateShip,
         getAvailableShots,
+        getBlockBustLength,
     }
 }
 
@@ -140,4 +146,12 @@ function calculateAvailableShots(fleet)
     }
 
     return shots;
+}
+
+function getLongestShipAlive(ships)
+{
+    for (const ship of ships)
+    {
+        if (!ship.isSunk) return ship.LENGTH;
+    }
 }

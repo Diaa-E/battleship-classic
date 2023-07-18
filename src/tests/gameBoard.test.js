@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import {GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots} from "../gameBoard";
+import {GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots, getLongestShipAlive} from "../gameBoard";
 import { Ship } from '../ship';
 import { updateFleet } from '../fleet';
 
@@ -42,4 +42,28 @@ test("Number of available shots gets reduced when a ship is sunk", () => {
     fleet[0].receiveDamage([0, 1]);
 
     expect(calculateAvailableShots(fleet)).toStrictEqual(1);
+});
+
+test("Returns the first ship in list that isn't sunk", () => {
+
+    const fleet = [
+        Ship("boat", 3, [0, 0], true),
+        Ship("boat2", 2, [1, 0], true)
+    ];
+
+    expect(getLongestShipAlive(fleet)).toStrictEqual(3);
+});
+
+test("Skips first ship if it's sunk", () => {
+
+    const fleet = [
+        Ship("boat", 3, [0, 0], true),
+        Ship("boat2", 2, [1, 0], true)
+    ];
+
+    fleet[0].receiveDamage([0, 0]);
+    fleet[0].receiveDamage([0, 1]);
+    fleet[0].receiveDamage([0, 2]);
+
+    expect(getLongestShipAlive(fleet)).toStrictEqual(2);
 });
