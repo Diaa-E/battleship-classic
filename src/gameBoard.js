@@ -2,12 +2,11 @@
 
 import { createFleet, updateFleet } from "./fleet";
 import { decodeCoord, positionConflict, rotationConflict, updateMissed } from "./positionUtility";
-export { GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots};
+export { GameBoard, EmptyBoard, processShot, calculateAvailableShots};
 
-function GameBoard(shipList, boardSize)
+function GameBoard(shipList, boardSize, pinBox)
 {
     let missedShots = []
-    let pinBox = PinBox("E", "M", "H", "S");
     let board = EmptyBoard(boardSize, pinBox.empty);
     let fleet = createFleet(shipList);
 
@@ -104,16 +103,6 @@ function EmptyBoard(boardSize, emptyPin)
     }
 
     return board;
-}
-
-function PinBox(emptyPin, missedPin, hitPin, sunkPin)
-{
-    return {
-        empty: emptyPin,
-        missed: missedPin,
-        hit: hitPin,
-        sunk: sunkPin,
-    };
 }
 
 function processShot(board, coord, missedShots)
