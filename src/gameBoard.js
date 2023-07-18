@@ -9,6 +9,7 @@ function GameBoard(shipList, boardSize, pinBox)
     let missedShots = []
     let board = EmptyBoard(boardSize, pinBox.empty);
     let fleet = createFleet(shipList);
+    _clearAndUpdate();
 
     function _clearBoard()
     {
