@@ -7,7 +7,7 @@ export function Game(playerName, gameModeNumber)
 {
     let pinBox = PinBox("E", "M", "H", "S");
     const rules = pickGameMode(gameModeNumber);
-    let aiTurn = pickRandomTurn === 0 ? false : true;
+    let aiTurn = pickRandomTurn() === 0 ? false : true;
     let gameOver = false;
     const players ={
         human: Player(playerName, false, rules, pinBox),
