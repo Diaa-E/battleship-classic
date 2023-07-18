@@ -11,6 +11,7 @@ function Ship(name, length, startPivot, startVertical)
     let isVertical = startVertical;
     let pivot = startPivot;
     let isSunk = false;
+    const SHOTS = length >= 5 ? 2 : 1;
 
     function receiveDamage(hit)
     {
@@ -33,6 +34,7 @@ function Ship(name, length, startPivot, startVertical)
         get NAME(){ return NAME },
         get LENGTH(){ return LENGTH },
         get isVertical(){ return isVertical },
+        get SHOTS(){ return SHOTS },
 
         changePosition: changePosition,
         receiveDamage: receiveDamage,

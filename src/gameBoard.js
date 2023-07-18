@@ -2,7 +2,7 @@
 
 import { createFleet, updateFleet } from "./fleet";
 import { decodeCoord, positionConflict, rotationConflict, updateMissed } from "./positionUtility";
-export { GameBoard, EmptyBoard, PinBox, processShot, countIntactShips};
+export { GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots};
 
 function GameBoard(shipList, boardSize)
 {
@@ -70,9 +70,9 @@ function GameBoard(shipList, boardSize)
         }
     }
 
-    function calculateAvailableShots()
+    function getAvailableShots()
     {
-        return countIntactShips(fleet);
+        return calculateAvailableShots(fleet);
     }
 
     return {
@@ -83,6 +83,7 @@ function GameBoard(shipList, boardSize)
         receiveAttack,
         moveShip,
         rotateShip,
+        getAvailableShots,
     }
 }
 
@@ -129,14 +130,14 @@ function processShot(board, coord, missedShots)
     return missedShots;
 }
 
-function countIntactShips(fleet)
+function calculateAvailableShots(fleet)
 {
     let shots = 0;
 
     for (const ship of fleet)
     {
-        if (!ship.isSunk) shots++;
+        if (!ship.isSunk) shots += ship.SHOTS;
     }
 
-    return shots
+    return shots;
 }

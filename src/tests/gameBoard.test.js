@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import {GameBoard, EmptyBoard, PinBox, processShot, countIntactShips} from "../gameBoard";
+import {GameBoard, EmptyBoard, PinBox, processShot, calculateAvailableShots} from "../gameBoard";
 import { Ship } from '../ship';
 import { updateFleet } from '../fleet';
 
@@ -36,10 +36,10 @@ test("Number of available shots gets reduced when a ship is sunk", () => {
         Ship("boat2", 3, [1, 0], true)
     ];
 
-    expect(countIntactShips(fleet)).toStrictEqual(2);
+    expect(calculateAvailableShots(fleet)).toStrictEqual(2);
 
     fleet[0].receiveDamage([0, 0]);
     fleet[0].receiveDamage([0, 1]);
 
-    expect(countIntactShips(fleet)).toStrictEqual(1);
+    expect(calculateAvailableShots(fleet)).toStrictEqual(1);
 });
