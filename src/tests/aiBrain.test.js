@@ -1,5 +1,6 @@
 import {expect, jest, test} from '@jest/globals';
-import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow, scanColumn, getAllMoves} from '../aiBrain';
+import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow, scanColumn, getAllMoves, getLongestShipAlive} from '../aiBrain';
+import { Ship } from '../ship';
 
 const WEIGHTS = {
     HUNT: 100,
@@ -194,4 +195,28 @@ test("Sorts weighted board into 3 sets of priority encoded coordinates", () => {
         medium: ["0,2", "1,0"],
         low: ["0,0", "0,1", "2,2"]
     })
+});
+
+test("Returns the first ship in list that isn't sunk", () => {
+
+    const fleet = [
+        Ship("boat", 3, [0, 0], true),
+        Ship("boat2", 2, [1, 0], true)
+    ];
+
+    expect(getLongestShipAlive(fleet)).toStrictEqual(3);
+});
+
+test("Skips first ship if it's sunk", () => {
+
+    const fleet = [
+        Ship("boat", 3, [0, 0], true),
+        Ship("boat2", 2, [1, 0], true)
+    ];
+
+    fleet[0].receiveDamage([0, 0]);
+    fleet[0].receiveDamage([0, 1]);
+    fleet[0].receiveDamage([0, 2]);
+
+    expect(getLongestShipAlive(fleet)).toStrictEqual(2);
 });

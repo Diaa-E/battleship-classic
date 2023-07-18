@@ -2,7 +2,7 @@
 
 import { decodeCoord, encodeCoord } from "./positionUtility";
 
-export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow, scanColumn, getAllMoves};
+export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow, scanColumn, getAllMoves, getLongestShipAlive};
 
 function AiBrain(rules)
 {
@@ -23,6 +23,12 @@ function AiBrain(rules)
     function _getRandomIndex(movesArray)
     {
         return Math.floor(Math.random() * movesArray.length);
+    }
+
+    function analyzeBoard(gameBoard, pinBox, opponentFleet)
+    {
+        const weightedBoard = createWeightedBoard(WEIGHTS, gameBoard.board, pinBox);
+        weightedBoard = bustRows()
     }
 
     function getAttackCoords(availableShots)
@@ -250,5 +256,13 @@ function getAllMoves(weightedBoard, weights)
         high,
         medium,
         low
+    }
+}
+
+function getLongestShipAlive(ships)
+{
+    for (const ship of ships)
+    {
+        if (!ship.isSunk) return ship.LENGTH;
     }
 }
