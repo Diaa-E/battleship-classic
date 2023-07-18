@@ -1,17 +1,51 @@
 "use strict";
 
-export { Screen };
+export { ConsoleScreen };
 
-function Screen()
+function ConsoleScreen(pinBox)
 {
     function refresh(playerBoard, AiBoard)
     {
-        printToConsole(playerBoard, AiBoard);
+        console.log("Your Board");
+        console.table(_processBoard(playerBoard, pinBox));
+    
+        console.log("AI's board");
+        console.table(_processBoard(AiBoard, pinBox));
     }
 
-    function getUserInput(promptMessage)
+    function _processBoard(board, pinBox)
     {
-        return getInput(promptMessage);
+        let newBoard = Array.from(board);
+
+        for (let x = 0; x < board.length; x++)
+        {
+            for (let y = 0; y < board.length; y++)
+            {
+                if (newBoard[y][x] === pinBox.empty)
+                {
+                    newBoard[y][x] = " ";
+                }
+                else if (newBoard[y][x] === pinBox.hit)
+                {
+                    newBoard[y][x] = "X";
+                }
+                else if (newBoard[y][x] === pinBox.sunk)
+                {
+                    newBoard[y][x] = "/";
+                }
+                else if (newBoard[y][x] === pinBox.missed)
+                {
+                    newBoard[y][x] = "O";
+                }
+            }
+        }
+
+        return newBoard;
+    }
+    
+    function getUserInput(promptMEssage)
+    {
+        return prompt(promptMEssage);
     }
 
     return {
@@ -19,18 +53,4 @@ function Screen()
         refresh,
         getUserInput
     }
-}
-
-function printToConsole(playerBoard, AiBoard)
-{
-    console.log("Your Board");
-    console.table(playerBoard);
-
-    console.log("AI's board");
-    console.table(AiBoard);
-}
-
-function getInput(promptMEssage)
-{
-    return prompt(promptMEssage);
 }
