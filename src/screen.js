@@ -15,7 +15,7 @@ function ConsoleScreen(pinBox)
 
     function _processBoard(board, pinBox)
     {
-        let newBoard = Array.from(board);
+        let newBoard = JSON.parse(JSON.stringify(board));
 
         for (let x = 0; x < board.length; x++)
         {

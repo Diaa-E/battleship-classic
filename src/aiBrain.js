@@ -2,7 +2,7 @@
 
 import { decodeCoord, encodeCoord } from "./positionUtility";
 
-export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow, scanColumn, getAllMoves, getLongestShipAlive};
+export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, scanRow, scanColumn, getAllMoves, getLongestShipAlive, bustBlocks};
 
 function AiBrain()
 {
@@ -32,8 +32,8 @@ function AiBrain()
         let weightedBoard = createWeightedBoard(WEIGHTS, board, pinBox);
         const damagedSquares = getDamagedSquares(weightedBoard, WEIGHTS);
 
-        weightedBoard = bustBlocks(longestShipAlive, weightedBoard, WEIGHTS);
-        weightedBoard = huntShips(damagedSquares, weightedBoard, WEIGHTS, longestShipAlive);
+        weightedBoard = Array.from(bustBlocks(longestShipAlive, weightedBoard, WEIGHTS));
+        weightedBoard = Array.from(huntShips(damagedSquares, weightedBoard, WEIGHTS, longestShipAlive));
 
         return getAllMoves(weightedBoard, WEIGHTS);
     }
@@ -94,8 +94,8 @@ function huntShips(damagedSquares, weightedBoard, weights, longestShipAlive)
 {
     damagedSquares.forEach(square => {
 
-        weightedBoard = scanRow(square, weightedBoard, weights, longestShipAlive);
-        weightedBoard = scanColumn(square, weightedBoard, weights, longestShipAlive);
+        weightedBoard = Array.from(scanRow(square, weightedBoard, weights, longestShipAlive));
+        weightedBoard = Array.from(scanColumn(square, weightedBoard, weights, longestShipAlive));
     });
 
     return weightedBoard;
@@ -153,8 +153,8 @@ function scanColumn(square, weightedBoard,  weights, longestShipAlive)
 
 function bustBlocks(blockLength, weightedBoard, weights)
 {
-    weightedBoard = bustRows(blockLength, weightedBoard, weights);
-    weightedBoard = bustColumns(blockLength, weightedBoard, weights);
+    weightedBoard = Array.from(bustRows(blockLength, weightedBoard, weights));
+    weightedBoard = Array.from(bustColumns(blockLength, weightedBoard, weights));
 
     return weightedBoard;
 }
@@ -268,9 +268,9 @@ function getAllMoves(weightedBoard, weights)
     }
 
     return {
-        high,
-        medium,
-        low
+        high: high,
+        medium: medium,
+        low: low
     }
 }
 
