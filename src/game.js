@@ -22,7 +22,7 @@ export function Game(playerName, gameModeNumber)
     function aiPlay()
     {
         const attacks = players.ai.aiBrain.getNextAttack(players.human.board, pinBox, players.human.fleet, players.ai.getAvailableShots());
-        
+
         attacks.forEach(attack => {
 
             players.human.receiveAttack(attack);

@@ -28,7 +28,7 @@ function AiBrain()
 
     function _analyzeBoard(board, pinBox, opponentFleet)
     {
-        const longestShipAlive = getLongestShipAlive(opponentFleet);
+        const longestShipAlive = getLongestShipAlive(opponentFleet.ships);
         let weightedBoard = createWeightedBoard(WEIGHTS, board, pinBox);
         const damagedSquares = getDamagedSquares(weightedBoard, WEIGHTS);
 

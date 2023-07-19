@@ -13,7 +13,21 @@ function createFleet(shipList)
         ships.push(Ship(shipList[i].shipName, shipList[i].shipLength, [i, 0], true));
     }
 
-    return ships;
+    function isDestroyed()
+    {
+        return checkFleetDestroyed(ships);
+    }
+
+    function update(board, damagedPin, sunkPin)
+    {
+        return updateFleet(ships, board, damagedPin, sunkPin);
+    }
+
+    return {
+        ships: ships,
+        isDestroyed,
+        update,
+    }
 }
 
 function updateFleet(ships, board, damagedPin, sunkPin)

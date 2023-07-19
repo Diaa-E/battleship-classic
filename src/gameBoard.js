@@ -1,6 +1,6 @@
 "use strict";
 
-import { createFleet, updateFleet } from "./fleet";
+import { checkFleetDestroyed, createFleet, updateFleet } from "./fleet";
 import { decodeCoord, positionConflict, rotationConflict, updateMissed } from "./positionUtility";
 export { GameBoard, EmptyBoard, processShot, calculateAvailableShots};
 
@@ -18,7 +18,7 @@ function GameBoard(shipList, boardSize, pinBox)
 
     function _placeShipPins()
     {
-        board = Array.from(updateFleet(fleet, board, pinBox.hit, pinBox.sunk));
+        board = Array.from(fleet.update(board, pinBox.hit, pinBox.sunk));
     }
 
     function _placeMissedPins()
@@ -75,6 +75,11 @@ function GameBoard(shipList, boardSize, pinBox)
         return calculateAvailableShots(fleet);
     }
 
+    function fleetDestroyed()
+    {
+        return fleet.isDestroyed();
+    }
+
     return {
         get board(){ return board },
         get pinBox(){ return pinBox },
@@ -84,6 +89,7 @@ function GameBoard(shipList, boardSize, pinBox)
         moveShip,
         rotateShip,
         getAvailableShots,
+        fleetDestroyed,
     }
 }
 
@@ -124,7 +130,7 @@ function calculateAvailableShots(fleet)
 {
     let shots = 0;
 
-    for (const ship of fleet)
+    for (const ship of fleet.ships)
     {
         if (!ship.isSunk) shots += ship.SHOTS;
     }
