@@ -19,13 +19,13 @@ test("Fleet is initialized vertically in a row starting at (0, 0)", () => {
         }
     ];
 
-    expect(createFleet(shipList).map(ship => ship.position.map(position => position.coord))).toStrictEqual([
+    expect(createFleet(shipList).ships.map(ship => ship.position.map(position => position.coord))).toStrictEqual([
         ["0,0", "0,1", "0,2", "0,3", "0,4"],
         ["1,0", "1,1", "1,2"],
         ["2,0", "2,1"],
     ]);
 
-    expect(createFleet(shipList).map(ship => ship.NAME)).toStrictEqual(["carrier", "submarine", "destroyer"]);
+    expect(createFleet(shipList).ships.map(ship => ship.NAME)).toStrictEqual(["carrier", "submarine", "destroyer"]);
 });
 
 test("Fleet is placed correctly on game board", () => {
