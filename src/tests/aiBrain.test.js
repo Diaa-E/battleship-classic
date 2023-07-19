@@ -1,5 +1,5 @@
 import {expect, jest, test} from '@jest/globals';
-import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow, scanColumn, getAllMoves, getLongestShipAlive} from '../aiBrain';
+import {bustRows, bustColumns, createWeightedBoard, getDamagedSquares, scanRow, scanColumn, getAllMoves, getLongestShipAlive, bustBlocks} from '../aiBrain';
 import { Ship } from '../ship';
 
 const WEIGHTS = {
@@ -105,6 +105,36 @@ test("Picks last square of a column of empty squares of a specified length (igno
         [WEIGHTS.BUST, WEIGHTS.BUST, WEIGHTS.RANDOM],
         [WEIGHTS.NONE, WEIGHTS.RANDOM, WEIGHTS.BUST]
     ]);
+});
+
+test("Busts blocks correctly, starting with rows", () => {
+
+    const weightedBoard = [
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+    ];
+
+    expect(bustBlocks(3, weightedBoard, WEIGHTS)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.BUST],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.BUST],
+        [WEIGHTS.BUST, WEIGHTS.BUST, WEIGHTS.BUST],
+    ])
+});
+
+test("Busts blocks on a messy board, starting with rows", () => {
+
+    const weightedBoard = [
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.RANDOM],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.DAMAGE],
+        [WEIGHTS.NONE, WEIGHTS.NONE, WEIGHTS.RANDOM],
+    ];
+
+    expect(bustBlocks(3, weightedBoard, WEIGHTS)).toStrictEqual([
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.BUST],
+        [WEIGHTS.RANDOM, WEIGHTS.RANDOM, WEIGHTS.DAMAGE],
+        [WEIGHTS.NONE, WEIGHTS.NONE, WEIGHTS.RANDOM],
+    ])
 });
 
 test("Damaged squares are retreived correctly (parsing starts with rows)", () => {
