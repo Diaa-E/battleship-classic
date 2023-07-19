@@ -4,38 +4,48 @@ export { ConsoleScreen };
 
 function ConsoleScreen(pinBox)
 {
-    function refresh(playerBoard, AiBoard)
+    function refresh(playerBoard, AiBoard, aiTurn)
     {
-        console.log("Your Board");
+        console.group(aiTurn? "Human's turn" : "AI's Turn");
+        console.group("Your Board");
         console.table(_processBoard(playerBoard, pinBox));
+        console.groupEnd();
     
-        console.log("AI's board");
+        console.group("AI's Board");
         console.table(_processBoard(AiBoard, pinBox));
+        console.groupEnd()
+        console.groupEnd();
     }
 
     function _processBoard(board, pinBox)
     {
-        let newBoard = JSON.parse(JSON.stringify(board));
+        const newBoard = [];
 
-        for (let x = 0; x < board.length; x++)
+        for (let y = 0; y < board.length; y++)
         {
-            for (let y = 0; y < board.length; y++)
+            newBoard.push([]);
+
+            for (let x = 0; x < board.length; x++)
             {
-                if (newBoard[y][x] === pinBox.empty)
+                if (board[y][x] === pinBox.empty)
                 {
-                    newBoard[y][x] = " ";
+                    newBoard[y].push(" ");
                 }
-                else if (newBoard[y][x] === pinBox.hit)
+                else if (board[y][x] === pinBox.hit)
                 {
-                    newBoard[y][x] = "X";
+                    newBoard[y].push("X");
                 }
-                else if (newBoard[y][x] === pinBox.sunk)
+                else if (board[y][x] === pinBox.sunk)
                 {
-                    newBoard[y][x] = "/";
+                    newBoard[y].push("/");
                 }
-                else if (newBoard[y][x] === pinBox.missed)
+                else if (board[y][x] === pinBox.missed)
                 {
-                    newBoard[y][x] = "O";
+                    newBoard[y].push("O");
+                }
+                else if (typeof board[y][x] === "object")
+                {
+                    newBoard[y].push("@");
                 }
             }
         }
