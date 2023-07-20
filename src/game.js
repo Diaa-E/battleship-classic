@@ -9,10 +9,11 @@ export function Game(playerName, gameModeNumber)
     const rules = pickGameMode(gameModeNumber);
     let aiTurn = pickRandomTurn() === 0 ? false : true;
     let gameOver = false;
+    let winner = undefined;
     const players ={
         human: Player(playerName, false, rules, pinBox),
         ai: Player("Player2", true, rules, pinBox)
-    }
+    };
     
     function switchTurn()
     {
@@ -29,7 +30,12 @@ export function Game(playerName, gameModeNumber)
         });
 
         switchTurn();
-        gameOver = players.human.fleetDestroyed();
+
+        if (players.human.fleetDestroyed())
+        {
+            gameOver = true;
+            winner = players.ai.NAME;
+        }
     }
 
     function humanPlay(attacks)
@@ -40,7 +46,12 @@ export function Game(playerName, gameModeNumber)
         });
 
         switchTurn();
-        gameOver = players.ai.fleetDestroyed();
+
+        if (players.ai.fleetDestroyed())
+        {
+            gameOver = true;
+            winner = players.human.NAME;
+        }
     }
 
     return {
@@ -50,6 +61,7 @@ export function Game(playerName, gameModeNumber)
         get humanBoard(){ return players.human.board },
         get humanAvailableShots(){ return players.human.getAvailableShots() },
         get pinBox(){ return pinBox },
+        get winner(){ return winner },
 
         switchTurn,
         aiPlay,
