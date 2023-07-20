@@ -46,7 +46,6 @@ function Player(playerName, rules, pinBox)
         get NAME(){ return NAME },
         get board(){ return gameBoard.board },
         get fleet(){ return gameBoard.fleet },
-        get pinBox(){ return gameBoard.pinBox },
         get totalShots(){ return totalShots },
 
         receiveAttack,
@@ -102,7 +101,6 @@ function Ai(rules, pinBox)
         get NAME(){ return NAME },
         get board(){ return gameBoard.board },
         get fleet(){ return gameBoard.fleet },
-        get pinBox(){ return gameBoard.pinBox },
         get aiBrain(){ return aiBrain },
         get totalShots(){ return totalShots },
 
