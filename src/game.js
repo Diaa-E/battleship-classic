@@ -23,6 +23,7 @@ export function Game(playerName, gameModeNumber)
     function aiPlay()
     {
         const attacks = players.ai.aiBrain.getNextAttack(players.human.board, pinBox, players.human.fleet, players.ai.getAvailableShots());
+        players.ai.addShotsFired(attacks.length);
 
         attacks.forEach(attack => {
 
@@ -40,6 +41,8 @@ export function Game(playerName, gameModeNumber)
 
     function humanPlay(attacks)
     {
+        players.human.addShotsFired(attacks.length);
+
         attacks.forEach(attack => {
 
             players.ai.receiveAttack(attack);
@@ -54,6 +57,14 @@ export function Game(playerName, gameModeNumber)
         }
     }
 
+    function getTotalShots()
+    {
+        return {
+            ai: players.ai.totalShots,
+            human: players.human.totalShots,
+        }
+    }
+
     return {
         get aiTurn(){ return aiTurn },
         get gameOver(){ return gameOver },
@@ -62,10 +73,13 @@ export function Game(playerName, gameModeNumber)
         get humanAvailableShots(){ return players.human.getAvailableShots() },
         get pinBox(){ return pinBox },
         get winner(){ return winner },
+        get aiName(){ return players.ai.NAME },
+        get humanName(){ return players.human.NAME },
 
         switchTurn,
         aiPlay,
         humanPlay,
+        getTotalShots,
     };
 }
 

@@ -8,6 +8,7 @@ export function Player(playerName, isAi, rules, pinBox)
 {
     const NAME = isAi? _generateAiName() : playerName;
     const aiBrain = isAi?  AiBrain() : undefined;
+    let totalShots = 0;
 
     const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE, pinBox);
 
@@ -36,6 +37,11 @@ export function Player(playerName, isAi, rules, pinBox)
         return gameBoard.fleetDestroyed();
     }
 
+    function addShotsFired(shots)
+    {
+        totalShots += shots;
+    }
+
     function _generateAiName()
     {
         const names = [
@@ -60,11 +66,13 @@ export function Player(playerName, isAi, rules, pinBox)
         get fleet(){ return gameBoard.fleet },
         get pinBox(){ return gameBoard.pinBox },
         get aiBrain(){ return aiBrain },
+        get totalShots(){ return totalShots },
 
         receiveAttack,
         moveShip,
         rotateShip,
         getAvailableShots,
-        fleetDestroyed
+        fleetDestroyed,
+        addShotsFired,
     };
 }
