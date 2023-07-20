@@ -25,6 +25,7 @@ function Ship(name, length, startPivot, startVertical)
         if (rotate) isVertical = !isVertical;
 
         position = Array.from(generatePosition(newPivot, isVertical, LENGTH));
+        pivot = newPivot;
     }
 
     return {
