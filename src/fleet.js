@@ -24,7 +24,8 @@ function createFleet(shipList)
     }
 
     return {
-        ships: ships,
+        get ships(){ return ships},
+        
         isDestroyed,
         update,
     }
