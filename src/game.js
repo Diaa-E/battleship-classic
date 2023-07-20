@@ -29,6 +29,7 @@ export function Game(playerName, gameModeNumber)
         });
 
         switchTurn();
+        gameOver = players.human.fleetDestroyed();
     }
 
     function humanPlay(attacks)
@@ -39,6 +40,7 @@ export function Game(playerName, gameModeNumber)
         });
 
         switchTurn();
+        gameOver = players.ai.fleetDestroyed();
     }
 
     return {

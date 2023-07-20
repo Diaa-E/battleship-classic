@@ -31,6 +31,11 @@ export function Player(playerName, isAi, rules, pinBox)
         return rules.ADVANCED_MODE ? gameBoard.getAvailableShots() : 1;
     }
 
+    function fleetDestroyed()
+    {
+        return gameBoard.fleetDestroyed();
+    }
+
     function _generateAiName()
     {
         const names = [
@@ -59,6 +64,7 @@ export function Player(playerName, isAi, rules, pinBox)
         receiveAttack,
         moveShip,
         rotateShip,
-        getAvailableShots
+        getAvailableShots,
+        fleetDestroyed
     };
 }
