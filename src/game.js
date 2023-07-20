@@ -1,6 +1,6 @@
 "use strict";
 
-import { Player } from "./player";
+import { Player, Ai } from "./player";
 import { pickGameMode } from "./rules";
 
 export function Game(playerName, gameModeNumber)
@@ -11,8 +11,8 @@ export function Game(playerName, gameModeNumber)
     let gameOver = false;
     let winner = undefined;
     const players ={
-        human: Player(playerName, false, rules, pinBox),
-        ai: Player("Player2", true, rules, pinBox)
+        human: Player(playerName, rules, pinBox),
+        ai: Ai(rules, pinBox)
     };
     
     function switchTurn()

@@ -4,13 +4,13 @@ import { GameBoard } from "./gameBoard";
 import { decodeCoord } from "./positionUtility";
 import { AiBrain } from "./aiBrain";
 
-export function Player(playerName, isAi, rules, pinBox)
-{
-    const NAME = isAi? _generateAiName() : playerName;
-    const aiBrain = isAi?  AiBrain() : undefined;
-    let totalShots = 0;
+export {Player, Ai};
 
+function Player(playerName, rules, pinBox)
+{
+    const NAME = playerName;
     const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE, pinBox);
+    let totalShots = 0;
 
     function moveShip(encodedCoord, encodedNewIvot)
     {
@@ -42,6 +42,29 @@ export function Player(playerName, isAi, rules, pinBox)
         totalShots += shots;
     }
 
+    return {
+        get NAME(){ return NAME },
+        get board(){ return gameBoard.board },
+        get fleet(){ return gameBoard.fleet },
+        get pinBox(){ return gameBoard.pinBox },
+        get totalShots(){ return totalShots },
+
+        receiveAttack,
+        moveShip,
+        rotateShip,
+        getAvailableShots,
+        fleetDestroyed,
+        addShotsFired,
+    };
+}
+
+function Ai(rules, pinBox)
+{
+    const NAME = _generateAiName();
+    const aiBrain = AiBrain();
+    const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE, pinBox);
+    let totalShots = 0;
+
     function _generateAiName()
     {
         const names = [
@@ -60,6 +83,21 @@ export function Player(playerName, isAi, rules, pinBox)
         return names[Math.round(Math.random() * names.length)];
     }
 
+    function getAvailableShots()
+    {
+        return rules.ADVANCED_MODE ? gameBoard.getAvailableShots() : 1;
+    }
+
+    function fleetDestroyed()
+    {
+        return gameBoard.fleetDestroyed();
+    }
+
+    function addShotsFired(shots)
+    {
+        totalShots += shots;
+    }
+
     return {
         get NAME(){ return NAME },
         get board(){ return gameBoard.board },
@@ -68,11 +106,8 @@ export function Player(playerName, isAi, rules, pinBox)
         get aiBrain(){ return aiBrain },
         get totalShots(){ return totalShots },
 
-        receiveAttack,
-        moveShip,
-        rotateShip,
         getAvailableShots,
         fleetDestroyed,
         addShotsFired,
-    };
+    }
 }
