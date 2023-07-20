@@ -55,7 +55,10 @@ function GameBoard(shipList, boardSize, pinBox)
         {
             ship.changePosition(decodedNewPivot, false);
             _clearAndUpdate();
+            return true;
         }
+
+        return false;
     }
 
     function rotateShip(encodedCoord)
@@ -67,7 +70,10 @@ function GameBoard(shipList, boardSize, pinBox)
         {
             ship.changePosition(ship.pivot, true);
             _clearAndUpdate();
+            return true;
         }
+
+        return false;
     }
 
     function getAvailableShots()
