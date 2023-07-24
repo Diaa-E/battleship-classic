@@ -14,11 +14,8 @@ function buildUi(boardSize, aiName, playerName)
     }
 
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
-    const playerBoard = PlayerBoardContainer(cssClasses.playerContainer);
-    const aiBoard = AiBoardContainer(cssClasses.aiContainer);
-
-    playerBoard.element.append(NameTag(cssClasses.nameTag, playerName).element);
-    aiBoard.element.append(NameTag(cssClasses.nameTag, aiName).element);
+    const playerBoard = PlayerBoardContainer(cssClasses.playerContainer, cssClasses.nameTag, playerName);
+    const aiBoard = AiBoardContainer(cssClasses.aiContainer, cssClasses.nameTag, aiName);
 
     document.body.append(
         logo.element,
@@ -38,20 +35,24 @@ function AppLogo(logoPath, logoClasses)
     };
 }
 
-function PlayerBoardContainer(playerContainerClasses)
+function PlayerBoardContainer(playerContainerClasses, nameTagClasses, playerName)
 {
     const divContainer = document.createElement("div");
     addClasses(divContainer, playerContainerClasses);
+
+    divContainer.append(NameTag(nameTagClasses, playerName).element);
 
     return {
         element: divContainer
     }
 }
 
-function AiBoardContainer(aiContainerClasses)
+function AiBoardContainer(aiContainerClasses, nameTagClasses, aiName)
 {
     const divContainer = document.createElement("div");
     addClasses(divContainer, aiContainerClasses);
+
+    divContainer.append(NameTag(nameTagClasses, aiName).element);
 
     return {
         element: divContainer
