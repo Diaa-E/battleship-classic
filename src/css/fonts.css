@@ -1,0 +1,10 @@
+@font-face {
+    font-family: "Janitor";
+    src: url("../../assets/fonts/Janitor.ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+
+:root{
+    --font-hand: "Janitor", sans-serif;
+}
