@@ -1,3 +1,28 @@
 @import url("./reset.css");
 @import url("./fonts.css");
 @import url("./colors.css");
+
+body{
+    background-color: var(--c-background);
+    display: grid;
+    width: 100vw;
+    grid-template-rows: repeat(4, min-content);
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+        "logo"
+        "player"
+        "controls"
+        "ai";
+}
+
+@media (min-width: 700px)
+{
+    body
+    {
+        grid-template-rows: 1fr 2fr;
+        grid-template-columns: 3fr 2fr 3fr;
+        grid-template-areas: 
+        "logo" "logo" "logo"
+        "player" "controls" "ai";
+    }
+}
