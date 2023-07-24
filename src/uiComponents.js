@@ -1,7 +1,6 @@
 "use strict";
 
 import battleshipLogo from "../assets/images/logo.svg";
-import playerSticker from "..//assets/images/card_player.svg";
 
 export { buildUi };
 
