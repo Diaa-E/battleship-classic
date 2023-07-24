@@ -36,6 +36,21 @@
     color: var(--c-black);
 }
 
+.board-container{
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: stretch;
+    place-content: stretch;
+    grid-area: board;
+    gap: 1%;
+}
+
+.square{
+    background-image: url("../../assets/images/square.svg");
+    background-size: cover;
+}
+
 @media (min-width: 700px) and (orientation: landscape){
     .sticker{
         --width: 30vw;

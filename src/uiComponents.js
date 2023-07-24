@@ -11,11 +11,26 @@ function buildUi(boardSize, aiName, playerName)
         playerContainer: ["sticker", "player-sticker"],
         aiContainer: ["sticker", "ai-sticker"],
         nameTag: ["name-tag"],
+        board: ["board-container"],
+        boardSquare: ["square"],
     }
 
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
-    const playerBoard = PlayerBoardContainer(cssClasses.playerContainer, cssClasses.nameTag, playerName);
-    const aiBoard = AiBoardContainer(cssClasses.aiContainer, cssClasses.nameTag, aiName);
+    const playerBoard = PlayerBoardContainer(
+        cssClasses.playerContainer,
+        cssClasses.nameTag, playerName,
+        cssClasses.boardSquare,
+        cssClasses.board,
+        boardSize
+    );
+    const aiBoard = AiBoardContainer(
+        cssClasses.aiContainer,
+        cssClasses.nameTag,
+        aiName,
+        cssClasses.boardSquare,
+        cssClasses.board,
+        boardSize
+    );
 
     document.body.append(
         logo.element,
@@ -35,24 +50,30 @@ function AppLogo(logoPath, logoClasses)
     };
 }
 
-function PlayerBoardContainer(playerContainerClasses, nameTagClasses, playerName)
+function PlayerBoardContainer(playerContainerClasses, nameTagClasses, playerName, boardSquareClasses, boardClasses, boardSize)
 {
     const divContainer = document.createElement("div");
     addClasses(divContainer, playerContainerClasses);
 
-    divContainer.append(NameTag(nameTagClasses, playerName).element);
+    divContainer.append(
+        NameTag(nameTagClasses, playerName).element,
+        Board(boardClasses, boardSquareClasses, boardSize).element,
+    );
 
     return {
         element: divContainer
     }
 }
 
-function AiBoardContainer(aiContainerClasses, nameTagClasses, aiName)
+function AiBoardContainer(aiContainerClasses, nameTagClasses, aiName, boardSquareClasses, boardClasses, boardSize)
 {
     const divContainer = document.createElement("div");
     addClasses(divContainer, aiContainerClasses);
 
-    divContainer.append(NameTag(nameTagClasses, aiName).element);
+    divContainer.append(
+        NameTag(nameTagClasses, aiName).element,
+        Board(boardClasses, boardSquareClasses, boardSize).element,
+    );
 
     return {
         element: divContainer
@@ -70,9 +91,37 @@ function NameTag(nameTagClasses, name)
     }
 }
 
-function PlayerBoard(boardSize)
+function Board(boardClasses, boardSquareClasses, boardSize)
 {
+    const divBoard = document.createElement("div");
+    addClasses(divBoard, boardClasses);
+    divBoard.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
+    divBoard.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
 
+    for (let y = 0; y < boardSize; y++)
+    {
+        for (let x = 0; x < boardSize; x++)
+        {
+            const square = boardSquare(boardSquareClasses, [x, y]);
+            randomSnapRotation(square.element);
+            divBoard.appendChild(square.element);
+        }
+    }
+
+    return {
+        element: divBoard,
+    }
+}
+
+function boardSquare(boardSquareClasses, coord)
+{
+    const divSquare = document.createElement("div");
+    divSquare.setAttribute("data-xy", `${coord[0]},${coord[1]}`);
+    addClasses(divSquare, boardSquareClasses);
+
+    return {
+        element: divSquare,
+    }
 }
 
 function addClasses(element, cssClasses = [])
@@ -94,3 +143,8 @@ function removeClasses(element, cssClasses = [])
         element.classList.remove(cssClass);
     });
 };
+
+function randomSnapRotation(element)
+{
+    element.style.transform = `rotate(${Math.floor(Math.random() * 4) * 90}deg)`;
+}
