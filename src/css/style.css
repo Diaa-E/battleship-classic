@@ -13,6 +13,13 @@ body{
         "player"
         "controls"
         "ai";
+    place-items: center;
+    place-content: center;
+}
+
+.logo{
+    height: 33vh;
+    grid-area: logo;
 }
 
 @media (min-width: 700px)
@@ -22,7 +29,7 @@ body{
         grid-template-rows: 1fr 2fr;
         grid-template-columns: 3fr 2fr 3fr;
         grid-template-areas: 
-        "logo" "logo" "logo"
-        "player" "controls" "ai";
+        "logo logo logo"
+        "player controls ai";
     }
 }
