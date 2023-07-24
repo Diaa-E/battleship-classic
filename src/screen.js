@@ -1,6 +1,17 @@
 "use strict";
 
-export { ConsoleScreen };
+import { buildUi } from "./uiComponents";
+
+export { ConsoleScreen, uiScreen };
+
+function uiScreen()
+{
+    buildUi();
+
+    return{
+
+    }
+}
 
 function ConsoleScreen(pinBox)
 {
