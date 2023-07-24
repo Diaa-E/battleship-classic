@@ -147,6 +147,11 @@ function Ai(rules, pinBox)
         return Math.floor(Math.random() * array.length);
     }
 
+    function receiveAttack(encodedCoord)
+    {
+        gameBoard.receiveAttack(decodeCoord(encodedCoord));;
+    }
+
     return {
         get NAME(){ return NAME },
         get board(){ return gameBoard.board },
@@ -157,5 +162,6 @@ function Ai(rules, pinBox)
         getAvailableShots,
         fleetDestroyed,
         addShotsFired,
+        receiveAttack,
     }
 }
