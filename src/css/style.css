@@ -1,6 +1,7 @@
 @import url("./reset.css");
 @import url("./fonts.css");
 @import url("./colors.css");
+@import url("./board.css");
 
 body{
     background-color: var(--c-background);
@@ -15,18 +16,18 @@ body{
         "ai";
     place-items: center;
     place-content: center;
+    gap: 2vh;
 }
 
 .logo{
-    height: 33vh;
+    width: 25vw;
     grid-area: logo;
 }
 
-@media (min-width: 700px)
-{
+@media (min-width: 700px) and (orientation: landscape){
     body
     {
-        grid-template-rows: 1fr 2fr;
+        grid-template-rows: repeat(2, min-content);
         grid-template-columns: 3fr 2fr 3fr;
         grid-template-areas: 
         "logo logo logo"

@@ -75,6 +75,7 @@ export function Game(playerName, gameModeNumber)
         get winner(){ return winner },
         get aiName(){ return players.ai.NAME },
         get humanName(){ return players.human.NAME },
+        get BOARD_SIZE(){ return rules.BOARD_SIZE },
 
         switchTurn,
         aiPlay,

@@ -4,9 +4,9 @@ import { buildUi } from "./uiComponents";
 
 export { ConsoleScreen, uiScreen };
 
-function uiScreen()
+function uiScreen(boardSize)
 {
-    buildUi();
+    buildUi(boardSize);
 
     return{
 

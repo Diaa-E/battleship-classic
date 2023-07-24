@@ -1,0 +1,26 @@
+.sticker{
+    --width: 90vw;
+    background-size: cover;
+    width: var(--width);
+    height: calc(1.12 * var(--width));
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.player-sticker{
+    background-image: url("../../assets/images/card_player.svg");
+    grid-template-rows: 1fr 6fr;
+    grid-area: player;
+}
+
+.ai-sticker{
+    background-image: url("../../assets/images/card_ai.svg");
+    grid-template-rows: 6fr 1fr;
+    grid-area: ai;
+}
+
+@media (min-width: 700px) and (orientation: landscape){
+    .sticker{
+        --width: 30vw;
+    }
+}
