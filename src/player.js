@@ -81,7 +81,7 @@ function Ai(rules, pinBox)
             "Brother Eye",
         ]
 
-        return names[Math.round(Math.random() * names.length)];
+        return names[Math.floor(Math.random() * names.length)];
     }
 
     function getAvailableShots()
