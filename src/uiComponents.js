@@ -1,6 +1,6 @@
 "use strict";
 
-import logo from "../assets/images/logo.svg";
+import battleshipLogo from "../assets/images/logo.svg";
 
 export { buildUi };
 
@@ -10,8 +10,10 @@ function buildUi()
         logo: ["logo"],
     }
 
+    const logo = AppLogo(battleshipLogo, cssClasses.logo);
+
     document.body.append(
-        AppLogo(logo, cssClasses.logo),
+        logo.element,
     )
 }
 
@@ -21,7 +23,9 @@ function AppLogo(logoPath, logoClasses)
     imgLogo.src = logoPath;
     addClasses(imgLogo, logoClasses);
 
-    return imgLogo;
+    return {
+        element: imgLogo
+    };
 }
 
 function addClasses(element, cssClasses = [])
