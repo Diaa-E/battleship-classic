@@ -4,17 +4,21 @@ import battleshipLogo from "../assets/images/logo.svg";
 
 export { buildUi };
 
-function buildUi(boardSize)
+function buildUi(boardSize, aiName, playerName)
 {
     const cssClasses = {
         logo: ["logo"],
         playerContainer: ["sticker", "player-sticker"],
         aiContainer: ["sticker", "ai-sticker"],
+        nameTag: ["name-tag"],
     }
 
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
     const playerBoard = PlayerBoardContainer(cssClasses.playerContainer);
     const aiBoard = AiBoardContainer(cssClasses.aiContainer);
+
+    playerBoard.element.append(NameTag(cssClasses.nameTag, playerName).element);
+    aiBoard.element.append(NameTag(cssClasses.nameTag, aiName).element);
 
     document.body.append(
         logo.element,
@@ -51,6 +55,17 @@ function AiBoardContainer(aiContainerClasses)
 
     return {
         element: divContainer
+    }
+}
+
+function NameTag(nameTagClasses, name)
+{
+    const h1 = document.createElement("h1");
+    h1.innerText = name;
+    addClasses(h1, nameTagClasses);
+
+    return {
+        element: h1,
     }
 }
 

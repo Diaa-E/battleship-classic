@@ -5,22 +5,43 @@
     height: calc(1.12 * var(--width));
     display: grid;
     grid-template-columns: 1fr;
+    padding: max(2vw, 2vh);
+    place-content: center;
+    place-items: center;
 }
 
 .player-sticker{
     background-image: url("../../assets/images/card_player.svg");
     grid-template-rows: 1fr 6fr;
     grid-area: player;
+    grid-template-areas: 
+        "name"
+        "board";
 }
 
 .ai-sticker{
     background-image: url("../../assets/images/card_ai.svg");
     grid-template-rows: 6fr 1fr;
     grid-area: ai;
+    grid-template-areas: 
+        "board"
+        "name";
+}
+
+.name-tag{
+    font-family: var(--font-hand);
+    grid-area: name;
+    justify-self: flex-start;
+    font-size: 6em;
+    color: var(--c-black);
 }
 
 @media (min-width: 700px) and (orientation: landscape){
     .sticker{
         --width: 30vw;
+    }
+
+    .name-tag{
+        font-size: 3em;
     }
 }
