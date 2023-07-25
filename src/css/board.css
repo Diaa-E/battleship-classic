@@ -32,7 +32,7 @@
     font-family: var(--font-hand);
     grid-area: name;
     justify-self: flex-start;
-    font-size: 6em;
+    font-size: 8vw;
     color: var(--c-black);
 }
 
@@ -57,6 +57,6 @@
     }
 
     .name-tag{
-        font-size: 3em;
+        font-size: 3vw;
     }
 }
