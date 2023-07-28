@@ -4,9 +4,9 @@ import { buildUi } from "./uiComponents";
 
 export { ConsoleScreen, uiScreen };
 
-function uiScreen(boardSize, aiName, playerName, humanFleet)
+function uiScreen(boardSize, players)
 {
-    buildUi(boardSize, aiName, playerName, humanFleet);
+    buildUi(boardSize, players);
 
     return{
 

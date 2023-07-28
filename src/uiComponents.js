@@ -4,7 +4,7 @@ import battleshipLogo from "../assets/images/logo.svg";
 
 export { buildUi };
 
-function buildUi(boardSize, aiName, playerName, humanFleet)
+function buildUi(boardSize, players)
 {
     const cssClasses = {
         logo: ["logo"],
@@ -20,16 +20,16 @@ function buildUi(boardSize, aiName, playerName, humanFleet)
 
     const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
     const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
-    const playerNameTag = NameTag(cssClasses.nameTag, playerName);
+    const playerNameTag = NameTag(cssClasses.nameTag, players.human.NAME);
 
     playerBoardContainer.element.append(
         playerBoard.element,
         playerNameTag.element
-    )
+    );
 
     const aiBoardContainer = AiBoardContainer(cssClasses.aiContainer);
     const aiBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
-    const aiNameTag = NameTag(cssClasses.nameTag, aiName);
+    const aiNameTag = NameTag(cssClasses.nameTag, players.ai.NAME);
 
     aiBoardContainer.element.append(
         aiBoard.element,
@@ -40,7 +40,12 @@ function buildUi(boardSize, aiName, playerName, humanFleet)
         logo.element,
         playerBoardContainer.element,
         aiBoardContainer.element
-    )
+    );
+}
+
+function ShipSticker(shipClasses)
+{
+    
 }
 
 function AppLogo(logoPath, logoClasses)
