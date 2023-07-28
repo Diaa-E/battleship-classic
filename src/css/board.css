@@ -51,6 +51,12 @@
     background-size: cover;
 }
 
+.ship{
+    position: absolute;
+    background-size: cover;
+    width: 5vw
+}
+
 @media (min-width: 700px) and (orientation: landscape){
     .sticker{
         --width: 30vw;

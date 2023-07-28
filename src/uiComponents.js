@@ -4,7 +4,7 @@ import battleshipLogo from "../assets/images/logo.svg";
 
 export { buildUi };
 
-function buildUi(boardSize, aiName, playerName)
+function buildUi(boardSize, aiName, playerName, humanFleet)
 {
     const cssClasses = {
         logo: ["logo"],
@@ -13,29 +13,33 @@ function buildUi(boardSize, aiName, playerName)
         nameTag: ["name-tag"],
         board: ["board-container"],
         boardSquare: ["square"],
+        ships: ["ship"],
     }
 
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
-    const playerBoard = PlayerBoardContainer(
-        cssClasses.playerContainer,
-        cssClasses.nameTag, playerName,
-        cssClasses.boardSquare,
-        cssClasses.board,
-        boardSize
-    );
-    const aiBoard = AiBoardContainer(
-        cssClasses.aiContainer,
-        cssClasses.nameTag,
-        aiName,
-        cssClasses.boardSquare,
-        cssClasses.board,
-        boardSize
+
+    const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
+    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
+    const playerNameTag = NameTag(cssClasses.nameTag, playerName);
+
+    playerBoardContainer.element.append(
+        playerBoard.element,
+        playerNameTag.element
+    )
+
+    const aiBoardContainer = AiBoardContainer(cssClasses.aiContainer);
+    const aiBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
+    const aiNameTag = NameTag(cssClasses.nameTag, aiName);
+
+    aiBoardContainer.element.append(
+        aiBoard.element,
+        aiNameTag.element
     );
 
     document.body.append(
         logo.element,
-        playerBoard.element,
-        aiBoard.element
+        playerBoardContainer.element,
+        aiBoardContainer.element
     )
 }
 
@@ -50,30 +54,20 @@ function AppLogo(logoPath, logoClasses)
     };
 }
 
-function PlayerBoardContainer(playerContainerClasses, nameTagClasses, playerName, boardSquareClasses, boardClasses, boardSize)
+function PlayerBoardContainer(playerContainerClasses)
 {
     const divContainer = document.createElement("div");
     addClasses(divContainer, playerContainerClasses);
-
-    divContainer.append(
-        NameTag(nameTagClasses, playerName).element,
-        Board(boardClasses, boardSquareClasses, boardSize).element,
-    );
-
+        
     return {
         element: divContainer
     }
 }
 
-function AiBoardContainer(aiContainerClasses, nameTagClasses, aiName, boardSquareClasses, boardClasses, boardSize)
+function AiBoardContainer(aiContainerClasses)
 {
     const divContainer = document.createElement("div");
     addClasses(divContainer, aiContainerClasses);
-
-    divContainer.append(
-        NameTag(nameTagClasses, aiName).element,
-        Board(boardClasses, boardSquareClasses, boardSize).element,
-    );
 
     return {
         element: divContainer
