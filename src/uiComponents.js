@@ -1,6 +1,7 @@
 "use strict";
 
 import battleshipLogo from "../assets/images/logo.svg";
+import shipImage from "../assets/images/ship.svg";
 
 export { buildUi };
 
@@ -41,11 +42,23 @@ function buildUi(boardSize, players)
         playerBoardContainer.element,
         aiBoardContainer.element
     );
+
+    drawShips(cssClasses.ships, players.human.fleet, playerBoard)
 }
 
-function ShipSticker(shipClasses)
+function drawShips(shipClasses, humanFleet, playerBoard)
 {
-    
+    humanFleet.ships.forEach(ship => {
+
+        ship.position.forEach(coord => {
+
+            const imgDot = new Image();
+            imgDot.src = shipImage;
+            addClasses(imgDot, shipClasses);
+            const square = document.querySelector(`.player-sticker [data-xy="${coord.coord}"`);
+            square.append(imgDot);
+        });
+    });
 }
 
 function AppLogo(logoPath, logoClasses)
