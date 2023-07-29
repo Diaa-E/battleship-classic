@@ -15,32 +15,17 @@ function buildUi(boardSize, players)
         board: ["board-container"],
         boardSquare: ["square"],
         ships: ["ship"],
-    }
+    };
 
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
 
-    const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
-    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
-    const playerNameTag = NameTag(cssClasses.nameTag, players.human.NAME);
-
-    playerBoardContainer.element.append(
-        playerBoard.element,
-        playerNameTag.element
-    );
-
-    const aiBoardContainer = AiBoardContainer(cssClasses.aiContainer);
-    const aiBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
-    const aiNameTag = NameTag(cssClasses.nameTag, players.ai.NAME);
-
-    aiBoardContainer.element.append(
-        aiBoard.element,
-        aiNameTag.element
-    );
+    const playerBoard = PlayerBoard(cssClasses, boardSize);
+    const aiBoard = AiBoard(cssClasses, boardSize);
 
     document.body.append(
         logo.element,
-        playerBoardContainer.element,
-        aiBoardContainer.element
+        playerBoard.element,
+        aiBoard.element,
     );
 
     drawShips(cssClasses.ships, players.human.fleet, playerBoard)
@@ -72,6 +57,34 @@ function AppLogo(logoPath, logoClasses)
     };
 }
 
+function PlayerBoard(cssClasses, boardSize)
+{
+    const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
+    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
+    const playerNameTag = NameTag(cssClasses.nameTag);
+
+    function refreshBoard(board)
+    {
+
+    }
+
+    function setName(newName)
+    {
+        playerNameTag.setName(newName);
+    }
+
+    playerBoardContainer.element.append(
+        playerBoard.element,
+        playerNameTag.element
+    );
+
+    return {
+        element: playerBoardContainer.element,
+        refreshBoard,
+        setName,
+    };
+}
+
 function PlayerBoardContainer(playerContainerClasses)
 {
     const divContainer = document.createElement("div");
@@ -80,6 +93,34 @@ function PlayerBoardContainer(playerContainerClasses)
     return {
         element: divContainer
     }
+}
+
+function AiBoard(cssClasses, boardSize)
+{
+    const aiBoardContainer = AiBoardContainer(cssClasses.aiContainer);
+    const aiBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
+    const aiNameTag = NameTag(cssClasses.nameTag);
+
+    aiBoardContainer.element.append(
+        aiBoard.element,
+        aiNameTag.element
+    );
+
+    function refreshBoard(board)
+    {
+
+    }
+
+    function setName(newName)
+    {
+        aiNameTag.setName(newName);
+    }
+
+    return {
+        element: aiBoardContainer.element,
+        refreshBoard,
+        setName,
+    };
 }
 
 function AiBoardContainer(aiContainerClasses)
@@ -92,14 +133,19 @@ function AiBoardContainer(aiContainerClasses)
     }
 }
 
-function NameTag(nameTagClasses, name)
+function NameTag(nameTagClasses)
 {
     const h1 = document.createElement("h1");
-    h1.innerText = name;
     addClasses(h1, nameTagClasses);
+
+    function setName(newName)
+    {
+        h1.innerText = newName
+    }
 
     return {
         element: h1,
+        setName,
     }
 }
 
