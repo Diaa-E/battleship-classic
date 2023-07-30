@@ -181,6 +181,7 @@ function EmptyImg(emptyClasses)
     const imgEmpty = new Image();
     imgEmpty.src = emptyImagePath;
     addClasses(imgEmpty, emptyClasses);
+    randomSnapRotation(imgEmpty);
 
     return {
         element: imgEmpty
@@ -192,6 +193,7 @@ function ShipImg(shipClasses)
     const imgShip = new Image();
     imgShip.src = shipImagePath;
     addClasses(imgShip, shipClasses);
+    randomSnapRotation(imgShip);
 
     return {
         element: imgShip
@@ -203,6 +205,7 @@ function SunkImg(sunkClasses)
     const imgSunk = new Image();
     imgSunk.src = sunkImagePath;
     addClasses(imgSunk, sunkClasses);
+    randomSnapRotation(imgSunk);
 
     return {
         element: imgSunk
@@ -214,6 +217,7 @@ function MissedImg(missedClasses)
     const imgMissed = new Image();
     imgMissed.src = missedImagePath;
     addClasses(imgMissed, missedClasses);
+    randomSnapRotation(imgMissed);
 
     return {
         element: imgMissed
@@ -225,6 +229,7 @@ function DamagedImg(damagedClasses)
     const imgDamaged = new Image();
     imgDamaged.src = damagedImagePath;
     addClasses(imgDamaged, damagedClasses);
+    randomSnapRotation(imgDamaged);
 
     return {
         element: imgDamaged
