@@ -50,9 +50,21 @@ function DocumentUi(boardSize)
         updateSquare(pinBox, board, decodedCoord, playerBoard.element, cssClasses, false);
     }
 
+    function setPlayerName(newName)
+    {
+        playerBoard.setName(newName);
+    }
+
+    function setAiName(newName)
+    {
+        aiBoard.setName(newName);
+    }
+
     return {
         refreshAiBoard,
         refreshPlayerBoard,
+        setPlayerName,
+        setAiName
     }
 }
 

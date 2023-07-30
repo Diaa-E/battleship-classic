@@ -18,9 +18,21 @@ function uiScreen(boardSize)
         ui.refreshPlayerBoard(pinBox, playerBoard, decodedCoord)
     }
 
+    function setPlayerName(newName)
+    {
+        ui.setPlayerName(newName);
+    }
+
+    function setAiName(newName)
+    {
+        ui.setAiName(newName);
+    }
+
     return{
         refreshAiBoard,
-        refreshPlayerBoard
+        refreshPlayerBoard,
+        setPlayerName,
+        setAiName
     }
 }
 
