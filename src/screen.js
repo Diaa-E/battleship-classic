@@ -28,11 +28,17 @@ function uiScreen(boardSize)
         ui.setAiName(newName);
     }
 
+    function mount()
+    {
+        ui.mount();
+    }
+
     return{
         refreshAiBoard,
         refreshPlayerBoard,
         setPlayerName,
-        setAiName
+        setAiName,
+        mount
     }
 }
 

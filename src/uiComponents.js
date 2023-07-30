@@ -29,9 +29,7 @@ function DocumentUi(boardSize)
     const playerBoard = PlayerBoard(cssClasses, boardSize);
     const aiBoard = AiBoard(cssClasses, boardSize);
 
-    _mountUi();
-
-    function _mountUi()
+    function mount()
     {
         document.body.append(
             logo.element,
@@ -64,7 +62,8 @@ function DocumentUi(boardSize)
         refreshAiBoard,
         refreshPlayerBoard,
         setPlayerName,
-        setAiName
+        setAiName,
+        mount
     }
 }
 
