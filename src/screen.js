@@ -33,12 +33,19 @@ function uiScreen(boardSize)
         ui.mount();
     }
 
+    function initBoards(playerBoard, aiBoard)
+    {
+        ui.initAiBoard(aiBoard);
+        ui.initPlayerBoard(playerBoard);
+    }
+
     return{
         refreshAiBoard,
         refreshPlayerBoard,
         setPlayerName,
         setAiName,
-        mount
+        mount,
+        initBoards
     }
 }
 

@@ -58,19 +58,63 @@ function DocumentUi(boardSize)
         aiBoard.setName(newName);
     }
 
+    function initAiBoard(board)
+    {
+        aiBoard.init(board);
+    }
+
+    function initPlayerBoard(board)
+    {
+        playerBoard.init(board);
+    }
+
     return {
         refreshAiBoard,
         refreshPlayerBoard,
         setPlayerName,
         setAiName,
-        mount
+        mount,
+        initAiBoard,
+        initPlayerBoard,
+    }
+}
+
+function getUiSquare(decodedCoord, uiBoard)
+{
+    return uiBoard.querySelector(`[data-xy="${decodedCoord[0]},${decodedCoord[1]}"]`);
+}
+
+function initBoard(hideShips, uiBoard, board, cssClasses)
+{
+    for (let y = 0; y < board.length; y++)
+    {
+        for (let x = 0; x < board.length; x++)
+        {
+            const uiSquare = getUiSquare([x, y], uiBoard);
+
+            if (typeof board[y][x] === "object")
+            {
+                if (!hideShips)
+                {
+                    drawShip(uiSquare, cssClasses.ship);
+                }
+                else
+                {
+                    drawEmpty(uiSquare, cssClasses.empty);
+                }
+            }
+            else
+            {
+                drawEmpty(uiSquare, cssClasses.empty);
+            }
+        }
     }
 }
 
 function updateSquare(pinBox, board, decodedCoord, uiBoard, cssClasses, hideShips)
 {
     const boardSquare = board[decodedCoord[1]][decodedCoord[0]];
-    const uiSquare = uiBoard.querySelector(`[data-xy="${decodedCoord[0]},${decodedCoord[1]}"]`);
+    const uiSquare = getUiSquare(decodedCoord, uiBoard);
 
     if (boardSquare === pinBox.empty)
     {
@@ -209,6 +253,11 @@ function PlayerBoard(cssClasses, boardSize)
 
     }
 
+    function init(board)
+    {
+        initBoard(false, playerBoard.element, board, cssClasses);
+    }
+
     function setName(newName)
     {
         playerNameTag.setName(newName);
@@ -223,6 +272,7 @@ function PlayerBoard(cssClasses, boardSize)
         element: playerBoardContainer.element,
         refreshBoard,
         setName,
+        init,
     };
 }
 
@@ -252,6 +302,11 @@ function AiBoard(cssClasses, boardSize)
 
     }
 
+    function init(board)
+    {
+        initBoard(true, aiBoard.element, board, cssClasses);
+    }
+
     function setName(newName)
     {
         aiNameTag.setName(newName);
@@ -261,6 +316,7 @@ function AiBoard(cssClasses, boardSize)
         element: aiBoardContainer.element,
         refreshBoard,
         setName,
+        init,
     };
 }
 

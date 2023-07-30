@@ -56,7 +56,14 @@
 }
 
 .empty{
-    
+    width: 90%;
+    filter: saturate(0%) brightness(250%);
+    opacity: 0%;
+}
+
+.ai-sticker .empty:hover{
+    opacity: 100%;
+    cursor: pointer;
 }
 
 @media (min-width: 700px) and (orientation: landscape){
