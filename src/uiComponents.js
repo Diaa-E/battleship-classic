@@ -1,11 +1,15 @@
 "use strict";
 
 import battleshipLogo from "../assets/images/logo.svg";
-import shipImage from "../assets/images/ship.svg";
+import shipImagePath from "../assets/images/ship.svg";
+import emptyImagePath from "../assets/images/empty.svg";
+import sunkImagePath from "../assets/images/sunk.svg";
+import missedImagePath from "../assets/images/missed.svg";
+import damagedImagePath from "../assets/images/damaged.svg";
 
-export { buildUi };
+export { DocumentUi };
 
-function buildUi(boardSize, players)
+function DocumentUi(boardSize)
 {
     const cssClasses = {
         logo: ["logo"],
@@ -14,36 +18,162 @@ function buildUi(boardSize, players)
         nameTag: ["name-tag"],
         board: ["board-container"],
         boardSquare: ["square"],
-        ships: ["ship"],
+        empty: ["empty"],
+        ship: ["ship"],
+        sunk: ["sunk"],
+        damaged: ["damaged"],
+        missed: ["missed"],
     };
 
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
-
     const playerBoard = PlayerBoard(cssClasses, boardSize);
     const aiBoard = AiBoard(cssClasses, boardSize);
 
-    document.body.append(
-        logo.element,
-        playerBoard.element,
-        aiBoard.element,
-    );
+    _mountUi();
 
-    drawShips(cssClasses.ships, players.human.fleet, playerBoard)
+    function _mountUi()
+    {
+        document.body.append(
+            logo.element,
+            playerBoard.element,
+            aiBoard.element,
+        );
+    }
+
+    function refreshAiBoard(pinBox, board, decodedCoord)
+    {
+        updateSquare(pinBox, board, decodedCoord, aiBoard.element, cssClasses, true);
+    }
+
+    function refreshPlayerBoard(pinBox, board, decodedCoord)
+    {
+        updateSquare(pinBox, board, decodedCoord, playerBoard.element, cssClasses, false);
+    }
+
+    return {
+        refreshAiBoard,
+        refreshPlayerBoard,
+    }
 }
 
-function drawShips(shipClasses, humanFleet, playerBoard)
+function updateSquare(pinBox, board, decodedCoord, uiBoard, cssClasses, hideShips)
 {
-    humanFleet.ships.forEach(ship => {
+    const boardSquare = board[decodedCoord[1]][decodedCoord[0]];
+    const uiSquare = uiBoard.querySelector(`[data-xy="${decodedCoord[0]},${decodedCoord[1]}"]`);
 
-        ship.position.forEach(coord => {
+    if (boardSquare === pinBox.empty)
+    {
+        uiSquare.innerHTML = "";
+        drawEmpty(uiSquare, cssClasses.empty);
+    }
+    else if (boardSquare === pinBox.sunk)
+    {
+        uiSquare.innerHTML = "";
+        if (!hideShips) drawShip(uiSquare, cssClasses.ship);
+        drawSunk(uiSquare, cssClasses.sunk);
+    }
+    else if (boardSquare === pinBox.hit)
+    {
+        uiSquare.innerHTML = "";
+        if (!hideShips) drawShip(uiSquare, cssClasses.ship);
+        drawDamaged(uiSquare, cssClasses.damaged);
+    }
+    else if (boardSquare === pinBox.missed)
+    {
+        uiSquare.innerHTML = "";
+        drawMissed(uiSquare, cssClasses.missed);
+    }
+    else if (typeof boardSquare === "object")
+    {
+        uiSquare.innerHTML = "";
+        if (!hideShips) drawShip(uiSquare, cssClasses.ship);
+    }
+}
 
-            const imgDot = new Image();
-            imgDot.src = shipImage;
-            addClasses(imgDot, shipClasses);
-            const square = document.querySelector(`.player-sticker [data-xy="${coord.coord}"`);
-            square.append(imgDot);
-        });
-    });
+function drawEmpty(uiSquare, emptyClasses)
+{
+    const imgEmpty = EmptyImg(emptyClasses);
+    uiSquare.appendChild(imgEmpty.element);
+}
+
+function drawShip(uiSquare, shipClasses)
+{
+    const imgShip = ShipImg(shipClasses);
+    uiSquare.append(imgShip.element);
+}
+
+function drawDamaged(uiSquare, damagedClasses)
+{
+    const imgDamaged = DamagedImg(damagedClasses);
+    uiSquare.append(imgDamaged.element);
+}
+
+function drawSunk(uiSquare, sunkClasses)
+{
+    const imgEmpty = EmptyImg(sunkClasses);
+    const imgSunk = SunkImg(sunkClasses);
+    uiSquare.append(imgEmpty.element, imgSunk.element);
+}
+
+function drawMissed(uiSquare, missedClasses)
+{
+    const imgMissed = MissedImg(missedClasses);
+    uiSquare.append(imgMissed.element);
+}
+
+function EmptyImg(emptyClasses)
+{
+    const imgEmpty = new Image();
+    imgEmpty.src = emptyImagePath;
+    addClasses(imgEmpty, emptyClasses);
+
+    return {
+        element: imgEmpty
+    };
+}
+
+function ShipImg(shipClasses)
+{
+    const imgShip = new Image();
+    imgShip.src = shipImagePath;
+    addClasses(imgShip, shipClasses);
+
+    return {
+        element: imgShip
+    };
+}
+
+function SunkImg(sunkClasses)
+{
+    const imgSunk = new Image();
+    imgSunk.src = sunkImagePath;
+    addClasses(imgSunk, sunkClasses);
+
+    return {
+        element: imgSunk
+    };
+}
+
+function MissedImg(missedClasses)
+{
+    const imgMissed = new Image();
+    imgMissed.src = missedImagePath;
+    addClasses(imgMissed, missedClasses);
+
+    return {
+        element: imgMissed
+    };
+}
+
+function DamagedImg(damagedClasses)
+{
+    const imgDamaged = new Image();
+    imgDamaged.src = damagedImagePath;
+    addClasses(imgDamaged, damagedClasses);
+
+    return {
+        element: imgDamaged
+    };
 }
 
 function AppLogo(logoPath, logoClasses)

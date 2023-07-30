@@ -1,15 +1,26 @@
 "use strict";
 
-import { buildUi } from "./uiComponents";
+import { DocumentUi } from "./uiComponents";
 
 export { ConsoleScreen, uiScreen };
 
-function uiScreen(boardSize, players)
+function uiScreen(boardSize)
 {
-    buildUi(boardSize, players);
+    const ui = DocumentUi(boardSize);
+
+    function refreshAiBoard(pinBox, aiBoard, decodedCoord)
+    {
+        ui.refreshAiBoard(pinBox, aiBoard, decodedCoord);
+    }
+
+    function refreshPlayerBoard(pinBox, playerBoard, decodedCoord)
+    {
+        ui.refreshPlayerBoard(pinBox, playerBoard, decodedCoord)
+    }
 
     return{
-
+        refreshAiBoard,
+        refreshPlayerBoard
     }
 }
 

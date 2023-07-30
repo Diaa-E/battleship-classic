@@ -55,6 +55,10 @@
     object-fit: contain;
 }
 
+.empty{
+    
+}
+
 @media (min-width: 700px) and (orientation: landscape){
     .sticker{
         --width: 30vw;
