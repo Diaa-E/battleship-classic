@@ -23,11 +23,15 @@ function DocumentUi(boardSize)
         sunk: ["sunk"],
         damaged: ["damaged"],
         missed: ["missed"],
+        controls: ["controls-container"],
+        fireButton: ["fire-button"],
+        shotsCounter: ["shot-counter"],
     };
 
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
     const playerBoard = PlayerBoard(cssClasses, boardSize);
     const aiBoard = AiBoard(cssClasses, boardSize);
+    const controls = Controls(cssClasses);
 
     function mount()
     {
@@ -35,7 +39,13 @@ function DocumentUi(boardSize)
             logo.element,
             playerBoard.element,
             aiBoard.element,
+            controls.element
         );
+    }
+
+    function updateRemainingShots(newNumber)
+    {
+        controls.setNumber(newNumber);
     }
 
     function refreshAiBoard(pinBox, board, decodedCoord)
@@ -76,6 +86,68 @@ function DocumentUi(boardSize)
         mount,
         initAiBoard,
         initPlayerBoard,
+        updateRemainingShots,
+    }
+}
+
+function Controls(cssClasses)
+{
+    const controlsContainer = ControlsContainer(cssClasses.controls);
+    const fireButton = FireButton(cssClasses.fireButton);
+    const shotsCounter = ShotsCounter(cssClasses.shotsCounter);
+    
+    controlsContainer.element.append(
+        fireButton.element,
+        shotsCounter.element
+    )
+
+    function setNumber(newNumber)
+    {
+        shotsCounter.setNumber(newNumber);
+    }
+
+    return {
+        element: controlsContainer.element,
+        setNumber,
+    }
+}
+
+function ControlsContainer(controlsClasses)
+{
+    const divContainer = document.createElement("div");
+    addClasses(divContainer, controlsClasses);
+
+    return {
+        element: divContainer,
+    }
+}
+
+function ShotsCounter(shotsCounterClasses)
+{
+    const divCounter = document.createElement("div");
+    const pShots = document.createElement("p");
+    pShots.innerText = "N/A";
+    addClasses(divCounter, shotsCounterClasses);
+    divCounter.append(pShots);
+
+    function setNumber(newNumber)
+    {
+        pShots.innerText = newNumber;
+    }
+
+    return {
+        element: divCounter,
+        setNumber,
+    }
+}
+
+function FireButton(buttonClasses)
+{
+    const btnFire = document.createElement("button");
+    addClasses(btnFire, buttonClasses);
+
+    return {
+        element: btnFire
     }
 }
 

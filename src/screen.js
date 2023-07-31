@@ -39,13 +39,19 @@ function uiScreen(boardSize)
         ui.initPlayerBoard(playerBoard);
     }
 
+    function updateRemainingShots(newNumber)
+    {
+        ui.updateRemainingShots(newNumber);
+    }
+
     return{
         refreshAiBoard,
         refreshPlayerBoard,
         setPlayerName,
         setAiName,
         mount,
-        initBoards
+        initBoards,
+        updateRemainingShots,
     }
 }
 
