@@ -301,7 +301,7 @@ function ShipImg(shipClasses)
     const imgShip = new Image();
     imgShip.src = shipImagePath;
     addClasses(imgShip, shipClasses);
-    randomSnapRotation(imgShip);
+    randomRotation(imgShip, 360, 0);
 
     return {
         element: imgShip
@@ -515,4 +515,9 @@ function removeClasses(element, cssClasses = [])
 function randomSnapRotation(element)
 {
     element.style.transform = `rotate(${Math.floor(Math.random() * 4) * 90}deg)`;
+}
+
+function randomRotation(element, maxAngle, minAngle)
+{
+    element.style.transform = `rotate(${Math.floor(Math.random() * (maxAngle - minAngle + 1)) + minAngle}deg)`;
 }
