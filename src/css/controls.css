@@ -7,7 +7,7 @@
     grid-area: counter;
     display: flex;
     place-content: center;
-    place-items: center;
+    padding-top: 10vw;
     font-family: var(--font-hand);
     color: var(--c-white);
     font-size: 7vw;
@@ -56,7 +56,6 @@
         width: 10vw;
         height: 100%;
         place-content: center;
-        place-items: flex-start;
         padding-top: 7vw;
         font-size: 3vw;
     }
