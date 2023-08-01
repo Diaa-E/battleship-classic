@@ -78,6 +78,16 @@ function DocumentUi(boardSize)
         playerBoard.init(board);
     }
 
+    function disableFireButton()
+    {
+        controls.disableFireButton();
+    }
+
+    function enableFireButton()
+    {
+        controls.enableFireButton();
+    }
+
     return {
         refreshAiBoard,
         refreshPlayerBoard,
@@ -87,6 +97,8 @@ function DocumentUi(boardSize)
         initAiBoard,
         initPlayerBoard,
         updateRemainingShots,
+        enableFireButton,
+        disableFireButton,
     }
 }
 
@@ -106,9 +118,21 @@ function Controls(cssClasses)
         shotsCounter.setNumber(newNumber);
     }
 
+    function disableFireButton()
+    {
+        fireButton.disable();
+    }
+
+    function enableFireButton()
+    {
+        fireButton.enable();
+    }
+
     return {
         element: controlsContainer.element,
         setNumber,
+        enableFireButton,
+        disableFireButton
     }
 }
 
@@ -146,8 +170,20 @@ function FireButton(buttonClasses)
     const btnFire = document.createElement("button");
     addClasses(btnFire, buttonClasses);
 
+    function disable()
+    {
+        btnFire.disabled = true;
+    }
+
+    function enable()
+    {
+        btnFire.disabled = false;
+    }
+
     return {
-        element: btnFire
+        element: btnFire,
+        disable,
+        enable
     }
 }
 

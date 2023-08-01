@@ -23,6 +23,10 @@
     grid-area: button;
 }
 
+.fire-button:disabled{
+    filter: saturate(0%) brightness(250%);
+}
+
 .controls-container{
     display: grid;
     grid-template-columns: 1fr;

@@ -44,6 +44,16 @@ function uiScreen(boardSize)
         ui.updateRemainingShots(newNumber);
     }
 
+    function enableFireButton()
+    {
+        ui.enableFireButton();
+    }
+
+    function disableFireButton()
+    {
+        ui.disableFireButton();
+    }
+
     return{
         refreshAiBoard,
         refreshPlayerBoard,
@@ -52,6 +62,8 @@ function uiScreen(boardSize)
         mount,
         initBoards,
         updateRemainingShots,
+        enableFireButton,
+        disableFireButton,
     }
 }
 
