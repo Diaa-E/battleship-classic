@@ -57,7 +57,6 @@
 
 .empty{
     width: 90%;
-    filter: saturate(0%) brightness(250%);
     opacity: 0%;
 }
 

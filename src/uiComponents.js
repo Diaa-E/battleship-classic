@@ -3,6 +3,7 @@
 import battleshipLogo from "../assets/images/logo.svg";
 import shipImagePath from "../assets/images/ship.svg";
 import emptyImagePath from "../assets/images/empty.svg";
+import crossedImagePath from "../assets/images/sunk.svg";
 import sunkImagePath from "../assets/images/sunk.svg";
 import missedImagePath from "../assets/images/missed.svg";
 import damagedImagePath from "../assets/images/damaged.svg";
@@ -273,9 +274,9 @@ function drawDamaged(uiSquare, damagedClasses)
 
 function drawSunk(uiSquare, sunkClasses)
 {
-    const imgEmpty = EmptyImg(sunkClasses);
+    const imgCrossed = CrossedImg(sunkClasses);
     const imgSunk = SunkImg(sunkClasses);
-    uiSquare.append(imgEmpty.element, imgSunk.element);
+    uiSquare.append(imgCrossed.element, imgSunk.element);
 }
 
 function drawMissed(uiSquare, missedClasses)
@@ -289,10 +290,22 @@ function EmptyImg(emptyClasses)
     const imgEmpty = new Image();
     imgEmpty.src = emptyImagePath;
     addClasses(imgEmpty, emptyClasses);
-    randomSnapRotation(imgEmpty);
+    randomRotation(imgEmpty, 45, -45);
 
     return {
         element: imgEmpty
+    };
+}
+
+function CrossedImg(crossedClasses)
+{
+    const imgCrossed = new Image();
+    imgCrossed.src = crossedImagePath;
+    addClasses(imgCrossed, crossedClasses);
+    randomSnapRotation(imgCrossed);
+
+    return {
+        element: imgCrossed
     };
 }
 
