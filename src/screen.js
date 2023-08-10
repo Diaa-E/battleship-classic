@@ -1,67 +1,69 @@
 "use strict";
 
-import { DocumentUi } from "./uiComponents";
+import { FleetEditor, MainUi } from "./uiComponents";
 
 export { ConsoleScreen, uiScreen };
 
 function uiScreen(boardSize)
 {
-    const ui = DocumentUi(boardSize);
+    const mainUi = MainUi(boardSize);
+    const fleetEditor = FleetEditor(boardSize);
 
     function openFleetEditor()
     {
-        ui.openFleetEditor();
+        fleetEditor.openDialog();
     }
 
     function closeFleetEditor()
     {
-        ui.closeFleetEditor();
+        fleetEditor.closeDialog();
     }
 
     function refreshAiBoard(pinBox, aiBoard, decodedCoord)
     {
-        ui.refreshAiBoard(pinBox, aiBoard, decodedCoord);
+        mainUi.refreshAiBoard(pinBox, aiBoard, decodedCoord);
     }
 
     function refreshPlayerBoard(pinBox, playerBoard, decodedCoord)
     {
-        ui.refreshPlayerBoard(pinBox, playerBoard, decodedCoord)
+        mainUi.refreshPlayerBoard(pinBox, playerBoard, decodedCoord)
     }
 
     function setPlayerName(newName)
     {
-        ui.setPlayerName(newName);
+        mainUi.setPlayerName(newName);
     }
 
     function setAiName(newName)
     {
-        ui.setAiName(newName);
+        mainUi.setAiName(newName);
     }
 
     function mount()
     {
-        ui.mount();
+        mainUi.mount();
+        fleetEditor.mount();
     }
 
     function initBoards(playerBoard, aiBoard)
     {
-        ui.initAiBoard(aiBoard);
-        ui.initPlayerBoard(playerBoard);
+        mainUi.initAiBoard(aiBoard);
+        mainUi.initPlayerBoard(playerBoard);
     }
 
     function updateRemainingShots(newNumber)
     {
-        ui.updateRemainingShots(newNumber);
+        mainUi.updateRemainingShots(newNumber);
     }
 
     function enableFireButton()
     {
-        ui.enableFireButton();
+        mainUi.enableFireButton();
     }
 
     function disableFireButton()
     {
-        ui.disableFireButton();
+        mainUi.disableFireButton();
     }
 
     return{
