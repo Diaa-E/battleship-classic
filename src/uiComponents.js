@@ -8,7 +8,7 @@ import cruiserImagePath from "../assets/images/cruiser.svg";
 import battleshipImagePath from "../assets/images/battleship.svg";
 
 import { AppLogo } from "./uiImages";
-import { PlayerBoard, AiBoard } from "./uiBoard";
+import { PlayerBoard, AiBoard, EditorBoard } from "./uiBoard";
 import { Controls } from "./uiGameControls";
 import { CurrentShipImage } from "./uiImages";
 import { Dialog, DialogForm } from "./uiDialogs";
@@ -141,7 +141,7 @@ function FleetEditor(boardSize)
     const dialog = Dialog(cssClasses.dialog);
     const btnNext = DialogButton(cssClasses.dialogButton, "Next", "submit");
     const form = DialogForm(cssClasses.fleetEditorForm);
-    const board = PlayerBoard(cssClasses, boardSize);
+    const board = EditorBoard(cssClasses, boardSize);
     const btnNextShip = ImageButton(cssClasses.nextButton);
     const btnPrevShip = ImageButton(cssClasses.prevButton);
     const btnRandomize = ImageButton(cssClasses.randomButton);

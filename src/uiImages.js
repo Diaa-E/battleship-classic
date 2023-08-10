@@ -17,7 +17,8 @@ export {
     DamagedImg,
     EmptyImg,
     ShipImg,
-    SunkImg
+    SunkImg,
+    EmptyEditorImg
 }
 
 function CurrentShipImage(selectedShipClasses)
@@ -56,6 +57,18 @@ function EmptyImg(emptyClasses)
 
     return {
         element: imgEmpty
+    };
+}
+
+function EmptyEditorImg(emptyEditorClasses)
+{
+    const imgEditorEmpty = new Image();
+    imgEditorEmpty.src = shipImagePath;
+    addClasses(imgEditorEmpty, emptyEditorClasses);
+    randomRotation(imgEditorEmpty, 360, 0);
+
+    return {
+        element: imgEditorEmpty
     };
 }
 

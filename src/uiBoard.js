@@ -1,11 +1,46 @@
 "use strict";
 
-import { addClasses, randomSnapRotation, initBoard } from "./uiUtility";
+import { addClasses, randomSnapRotation, initBoard, initEditorBoard } from "./uiUtility";
 
 export {
     PlayerBoard,
-    AiBoard
+    AiBoard,
+    EditorBoard
 };
+
+function EditorBoard(cssClasses, boardSize)
+{
+    const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
+    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
+    const playerNameTag = NameTag(cssClasses.nameTag);
+
+    function refreshBoard(board)
+    {
+
+    }
+
+    function init(board)
+    {
+        initEditorBoard(playerBoard.element, board, cssClasses);
+    }
+
+    function setName(newName)
+    {
+        playerNameTag.setName(newName);
+    }
+
+    playerBoardContainer.element.append(
+        playerBoard.element,
+        playerNameTag.element
+    );
+
+    return {
+        element: playerBoardContainer.element,
+        refreshBoard,
+        setName,
+        init,
+    };
+}
 
 function PlayerBoard(cssClasses, boardSize)
 {

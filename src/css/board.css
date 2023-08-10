@@ -55,6 +55,10 @@
     object-fit: contain;
 }
 
+.ship-highlight{
+    filter: brightness(0%) saturate(100%) invert(50%) sepia(40%) saturate(4232%) hue-rotate(186deg) brightness(99%) contrast(100%);
+}
+
 .empty{
     width: 90%;
     opacity: 0%;
@@ -73,6 +77,7 @@
 .editor-empty:hover{
     opacity: 100%;
     cursor: pointer;
+    filter: brightness(0%) saturate(100%) invert(50%) sepia(40%) saturate(4232%) hue-rotate(186deg) brightness(99%) contrast(100%);
 }
 
 @media (min-width: 700px) and (orientation: landscape){

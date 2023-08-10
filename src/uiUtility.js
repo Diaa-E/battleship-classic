@@ -1,6 +1,6 @@
 "use strict";
 
-import { EmptyImg, CrossedImg, DamagedImg, ShipImg, MissedImg, SunkImg } from "./uiImages";
+import { EmptyImg, CrossedImg, DamagedImg, ShipImg, MissedImg, SunkImg, EmptyEditorImg } from "./uiImages";
 
 export {
     addClasses,
@@ -9,7 +9,8 @@ export {
     randomSnapRotation,
     appendToParent,
     updateSquare,
-    initBoard
+    initBoard,
+    initEditorBoard,
 };
 
 function addClasses(element, cssClasses = [])
@@ -90,6 +91,12 @@ function drawEmpty(uiSquare, emptyClasses)
     uiSquare.appendChild(imgEmpty.element);
 }
 
+function drawEditorEmpty(uiSquare, emptyEditorClasses)
+{
+    const imgEmpty = EmptyEditorImg(emptyEditorClasses);
+    uiSquare.appendChild(imgEmpty.element);
+}
+
 function drawShip(uiSquare, shipClasses)
 {
     const imgShip = ShipImg(shipClasses);
@@ -142,6 +149,26 @@ function initBoard(hideShips, uiBoard, board, cssClasses)
             else
             {
                 drawEmpty(uiSquare, cssClasses.empty);
+            }
+        }
+    }
+}
+
+function initEditorBoard(uiBoard, board, cssClasses)
+{
+    for (let y = 0; y < board.length; y++)
+    {
+        for (let x = 0; x < board.length; x++)
+        {
+            const uiSquare = getUiSquare([x, y], uiBoard);
+
+            if (typeof board[y][x] === "object")
+            {
+                drawShip(uiSquare, cssClasses.ship);
+            }
+            else
+            {
+                drawEditorEmpty(uiSquare, cssClasses.empty);
             }
         }
     }
