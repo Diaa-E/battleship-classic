@@ -1,0 +1,75 @@
+.dialog{
+    border: none;
+    background-color: var(--c-background);
+}
+
+.dialog::backdrop{
+    background-color: hsla(208, 56%, 74%, 100%);
+    /*for some reason color variables are not working*/
+}
+
+.fleet-editor-form{
+    background-color: var(--c-background);
+    display: grid;
+    grid-template-columns: 1fr repeat(2, .5fr);
+    grid-template-rows: repeat(3, 2fr) 1fr;
+    grid-template-areas: 
+    "player ship ship"
+    "player prev-ship next-ship"
+    "player random rotate"
+    "next next next";
+    gap: 2vw;
+    place-items: center;
+    place-content: center;
+}
+
+.dialog-button{
+    background-color: var(--c-white);
+    border-radius: 1vw;
+    border: .2vh solid black;
+    padding: 1vw;
+    font-family: var(--font-hand);
+    font-size: 2vw;
+    cursor: pointer;
+    width: 8vw;
+    height: 4vw;
+    box-shadow: 0vw 0vw .2vw .1vw rgba(0, 0, 0, 0.5);
+    grid-area: next;
+    place-self: flex-end;
+}
+
+.current-ship{
+    height: 10vw;
+    grid-area: ship;
+}
+
+.editor-button{
+    background-color: var(--c-none);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 10vw;
+    width: 10vw;
+    cursor: pointer;
+}
+
+.next-button{
+    background-image: url("../../assets/images/arrow.svg");
+    grid-area: next-ship;
+}
+
+.prev-button{
+    background-image: url("../../assets/images/arrow.svg");
+    transform: scaleX(-1);
+    grid-area: prev-ship;
+}
+
+.random-button{
+    background-image: url("../../assets/images/randomize.svg");
+    grid-area: random;
+}
+
+.rotate-button{
+    background-image: url("../../assets/images/rotate.svg");
+    grid-area: rotate;
+}

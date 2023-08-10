@@ -3,6 +3,7 @@
 @import url("./colors.css");
 @import url("./board.css");
 @import url("./controls.css");
+@import url("./dialog.css");
 
 body{
     background-color: var(--c-background);

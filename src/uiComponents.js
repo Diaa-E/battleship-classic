@@ -7,6 +7,12 @@ import crossedImagePath from "../assets/images/sunk.svg";
 import sunkImagePath from "../assets/images/sunk.svg";
 import missedImagePath from "../assets/images/missed.svg";
 import damagedImagePath from "../assets/images/damaged.svg";
+import carrierImagePath from "../assets/images/carrier.svg";
+import destroyerImagePath from "../assets/images/destroyer.svg";
+import submarineImagePath from "../assets/images/submarine.svg";
+import cruiserImagePath from "../assets/images/cruiser.svg";
+import battleshipImagePath from "../assets/images/battleship.svg";
+
 
 export { DocumentUi };
 
@@ -27,12 +33,21 @@ function DocumentUi(boardSize)
         controls: ["controls-container"],
         fireButton: ["fire-button"],
         shotsCounter: ["shot-counter"],
+        dialog: ["dialog"],
+        dialogButton: ["dialog-button"],
+        fleetEditorForm: ["fleet-editor-form"],
+        currentShip: ["current-ship"],
+        nextButton: ["editor-button", "next-button"],
+        prevButton: ["editor-button", "prev-button"],
+        randomButton: ["editor-button", "random-button"],
+        rotateButton: ["editor-button", "rotate-button"],
     };
 
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
     const playerBoard = PlayerBoard(cssClasses, boardSize);
     const aiBoard = AiBoard(cssClasses, boardSize);
     const controls = Controls(cssClasses);
+    const fleetEditor = FleetEditor(cssClasses, boardSize);
 
     function mount()
     {
@@ -40,8 +55,19 @@ function DocumentUi(boardSize)
             logo.element,
             playerBoard.element,
             aiBoard.element,
-            controls.element
+            controls.element,
+            fleetEditor.element
         );
+    }
+
+    function openFleetEditor()
+    {
+        fleetEditor.openDialog();
+    }
+
+    function closeFleetEditor()
+    {
+        fleetEditor.closeDialog();
     }
 
     function updateRemainingShots(newNumber)
@@ -100,13 +126,176 @@ function DocumentUi(boardSize)
         updateRemainingShots,
         enableFireButton,
         disableFireButton,
+        closeFleetEditor,
+        openFleetEditor
+    }
+}
+
+function FleetEditor(cssClasses, boardSize)
+{
+    const fleetImages = [
+        carrierImagePath,
+        battleshipImagePath,
+        cruiserImagePath,
+        submarineImagePath,
+        destroyerImagePath,
+    ];
+
+    let currentShipIndex = 0;
+    const currentShipImg = CurrentShipImage(cssClasses.currentShip);
+    const dialog = Dialog(cssClasses.dialog);
+    const btnNext = DialogButton(cssClasses.dialogButton, "Next", "submit");
+    const form = DialogForm(cssClasses.fleetEditorForm);
+    const board = PlayerBoard(cssClasses, boardSize);
+    const btnNextShip = ImageButton(cssClasses.nextButton);
+    const btnPrevShip = ImageButton(cssClasses.prevButton);
+    const btnRandomize = ImageButton(cssClasses.randomButton);
+    const btnRotate = ImageButton(cssClasses.rotateButton);
+    board.setName("Deploy fleet!");
+    
+    updateCurrentShipImage();
+
+    form.appendElements([
+        btnNext.element,
+        board.element,
+        currentShipImg.element,
+        btnNextShip.element,
+        btnPrevShip.element,
+        btnRandomize.element,
+        btnRotate.element
+    ]);
+
+    dialog.appendElements([
+        form.element
+    ]);
+
+    function updateCurrentShipImage()
+    {
+        currentShipImg.setSrc(fleetImages[currentShipIndex]);
+    }
+
+    function selectNextShip()
+    {
+        if (currentShipIndex === fleetImages.length - 1)
+        {
+            currentShipIndex = 0;
+        }
+        else
+        {
+            currentShipIndex++;
+        }
+    }
+
+    function selectPreviousShip()
+    {
+        if (currentShipIndex === 0)
+        {
+            currentShipIndex = fleetImages.length - 1;
+        }
+        else
+        {
+            currentShipIndex--;
+        }
+    }
+
+    function openDialog()
+    {
+        dialog.open();
+    }
+
+    function closeDialog()
+    {
+        dialog.close();
+    }
+
+    btnNext.element.addEventListener("click", () => {
+
+    });
+
+    return {
+        element: dialog.element,
+        openDialog,
+        closeDialog,
+    }
+}
+
+function DialogForm(formClasses)
+{
+    const form = document.createElement("form");
+    form.method = "dialog";
+    addClasses(form, formClasses);
+
+    function appendElements(elements)
+    {
+        appendToParent(form, elements);
+    }
+
+    return {
+        element: form,
+        appendElements,
+    }
+}
+
+function Dialog(dialogClasses)
+{
+    const dialog = document.createElement("dialog");
+    addClasses(dialog, dialogClasses);
+
+    function open()
+    {
+        dialog.showModal();
+    }
+
+    function close()
+    {
+        dialog.close();
+    }
+
+    function appendElements(elements)
+    {
+        appendToParent(dialog, elements);
+    }
+
+    return {
+        element: dialog,
+        open,
+        close,
+        appendElements
+    }
+}
+
+function DialogButton(dialogButtonClasses, text, type)
+{
+    const btnDialog = document.createElement("button");
+    addClasses(btnDialog, dialogButtonClasses);
+    btnDialog.innerText = text;
+    btnDialog.type = type;
+
+    return {
+        element: btnDialog,
+    }
+}
+
+function CurrentShipImage(selectedShipClasses)
+{
+    const imgShip = new Image();
+    addClasses(imgShip, selectedShipClasses);
+
+    function setSrc(newSrc)
+    {
+        imgShip.src = newSrc;
+    }
+
+    return {
+        element: imgShip,
+        setSrc,
     }
 }
 
 function Controls(cssClasses)
 {
     const controlsContainer = ControlsContainer(cssClasses.controls);
-    const fireButton = FireButton(cssClasses.fireButton);
+    const fireButton = ImageButton(cssClasses.fireButton);
     const shotsCounter = ShotsCounter(cssClasses.shotsCounter);
     
     controlsContainer.element.append(
@@ -166,23 +355,24 @@ function ShotsCounter(shotsCounterClasses)
     }
 }
 
-function FireButton(buttonClasses)
+function ImageButton(buttonClasses, type = "button")
 {
-    const btnFire = document.createElement("button");
-    addClasses(btnFire, buttonClasses);
+    const btn = document.createElement("button");
+    addClasses(btn, buttonClasses);
+    btn.type = type;
 
     function disable()
     {
-        btnFire.disabled = true;
+        btn.disabled = true;
     }
 
     function enable()
     {
-        btnFire.disabled = false;
+        btn.disabled = false;
     }
 
     return {
-        element: btnFire,
+        element: btn,
         disable,
         enable
     }
@@ -533,4 +723,12 @@ function randomSnapRotation(element)
 function randomRotation(element, maxAngle, minAngle)
 {
     element.style.transform = `rotate(${Math.floor(Math.random() * (maxAngle - minAngle + 1)) + minAngle}deg)`;
+}
+
+function appendToParent(parent, children)
+{
+    children.forEach(child => {
+
+        parent.appendChild(child);
+    });
 }

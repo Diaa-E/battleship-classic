@@ -8,6 +8,16 @@ function uiScreen(boardSize)
 {
     const ui = DocumentUi(boardSize);
 
+    function openFleetEditor()
+    {
+        ui.openFleetEditor();
+    }
+
+    function closeFleetEditor()
+    {
+        ui.closeFleetEditor();
+    }
+
     function refreshAiBoard(pinBox, aiBoard, decodedCoord)
     {
         ui.refreshAiBoard(pinBox, aiBoard, decodedCoord);
@@ -64,6 +74,8 @@ function uiScreen(boardSize)
         updateRemainingShots,
         enableFireButton,
         disableFireButton,
+        openFleetEditor,
+        closeFleetEditor,
     }
 }
 

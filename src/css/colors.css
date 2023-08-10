@@ -1,9 +1,10 @@
 :root{
-    --c-background: #97bfe2;
+    --c-background: hsla(208, 56%, 74%, 100%);
     --c-red: #d30c7b;
     --c-blue: #1e96fc;
     --c-grey: #545863;
     --c-orange: #f96e46;
     --c-black: black;
     --c-white: white;
+    --c-none: rgba(0, 0, 0, 0);
 }
