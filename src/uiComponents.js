@@ -151,8 +151,8 @@ function FleetEditor(cssClasses, boardSize)
     const btnPrevShip = ImageButton(cssClasses.prevButton);
     const btnRandomize = ImageButton(cssClasses.randomButton);
     const btnRotate = ImageButton(cssClasses.rotateButton);
-    board.setName("Deploy fleet!");
     
+    board.setName("Deploy fleet!");
     updateCurrentShipImage();
 
     form.appendElements([
@@ -168,6 +168,18 @@ function FleetEditor(cssClasses, boardSize)
     dialog.appendElements([
         form.element
     ]);
+
+    btnNextShip.element.addEventListener("click", () => {
+
+        selectNextShip();
+        updateCurrentShipImage();
+    });
+
+    btnPrevShip.element.addEventListener("click", () => {
+
+        selectPreviousShip();
+        updateCurrentShipImage();
+    });
 
     function updateCurrentShipImage()
     {

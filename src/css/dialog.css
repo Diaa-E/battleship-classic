@@ -39,7 +39,7 @@
 }
 
 .current-ship{
-    height: 10vw;
+    height: 15vh;
     grid-area: ship;
 }
 
