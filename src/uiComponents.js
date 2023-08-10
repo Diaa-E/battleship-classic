@@ -124,6 +124,8 @@ function FleetEditor(boardSize)
         nameTag: ["name-tag"],
         board: ["board-container"],
         boardSquare: ["square"],
+        empty: ["editor-empty"],
+        ship: ["ship"]
     };
 
     const fleetImages = [
@@ -173,6 +175,11 @@ function FleetEditor(boardSize)
         selectPreviousShip();
         updateCurrentShipImage();
     });
+
+    function refreshBoard(playerBoard)
+    {
+        board.init(playerBoard);
+    }
 
     function mount()
     {
@@ -227,5 +234,6 @@ function FleetEditor(boardSize)
         openDialog,
         closeDialog,
         mount,
+        refreshBoard,
     }
 }

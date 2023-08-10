@@ -9,6 +9,11 @@ function uiScreen(boardSize)
     const mainUi = MainUi(boardSize);
     const fleetEditor = FleetEditor(boardSize);
 
+    function refreshEditorBoard(playerBoard)
+    {
+        fleetEditor.refreshBoard(playerBoard);
+    }
+
     function openFleetEditor()
     {
         fleetEditor.openDialog();
@@ -78,6 +83,7 @@ function uiScreen(boardSize)
         disableFireButton,
         openFleetEditor,
         closeFleetEditor,
+        refreshEditorBoard,
     }
 }
 

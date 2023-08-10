@@ -65,6 +65,16 @@
     cursor: pointer;
 }
 
+.editor-empty{
+    width: 90%;
+    opacity: 0%;
+}
+
+.editor-empty:hover{
+    opacity: 100%;
+    cursor: pointer;
+}
+
 @media (min-width: 700px) and (orientation: landscape){
     .sticker{
         --width: 30vw;
