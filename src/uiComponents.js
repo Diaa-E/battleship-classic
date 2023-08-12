@@ -192,6 +192,11 @@ function FleetEditor(boardSize)
         }
     }
 
+    btnRotate.element.addEventListener("click", (e) => {
+
+        dispatchCustomEvent("shipRotated", {shipIndex: currentShipIndex}, e.target, true);
+    });
+
     function dispatchCustomEvent(eventType, data, dispatcherElement, bubbles = true)
     {
         const event = new CustomEvent(eventType, {
