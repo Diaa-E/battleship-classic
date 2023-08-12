@@ -151,6 +151,7 @@ function initBoard(hideShips, uiBoard, board, cssClasses)
 
 function initEditorBoard(uiBoard, board, cssClasses)
 {
+    uiBoard.clearAllSquares();
     for (let y = 0; y < board.length; y++)
     {
         for (let x = 0; x < board.length; x++)

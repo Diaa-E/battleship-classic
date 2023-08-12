@@ -192,9 +192,21 @@ function Board(boardClasses, boardSquareClasses, boardSize)
         return uiSquares[decodedCoord[1]][decodedCoord[0]];
     }
 
+    function clearAllSquares()
+    {
+        uiSquares.forEach(row => {
+
+            row.forEach(square => {
+
+                square.innerHTML = "";
+            });
+        });
+    }
+
     return {
         element: divBoard,
-        getSquare
+        getSquare,
+        clearAllSquares,
     }
 }
 
