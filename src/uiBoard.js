@@ -25,7 +25,7 @@ function EditorBoard(cssClasses, boardSize)
         encodedShipPosition.forEach(codedPair => {
 
             const uiSquare = getUiSquare(decodeCoord(codedPair.coord), playerBoard.element);
-            addClasses(uiSquare, highlightClasses);
+            addClasses(uiSquare.firstChild, highlightClasses);
         });
     }
 
@@ -34,7 +34,7 @@ function EditorBoard(cssClasses, boardSize)
         encodedShipPosition.forEach(codedPair => {
 
             const uiSquare = getUiSquare(decodeCoord(codedPair.coord), playerBoard.element);
-            removeClasses(uiSquare, highlightClasses);
+            removeClasses(uiSquare.firstChild, highlightClasses);
         });
     }
 
