@@ -9,6 +9,16 @@ function uiScreen(boardSize)
     const mainUi = MainUi(boardSize);
     const fleetEditor = FleetEditor(boardSize);
 
+    function highLightShip(encodedShipPosition)
+    {
+        fleetEditor.highLightShip(encodedShipPosition);
+    }
+
+    function unhighLightShip(encodedShipPosition)
+    {
+        fleetEditor.unhighlightShip(encodedShipPosition);
+    }
+
     function refreshEditorBoard(playerBoard)
     {
         fleetEditor.refreshBoard(playerBoard);
@@ -84,6 +94,8 @@ function uiScreen(boardSize)
         openFleetEditor,
         closeFleetEditor,
         refreshEditorBoard,
+        highLightShip,
+        unhighLightShip,
     }
 }
 

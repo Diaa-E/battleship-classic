@@ -1,6 +1,7 @@
 "use strict";
 
-import { addClasses, randomSnapRotation, initBoard, initEditorBoard } from "./uiUtility";
+import { addClasses, randomSnapRotation, initBoard, initEditorBoard, getUiSquare, removeClasses } from "./uiUtility";
+import { decodeCoord } from "./positionUtility";
 
 export {
     PlayerBoard,
@@ -17,6 +18,24 @@ function EditorBoard(cssClasses, boardSize)
     function refreshBoard(board)
     {
 
+    }
+
+    function highlightShip(highlightClasses, encodedShipPosition)
+    {
+        encodedShipPosition.forEach(codedPair => {
+
+            const uiSquare = getUiSquare(decodeCoord(codedPair.coord), playerBoard.element);
+            addClasses(uiSquare, highlightClasses);
+        });
+    }
+
+    function unhighlightShip(highlightClasses, encodedShipPosition)
+    {
+        encodedShipPosition.forEach(codedPair => {
+
+            const uiSquare = getUiSquare(decodeCoord(codedPair.coord), playerBoard.element);
+            removeClasses(uiSquare, highlightClasses);
+        });
     }
 
     function init(board)
@@ -39,6 +58,8 @@ function EditorBoard(cssClasses, boardSize)
         refreshBoard,
         setName,
         init,
+        highlightShip,
+        unhighlightShip,
     };
 }
 

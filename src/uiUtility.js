@@ -11,6 +11,7 @@ export {
     updateSquare,
     initBoard,
     initEditorBoard,
+    getUiSquare,
 };
 
 function addClasses(element, cssClasses = [])

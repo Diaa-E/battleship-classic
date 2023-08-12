@@ -125,7 +125,8 @@ function FleetEditor(boardSize)
         board: ["board-container"],
         boardSquare: ["square"],
         empty: ["editor-empty"],
-        ship: ["ship"]
+        ship: ["ship"],
+        highlight: ["ship-highlight"],
     };
 
     const fleetImages = [
@@ -164,17 +165,39 @@ function FleetEditor(boardSize)
         form.element
     ]);
 
-    btnNextShip.element.addEventListener("click", () => {
+    btnNextShip.element.addEventListener("click", (e) => {
 
         selectNextShip();
         updateCurrentShipImage();
+        dispatchCustomEvent("currentShipChanged", {shipIndex: currentShipIndex}, e.target);
     });
 
-    btnPrevShip.element.addEventListener("click", () => {
+    btnPrevShip.element.addEventListener("click", (e) => {
 
         selectPreviousShip();
         updateCurrentShipImage();
+        dispatchCustomEvent("currentShipChanged", {shipIndex: currentShipIndex}, e.target);
     });
+
+    function dispatchCustomEvent(eventType, data, dispatcherElement, bubbles = true)
+    {
+        const event = new CustomEvent(eventType, {
+            bubbles: bubbles,
+            detail: data
+        });
+
+        dispatcherElement.dispatchEvent(event);
+    }
+
+    function highLightShip(encodedShipPosition)
+    {
+        board.highlightShip(cssClasses.highlight, encodedShipPosition);
+    }
+
+    function unhighlightShip(encodedShipPosition)
+    {
+        board.unhighlightShip(cssClasses.highlight, encodedShipPosition);
+    }
 
     function refreshBoard(playerBoard)
     {
@@ -235,5 +258,7 @@ function FleetEditor(boardSize)
         closeDialog,
         mount,
         refreshBoard,
+        highLightShip,
+        unhighlightShip,
     }
 }
