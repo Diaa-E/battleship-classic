@@ -1,6 +1,6 @@
 "use strict";
 
-import { addClasses, randomSnapRotation, initBoard, initEditorBoard, getUiSquare, removeClasses } from "./uiUtility";
+import { addClasses, randomSnapRotation, initBoard, initEditorBoard, removeClasses } from "./uiUtility";
 import { decodeCoord } from "./positionUtility";
 
 export {
@@ -24,7 +24,7 @@ function EditorBoard(cssClasses, boardSize)
     {
         encodedShipPosition.forEach(codedPair => {
 
-            const uiSquare = getUiSquare(decodeCoord(codedPair.coord), playerBoard.element);
+            const uiSquare = playerBoard.getSquare(decodeCoord(codedPair.coord));
             addClasses(uiSquare.firstChild, highlightClasses);
         });
     }
@@ -33,14 +33,14 @@ function EditorBoard(cssClasses, boardSize)
     {
         encodedShipPosition.forEach(codedPair => {
 
-            const uiSquare = getUiSquare(decodeCoord(codedPair.coord), playerBoard.element);
+            const uiSquare = playerBoard.getSquare(decodeCoord(codedPair.coord));
             removeClasses(uiSquare.firstChild, highlightClasses);
         });
     }
 
     function init(board)
     {
-        initEditorBoard(playerBoard.element, board, cssClasses);
+        initEditorBoard(playerBoard, board, cssClasses);
     }
 
     function setName(newName)
@@ -76,7 +76,7 @@ function PlayerBoard(cssClasses, boardSize)
 
     function init(board)
     {
-        initBoard(false, playerBoard.element, board, cssClasses);
+        initBoard(false, playerBoard, board, cssClasses);
     }
 
     function setName(newName)
@@ -125,7 +125,7 @@ function AiBoard(cssClasses, boardSize)
 
     function init(board)
     {
-        initBoard(true, aiBoard.element, board, cssClasses);
+        initBoard(true, aiBoard, board, cssClasses);
     }
 
     function setName(newName)
@@ -170,29 +170,37 @@ function NameTag(nameTagClasses)
 function Board(boardClasses, boardSquareClasses, boardSize)
 {
     const divBoard = document.createElement("div");
+    const uiSquares = [];
     addClasses(divBoard, boardClasses);
     divBoard.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
     divBoard.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
 
     for (let y = 0; y < boardSize; y++)
     {
+        uiSquares.push([]);
         for (let x = 0; x < boardSize; x++)
         {
-            const square = boardSquare(boardSquareClasses, [x, y]);
+            const square = BoardSquare(boardSquareClasses);
+            uiSquares[y].push(square.element);
             randomSnapRotation(square.element);
             divBoard.appendChild(square.element);
         }
     }
 
+    function getSquare(decodedCoord)
+    {
+        return uiSquares[decodedCoord[1]][decodedCoord[0]];
+    }
+
     return {
         element: divBoard,
+        getSquare
     }
 }
 
-function boardSquare(boardSquareClasses, coord)
+function BoardSquare(boardSquareClasses)
 {
     const divSquare = document.createElement("div");
-    divSquare.setAttribute("data-xy", `${coord[0]},${coord[1]}`);
     addClasses(divSquare, boardSquareClasses);
 
     return {

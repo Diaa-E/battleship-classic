@@ -11,7 +11,6 @@ export {
     updateSquare,
     initBoard,
     initEditorBoard,
-    getUiSquare,
 };
 
 function addClasses(element, cssClasses = [])
@@ -123,18 +122,13 @@ function drawMissed(uiSquare, missedClasses)
     uiSquare.append(imgMissed.element);
 }
 
-function getUiSquare(decodedCoord, uiBoard)
-{
-    return uiBoard.querySelector(`[data-xy="${decodedCoord[0]},${decodedCoord[1]}"]`);
-}
-
 function initBoard(hideShips, uiBoard, board, cssClasses)
 {
     for (let y = 0; y < board.length; y++)
     {
         for (let x = 0; x < board.length; x++)
         {
-            const uiSquare = getUiSquare([x, y], uiBoard);
+            const uiSquare = uiBoard.getSquare([x, y]);
 
             if (typeof board[y][x] === "object")
             {
@@ -161,7 +155,7 @@ function initEditorBoard(uiBoard, board, cssClasses)
     {
         for (let x = 0; x < board.length; x++)
         {
-            const uiSquare = getUiSquare([x, y], uiBoard);
+            const uiSquare = uiBoard.getSquare([x, y])
 
             if (typeof board[y][x] === "object")
             {
