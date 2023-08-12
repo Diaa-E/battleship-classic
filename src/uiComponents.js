@@ -13,6 +13,7 @@ import { Controls } from "./uiGameControls";
 import { CurrentShipImage } from "./uiImages";
 import { Dialog, DialogForm } from "./uiDialogs";
 import { DialogButton, ImageButton } from "./uiButtons";
+import { encodeCoord } from "./positionUtility";
 
 export { MainUi, FleetEditor };
 
@@ -178,6 +179,18 @@ function FleetEditor(boardSize)
         updateCurrentShipImage();
         dispatchCustomEvent("currentShipChanged", {shipIndex: currentShipIndex}, e.target);
     });
+
+    for (let y = 0; y < boardSize; y++)
+    {
+        for (let x = 0; x < boardSize; x++)
+        {
+            const square = board.getSquare([x, y]);
+            square.addEventListener("click", () => {
+
+                dispatchCustomEvent("shipMoved", {shipIndex: currentShipIndex, newPivot: encodeCoord([x, y])}, square, true);
+            });
+        }
+    }
 
     function dispatchCustomEvent(eventType, data, dispatcherElement, bubbles = true)
     {

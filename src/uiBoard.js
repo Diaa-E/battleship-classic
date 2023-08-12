@@ -38,6 +38,11 @@ function EditorBoard(cssClasses, boardSize)
         });
     }
 
+    function getSquare(decodedCoord)
+    {
+        return playerBoard.getSquare(decodedCoord);
+    }
+
     function init(board)
     {
         initEditorBoard(playerBoard, board, cssClasses);
@@ -60,6 +65,7 @@ function EditorBoard(cssClasses, boardSize)
         init,
         highlightShip,
         unhighlightShip,
+        getSquare,
     };
 }
 

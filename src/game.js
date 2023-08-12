@@ -65,6 +65,11 @@ export function Game(playerName, gameModeNumber)
         }
     }
 
+    function movePlayerShip(encodedCoord, encodedNewPivot)
+    {
+        players.human.moveShip(encodedCoord, encodedNewPivot);
+    }
+
     return {
         get aiTurn(){ return aiTurn },
         get gameOver(){ return gameOver },
@@ -84,6 +89,7 @@ export function Game(playerName, gameModeNumber)
         aiPlay,
         humanPlay,
         getTotalShots,
+        movePlayerShip,
     };
 }
 
