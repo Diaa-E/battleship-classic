@@ -197,6 +197,11 @@ function FleetEditor(boardSize)
         dispatchCustomEvent("shipRotated", {shipIndex: currentShipIndex}, e.target, true);
     });
 
+    btnRandomize.element.addEventListener("click", (e) => {
+
+        dispatchCustomEvent("fleetRandomized", {shipIndex: currentShipIndex}, e.target, true);
+    });
+
     function dispatchCustomEvent(eventType, data, dispatcherElement, bubbles = true)
     {
         const event = new CustomEvent(eventType, {

@@ -43,7 +43,15 @@ function newGame()
         screen.refreshEditorBoard(game.humanBoard);
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
         screen.initBoards(game.humanBoard, game.aiBoard);
-    })
+    });
+
+    document.addEventListener("fleetRandomized", (e) => {
+
+        game.players.human.randomizeFleet();
+        screen.refreshEditorBoard(game.humanBoard);
+        screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
+        screen.initBoards(game.humanBoard, game.aiBoard);
+    });
     // game.humanFleet.ships.forEach(ship => {
 
     //     ship.position.forEach(square => {

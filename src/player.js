@@ -12,6 +12,11 @@ function Player(playerName, rules, pinBox)
     const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE, pinBox);
     let totalShots = 0;
 
+    function randomizeFleet()
+    {
+        gameBoard.randomizeFleet();
+    }
+
     function moveShip(encodedCoord, encodedNewIvot)
     {
         gameBoard.moveShip(encodedCoord, encodedNewIvot);
@@ -54,6 +59,7 @@ function Player(playerName, rules, pinBox)
         getAvailableShots,
         fleetDestroyed,
         addShotsFired,
+        randomizeFleet,
     };
 }
 
