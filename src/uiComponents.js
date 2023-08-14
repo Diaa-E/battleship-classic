@@ -150,7 +150,7 @@ function GameSettings()
     btnNext.element.addEventListener("click", (e) => {
 
         dispatchCustomEvent(
-            "gameSettingsChanged",
+            "gameSettingsClosed",
             {playerName: txtName.getValue(), gameMode: checkAdvancedMode.isChecked() ? 1 : 0},
             e.target,
             true

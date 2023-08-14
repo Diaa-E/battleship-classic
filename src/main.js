@@ -13,7 +13,7 @@ function newGame()
     screen.loadGameSettings();
     screen.openGameSettings();
 
-    document.addEventListener("gameSettingsChanged", (e) => {
+    document.addEventListener("gameSettingsClosed", (e) => {
 
         game.init(e.detail.playerName, e.detail.gameMode);
         screen.loadFleetEditor(game.rules.BOARD_SIZE);
