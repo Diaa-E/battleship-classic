@@ -14,8 +14,10 @@ import { CurrentShipImage } from "./uiImages";
 import { Dialog, DialogForm } from "./uiDialogs";
 import { DialogButton, ImageButton } from "./uiButtons";
 import { encodeCoord } from "./positionUtility";
+import { TextBox } from "./uiTextboxes";
+import { NamePrompt } from "./uiPrompts";
 
-export { MainUi, FleetEditor };
+export { MainUi, FleetEditor, GameSettings };
 
 function MainUi(boardSize)
 {
@@ -107,6 +109,63 @@ function MainUi(boardSize)
         updateRemainingShots,
         enableFireButton,
         disableFireButton,
+    }
+}
+
+function GameSettings()
+{
+    const cssClasses = {
+        dialog: ["dialog"],
+        dialogButton: ["dialog-button"],
+        settingsForm: ["settings-form"],
+        nameTextbox: ["name-textbox"],
+        namePrompt: ["name-prompt"],
+        namePromptContainer: ["name-prompt-container"],
+    };
+
+    const dialog = Dialog(cssClasses.dialog);
+    const form = DialogForm(cssClasses.settingsForm);
+    const btnNext = DialogButton(cssClasses.dialogButton, "Next", "submit");
+    const txtName = TextBox(cssClasses.nameTextbox, "Your name...", 10, true);
+    const namePrompt = NamePrompt(cssClasses);
+
+    form.appendElements([
+        btnNext.element,
+        txtName.element,
+        namePrompt.element,
+    ]);
+
+    dialog.appendElements([
+        form.element,
+    ]);
+
+    function getPlayerName()
+    {
+        return txtName.getValue();
+    }
+
+    function openDialog()
+    {
+        dialog.open();
+    }
+
+    function closeDialog()
+    {
+        dialog.close();
+    }
+
+    function mount()
+    {
+        document.body.appendChild(dialog.element);
+    }
+
+    return {
+        element: dialog.element,
+
+        mount,
+        closeDialog,
+        openDialog,
+        getPlayerName,
     }
 }
 

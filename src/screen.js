@@ -1,6 +1,6 @@
 "use strict";
 
-import { FleetEditor, MainUi } from "./uiComponents";
+import { FleetEditor, MainUi, GameSettings } from "./uiComponents";
 
 export { ConsoleScreen, uiScreen };
 
@@ -8,6 +8,17 @@ function uiScreen(boardSize)
 {
     const mainUi = MainUi(boardSize);
     const fleetEditor = FleetEditor(boardSize);
+    const gameSettings = GameSettings();
+
+    function openGameSettings()
+    {
+        gameSettings.openDialog();
+    }
+
+    function closeGameSettings()
+    {
+        gameSettings.closeDialog();
+    }
 
     function highLightShip(encodedShipPosition)
     {
@@ -58,6 +69,7 @@ function uiScreen(boardSize)
     {
         mainUi.mount();
         fleetEditor.mount();
+        gameSettings.mount();
     }
 
     function initBoards(playerBoard, aiBoard)
@@ -96,6 +108,8 @@ function uiScreen(boardSize)
         refreshEditorBoard,
         highLightShip,
         unhighLightShip,
+        openGameSettings,
+        closeGameSettings
     }
 }
 

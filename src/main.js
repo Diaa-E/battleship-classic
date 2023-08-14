@@ -16,7 +16,8 @@ function newGame()
     screen.setPlayerName(game.humanName);
     screen.initBoards(game.humanBoard, game.aiBoard);
     screen.disableFireButton();
-    screen.openFleetEditor();
+    //screen.openFleetEditor();
+    screen.openGameSettings();
     screen.refreshEditorBoard(game.humanBoard);
     screen.highLightShip(game.humanFleet.ships[0].position);
 
