@@ -11,6 +11,7 @@ export {
     updateSquare,
     initBoard,
     initEditorBoard,
+    dispatchCustomEvent,
 };
 
 function addClasses(element, cssClasses = [])
@@ -169,4 +170,14 @@ function initEditorBoard(uiBoard, board, cssClasses)
             }
         }
     }
+}
+
+function dispatchCustomEvent(eventType, data, dispatcherElement, bubbles = true)
+{
+    const event = new CustomEvent(eventType, {
+        bubbles: bubbles,
+        detail: data
+    });
+
+    dispatcherElement.dispatchEvent(event);
 }

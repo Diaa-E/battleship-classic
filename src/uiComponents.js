@@ -17,6 +17,7 @@ import { encodeCoord } from "./positionUtility";
 import { TextBox } from "./uiTextboxes";
 import { NamePrompt } from "./uiPrompts";
 import { CheckBox } from "./uiCheckboxes";
+import { dispatchCustomEvent } from "./uiUtility";
 
 export { MainUi, FleetEditor, GameSettings };
 
@@ -267,16 +268,6 @@ function FleetEditor(boardSize)
 
         dispatchCustomEvent("fleetRandomized", {shipIndex: currentShipIndex}, e.target, true);
     });
-
-    function dispatchCustomEvent(eventType, data, dispatcherElement, bubbles = true)
-    {
-        const event = new CustomEvent(eventType, {
-            bubbles: bubbles,
-            detail: data
-        });
-
-        dispatcherElement.dispatchEvent(event);
-    }
 
     function highLightShip(encodedShipPosition)
     {
