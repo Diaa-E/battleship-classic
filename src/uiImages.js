@@ -1,6 +1,6 @@
 "use strict";
 
-import { addClasses, randomRotation } from "./uiUtility";
+import { addClasses, randomRotation, randomSnapRotation } from "./uiUtility";
 
 import shipImagePath from "../assets/images/ship.svg";
 import emptyImagePath from "../assets/images/empty.svg";
