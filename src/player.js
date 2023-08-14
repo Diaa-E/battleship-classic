@@ -107,50 +107,7 @@ function Ai(rules, pinBox)
 
     function _placeShips()
     {
-        for (let ship of gameBoard.fleet.ships)
-        {
-            let availableSquares = _getAvailableSquares(ship);
-
-            while (availableSquares.length > 0)
-            {
-                const i = _getRandomIndex(availableSquares);
-
-                if (gameBoard.moveShip(encodeCoord(ship.pivot), availableSquares[i]))
-                {
-                    if (Math.floor(Math.random() * 100) > 50)
-                    {
-                        gameBoard.rotateShip(encodeCoord(ship.pivot));
-                    }
-
-                    break;
-                }
-
-                availableSquares.splice(i, 1);
-            }
-        }
-    }
-
-    function _getAvailableSquares(ship)
-    {
-        let availableSquares = [];
-
-        for (let y = 0; y < gameBoard.board.length; y++)
-        {
-            for (let x = 0; x < gameBoard.board.length; x++)
-            {
-                if (gameBoard.board[y][x] === ship || gameBoard.board[y][x] === pinBox.empty)
-                {
-                    availableSquares.push(encodeCoord([x, y]));
-                }
-            }
-        }
-
-        return availableSquares;
-    }
-
-    function _getRandomIndex(array)
-    {
-        return Math.floor(Math.random() * array.length);
+        gameBoard.randomizeFleet();
     }
 
     function receiveAttack(encodedCoord)
