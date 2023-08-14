@@ -1,0 +1,11 @@
+.name-textbox{
+    background-color: var(--c-white);
+    border-radius: 1vw;
+    border: .2vh solid black;
+    padding: 1vw;
+    font-family: var(--font-hand);
+    font-size: 2vw;
+    box-shadow: 0vw 0vw .2vw .1vw rgba(0, 0, 0, 0.5);
+    grid-area: name-box;
+    justify-self: stretch;
+}

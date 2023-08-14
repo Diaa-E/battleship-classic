@@ -4,6 +4,8 @@
 @import url("./board.css");
 @import url("./controls.css");
 @import url("./dialog.css");
+@import url("./input.css");
+@import url("./prompts.css");
 
 body{
     background-color: var(--c-background);

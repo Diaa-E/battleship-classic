@@ -8,6 +8,21 @@
     /*for some reason color variables are not working*/
 }
 
+.settings-form{
+    background-color: var(--c-background);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 2fr) 1fr;
+    grid-template-areas: 
+    "name-prompt"
+    "name-box"
+    "advanced"
+    "next";
+    gap: 2vw;
+    place-items: center;
+    place-content: center;
+}
+
 .fleet-editor-form{
     background-color: var(--c-background);
     display: grid;
