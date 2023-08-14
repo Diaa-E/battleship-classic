@@ -9,3 +9,35 @@
     grid-area: name-box;
     justify-self: stretch;
 }
+
+.checkbox-container{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    background-image: url("../../assets/images/advanced_mode.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30vw;
+    height: 12vw;
+    padding-bottom: 4vw;
+    padding-top: 8vw;
+    padding-right: 8vw;
+    place-items: center;
+    place-content: center;
+}
+
+.check-button{
+    background-image: url("../../assets/images/square.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 3vw;
+    height: 3vw;
+    cursor: pointer;
+}
+
+.checkbox-label{
+    font-family: var(--font-hand);
+    font-size: 2vw;
+    cursor: pointer;
+}

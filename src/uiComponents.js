@@ -16,6 +16,7 @@ import { DialogButton, ImageButton } from "./uiButtons";
 import { encodeCoord } from "./positionUtility";
 import { TextBox } from "./uiTextboxes";
 import { NamePrompt } from "./uiPrompts";
+import { CheckBox } from "./uiCheckboxes";
 
 export { MainUi, FleetEditor, GameSettings };
 
@@ -121,6 +122,10 @@ function GameSettings()
         nameTextbox: ["name-textbox"],
         namePrompt: ["name-prompt"],
         namePromptContainer: ["name-prompt-container"],
+        checkBoxContainer: ["checkbox-container"],
+        checkButton: ["check-button"],
+        checkMark: ["check-mark"],
+        checkBoxLabel: ["checkbox-label"],
     };
 
     const dialog = Dialog(cssClasses.dialog);
@@ -128,11 +133,13 @@ function GameSettings()
     const btnNext = DialogButton(cssClasses.dialogButton, "Next", "submit");
     const txtName = TextBox(cssClasses.nameTextbox, "Your name...", 10, true);
     const namePrompt = NamePrompt(cssClasses);
+    const checkAdvancedMode = CheckBox(cssClasses, "Advanced mode")
 
     form.appendElements([
         btnNext.element,
         txtName.element,
         namePrompt.element,
+        checkAdvancedMode.element
     ]);
 
     dialog.appendElements([

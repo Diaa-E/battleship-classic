@@ -18,7 +18,27 @@ export {
     EmptyImg,
     ShipImg,
     SunkImg,
-    EmptyEditorImg
+    EmptyEditorImg,
+    CheckMark
+}
+
+function CheckMark(checkMarkClasses)
+{
+    const imgMark = new Image();
+    imgMark.src = missedImagePath;
+    addClasses(imgMark, checkMarkClasses);
+    randomSnapRotation(imgMark);
+
+    function toggle(checked)
+    {
+        checked ? imgMark.style.opacity = "100%" : imgMark.style.opacity = "0%";
+    }
+
+    return {
+        element: imgMark,
+
+        toggle,
+    };
 }
 
 function CurrentShipImage(selectedShipClasses)
