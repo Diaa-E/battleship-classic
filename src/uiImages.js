@@ -4,7 +4,7 @@ import { addClasses, randomRotation } from "./uiUtility";
 
 import shipImagePath from "../assets/images/ship.svg";
 import emptyImagePath from "../assets/images/empty.svg";
-import crossedImagePath from "../assets/images/sunk.svg";
+import crossedImagePath from "../assets/images/crossed.svg";
 import sunkImagePath from "../assets/images/sunk.svg";
 import missedImagePath from "../assets/images/missed.svg";
 import damagedImagePath from "../assets/images/damaged.svg";
