@@ -8,18 +8,25 @@ newGame();
 
 function newGame()
 {
-    const game = Game("Human", 0);
-    const screen = uiScreen(game.rules.BOARD_SIZE);
-    screen.mount();
-
-    screen.setAiName(game.aiName);
-    screen.setPlayerName(game.humanName);
-    screen.initBoards(game.humanBoard, game.aiBoard);
-    screen.disableFireButton();
-    //screen.openFleetEditor();
+    const game = Game();
+    const screen = uiScreen();
+    screen.loadGameSettings();
     screen.openGameSettings();
-    screen.refreshEditorBoard(game.humanBoard);
-    screen.highLightShip(game.humanFleet.ships[0].position);
+
+
+    document.addEventListener("gameSettingsChanged", (e) => {
+
+        game.init(e.detail.playerName, e.detail.gameMode);
+        screen.loadFleetEditor(game.rules.BOARD_SIZE);
+        screen.openFleetEditor();
+        screen.loadMainUi(game.rules.BOARD_SIZE);
+        screen.setAiName(game.aiName);
+        screen.setPlayerName(game.humanName);
+        screen.initBoards(game.humanBoard, game.aiBoard);
+        screen.disableFireButton();
+        screen.refreshEditorBoard(game.humanBoard);
+        screen.highLightShip(game.humanFleet.ships[0].position);
+    });
 
     document.addEventListener("currentShipChanged", (e) => {
 

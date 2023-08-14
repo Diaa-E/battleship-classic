@@ -4,11 +4,29 @@ import { FleetEditor, MainUi, GameSettings } from "./uiComponents";
 
 export { ConsoleScreen, uiScreen };
 
-function uiScreen(boardSize)
+function uiScreen()
 {
-    const mainUi = MainUi(boardSize);
-    const fleetEditor = FleetEditor(boardSize);
-    const gameSettings = GameSettings();
+    let mainUi;
+    let fleetEditor;
+    let gameSettings;
+
+    function loadMainUi(boardSize)
+    {
+        mainUi = MainUi(boardSize);
+        mainUi.mount();
+    }
+
+    function loadFleetEditor(boardSize)
+    {
+        fleetEditor = FleetEditor(boardSize);
+        fleetEditor.mount();
+    }
+
+    function loadGameSettings()
+    {
+        gameSettings = GameSettings();
+        gameSettings.mount();
+    }
 
     function openGameSettings()
     {
@@ -65,13 +83,6 @@ function uiScreen(boardSize)
         mainUi.setAiName(newName);
     }
 
-    function mount()
-    {
-        mainUi.mount();
-        fleetEditor.mount();
-        gameSettings.mount();
-    }
-
     function initBoards(playerBoard, aiBoard)
     {
         mainUi.initAiBoard(aiBoard);
@@ -98,7 +109,6 @@ function uiScreen(boardSize)
         refreshPlayerBoard,
         setPlayerName,
         setAiName,
-        mount,
         initBoards,
         updateRemainingShots,
         enableFireButton,
@@ -109,7 +119,10 @@ function uiScreen(boardSize)
         highLightShip,
         unhighLightShip,
         openGameSettings,
-        closeGameSettings
+        closeGameSettings,
+        loadFleetEditor,
+        loadGameSettings,
+        loadMainUi,
     }
 }
 

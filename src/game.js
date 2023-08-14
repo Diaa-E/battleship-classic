@@ -3,17 +3,23 @@
 import { Player, Ai } from "./player";
 import { pickGameMode } from "./rules";
 
-export function Game(playerName, gameModeNumber)
+export function Game()
 {
     let pinBox = PinBox("E", "M", "H", "S");
-    const rules = pickGameMode(gameModeNumber);
+    let rules;
     let aiTurn = pickRandomTurn() === 0 ? false : true;
     let gameOver = false;
     let winner = undefined;
-    const players ={
-        human: Player(playerName, rules, pinBox),
-        ai: Ai(rules, pinBox)
-    };
+    let players;
+
+    function init(playerName, gameModeNumber)
+    {
+        rules = pickGameMode(gameModeNumber);
+        players = {
+            human: Player(playerName, rules, pinBox),
+            ai: Ai(rules, pinBox)
+        };
+    }
     
     function switchTurn()
     {
@@ -96,6 +102,7 @@ export function Game(playerName, gameModeNumber)
         getTotalShots,
         movePlayerShip,
         rotatePlayerShip,
+        init
     };
 }
 

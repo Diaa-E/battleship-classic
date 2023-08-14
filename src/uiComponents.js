@@ -134,7 +134,7 @@ function GameSettings()
     const btnNext = DialogButton(cssClasses.dialogButton, "Next", "submit");
     const txtName = TextBox(cssClasses.nameTextbox, "Your name...", 10, true);
     const namePrompt = NamePrompt(cssClasses);
-    const checkAdvancedMode = CheckBox(cssClasses, "Advanced mode")
+    const checkAdvancedMode = CheckBox(cssClasses, "Advanced mode");
 
     form.appendElements([
         btnNext.element,
@@ -146,6 +146,16 @@ function GameSettings()
     dialog.appendElements([
         form.element,
     ]);
+
+    btnNext.element.addEventListener("click", (e) => {
+
+        dispatchCustomEvent(
+            "gameSettingsChanged",
+            {playerName: txtName.getValue(), gameMode: checkAdvancedMode.isChecked() ? 1 : 0},
+            e.target,
+            true
+        );
+    })
 
     function getPlayerName()
     {
