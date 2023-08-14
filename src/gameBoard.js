@@ -1,7 +1,9 @@
 "use strict";
 
-import { checkFleetDestroyed, createFleet, updateFleet } from "./fleet";
+import { createFleet } from "./fleet";
 import { decodeCoord, positionConflict, rotationConflict, updateMissed } from "./positionUtility";
+import { encodeCoord } from "./positionUtility";
+
 export { GameBoard, EmptyBoard, processShot, calculateAvailableShots};
 
 function GameBoard(shipList, boardSize, pinBox)
@@ -10,6 +12,54 @@ function GameBoard(shipList, boardSize, pinBox)
     let board = EmptyBoard(boardSize, pinBox.empty);
     let fleet = createFleet(shipList);
     _clearAndUpdate();
+
+    function randomizeFleet()
+    {
+        for (let ship of fleet.ships)
+        {
+            let availableSquares = _getAvailableSquares(ship);
+
+            while (availableSquares.length > 0)
+            {
+                const i = _getRandomIndex(availableSquares);
+
+                if (moveShip(encodeCoord(ship.pivot), availableSquares[i]))
+                {
+                    if (Math.floor(Math.random() * 100) > 50)
+                    {
+                        rotateShip(encodeCoord(ship.pivot));
+                    }
+
+                    break;
+                }
+
+                availableSquares.splice(i, 1);
+            }
+        }
+    }
+
+    function _getAvailableSquares(ship)
+    {
+        let availableSquares = [];
+
+        for (let y = 0; y < board.length; y++)
+        {
+            for (let x = 0; x < board.length; x++)
+            {
+                if (board[y][x] === ship || board[y][x] === pinBox.empty)
+                {
+                    availableSquares.push(encodeCoord([x, y]));
+                }
+            }
+        }
+
+        return availableSquares;
+    }
+
+    function _getRandomIndex(array)
+    {
+        return Math.floor(Math.random() * array.length);
+    }
 
     function _clearBoard()
     {
@@ -96,6 +146,7 @@ function GameBoard(shipList, boardSize, pinBox)
         rotateShip,
         getAvailableShots,
         fleetDestroyed,
+        randomizeFleet
     }
 }
 
