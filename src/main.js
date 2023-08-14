@@ -13,19 +13,23 @@ function newGame()
     screen.loadGameSettings();
     screen.openGameSettings();
 
-
     document.addEventListener("gameSettingsChanged", (e) => {
 
         game.init(e.detail.playerName, e.detail.gameMode);
         screen.loadFleetEditor(game.rules.BOARD_SIZE);
         screen.openFleetEditor();
+        screen.refreshEditorBoard(game.humanBoard);
+        screen.highLightShip(game.humanFleet.ships[0].position);
+    });
+
+    document.addEventListener("fleetEditorClosed", (e) => {
+
         screen.loadMainUi(game.rules.BOARD_SIZE);
         screen.setAiName(game.aiName);
         screen.setPlayerName(game.humanName);
         screen.initBoards(game.humanBoard, game.aiBoard);
         screen.disableFireButton();
-        screen.refreshEditorBoard(game.humanBoard);
-        screen.highLightShip(game.humanFleet.ships[0].position);
+        screen.initBoards(game.humanBoard, game.aiBoard);
     });
 
     document.addEventListener("currentShipChanged", (e) => {
@@ -42,7 +46,6 @@ function newGame()
         game.movePlayerShip(game.humanFleet.ships[e.detail.shipIndex].position[0].coord, e.detail.newPivot);
         screen.refreshEditorBoard(game.humanBoard);
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
-        screen.initBoards(game.humanBoard, game.aiBoard);
     });
 
     document.addEventListener("shipRotated", (e) => {
@@ -50,7 +53,6 @@ function newGame()
         game.rotatePlayerShip(game.humanFleet.ships[e.detail.shipIndex].position[0].coord);
         screen.refreshEditorBoard(game.humanBoard);
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
-        screen.initBoards(game.humanBoard, game.aiBoard);
     });
 
     document.addEventListener("fleetRandomized", (e) => {
@@ -58,7 +60,6 @@ function newGame()
         game.players.human.randomizeFleet();
         screen.refreshEditorBoard(game.humanBoard);
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
-        screen.initBoards(game.humanBoard, game.aiBoard);
     });
     // game.humanFleet.ships.forEach(ship => {
 

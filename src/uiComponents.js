@@ -243,6 +243,11 @@ function FleetEditor(boardSize)
         form.element
     ]);
 
+    btnNext.element.addEventListener("click", (e) => {
+
+        dispatchCustomEvent("fleetEditorClosed", {}, e.target, true);
+    });
+
     btnNextShip.element.addEventListener("click", (e) => {
 
         selectNextShip();
