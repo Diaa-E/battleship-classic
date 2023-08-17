@@ -69,6 +69,11 @@
     cursor: pointer;
 }
 
+.marked{
+    opacity: 100%;
+    filter: invert(14%) sepia(91%) saturate(3511%) hue-rotate(313deg) brightness(103%) contrast(104%);
+}
+
 .editor-empty{
     width: 90%;
     opacity: 0%;

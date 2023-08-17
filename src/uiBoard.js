@@ -12,7 +12,7 @@ export {
 function EditorBoard(cssClasses, boardSize)
 {
     const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
-    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
+    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
     const playerNameTag = NameTag(cssClasses.nameTag);
 
     function refreshBoard(board)
@@ -24,7 +24,7 @@ function EditorBoard(cssClasses, boardSize)
     {
         encodedShipPosition.forEach(codedPair => {
 
-            const uiSquare = playerBoard.getSquare(decodeCoord(codedPair.coord));
+            const uiSquare = playerBoard.getSquare(decodeCoord(codedPair.coord)).element;
             addClasses(uiSquare.firstChild, highlightClasses);
         });
     }
@@ -33,7 +33,7 @@ function EditorBoard(cssClasses, boardSize)
     {
         encodedShipPosition.forEach(codedPair => {
 
-            const uiSquare = playerBoard.getSquare(decodeCoord(codedPair.coord));
+            const uiSquare = playerBoard.getSquare(decodeCoord(codedPair.coord)).element;
             removeClasses(uiSquare.firstChild, highlightClasses);
         });
     }
@@ -72,7 +72,7 @@ function EditorBoard(cssClasses, boardSize)
 function PlayerBoard(cssClasses, boardSize)
 {
     const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
-    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
+    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
     const playerNameTag = NameTag(cssClasses.nameTag);
 
     function refreshBoard(board)
@@ -116,7 +116,7 @@ function PlayerBoardContainer(playerContainerClasses)
 function AiBoard(cssClasses, boardSize)
 {
     const aiBoardContainer = AiBoardContainer(cssClasses.aiContainer);
-    const aiBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize);
+    const aiBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
     const aiNameTag = NameTag(cssClasses.nameTag);
 
     aiBoardContainer.element.append(
@@ -127,6 +127,21 @@ function AiBoard(cssClasses, boardSize)
     function refreshBoard(board)
     {
 
+    }
+
+    function getSquare(decodedCoord)
+    {
+        return aiBoard.getSquare(decodedCoord);
+    }
+
+    function markSquare(decodedCoord)
+    {
+        aiBoard.markSquare(decodedCoord, cssClasses.boardSquareMarked);
+    }
+
+    function unmarkSquare(decodedCoord)
+    {
+        aiBoard.markSquare(decodedCoord, cssClasses.boardSquareMarked);
     }
 
     function init(board)
@@ -141,9 +156,13 @@ function AiBoard(cssClasses, boardSize)
 
     return {
         element: aiBoardContainer.element,
+
         refreshBoard,
         setName,
         init,
+        markSquare,
+        unmarkSquare,
+        getSquare
     };
 }
 
@@ -173,7 +192,7 @@ function NameTag(nameTagClasses)
     }
 }
 
-function Board(boardClasses, boardSquareClasses, boardSize)
+function Board(boardClasses, boardSquareClasses, boardSize, boardMarkedSquareClasses)
 {
     const divBoard = document.createElement("div");
     const uiSquares = [];
@@ -186,8 +205,8 @@ function Board(boardClasses, boardSquareClasses, boardSize)
         uiSquares.push([]);
         for (let x = 0; x < boardSize; x++)
         {
-            const square = BoardSquare(boardSquareClasses);
-            uiSquares[y].push(square.element);
+            const square = BoardSquare(boardSquareClasses, boardMarkedSquareClasses);
+            uiSquares[y].push(square);
             randomSnapRotation(square.element);
             divBoard.appendChild(square.element);
         }
@@ -198,30 +217,65 @@ function Board(boardClasses, boardSquareClasses, boardSize)
         return uiSquares[decodedCoord[1]][decodedCoord[0]];
     }
 
+    function markSquare(decodedCoord, boardMarkedSquareClasses)
+    {
+        uiSquares[decodedCoord[1]][decodedCoord[0]].mark(boardMarkedSquareClasses);
+    }
+
+    function unmarkSquare(decodedCoord, boardMarkedSquareClasses)
+    {
+        uiSquares[decodedCoord[1]][decodedCoord[0]].unmark(boardMarkedSquareClasses);
+    }
+
     function clearAllSquares()
     {
         uiSquares.forEach(row => {
 
             row.forEach(square => {
 
-                square.innerHTML = "";
+                square.element.innerHTML = "";
             });
         });
     }
 
     return {
         element: divBoard,
+
         getSquare,
         clearAllSquares,
+        markSquare,
+        unmarkSquare
     }
 }
 
-function BoardSquare(boardSquareClasses)
+function BoardSquare(boardSquareClasses, boardMarkedSquareClasses)
 {
+    let marked = false;
     const divSquare = document.createElement("div");
     addClasses(divSquare, boardSquareClasses);
 
+    function isMarked()
+    {
+        return marked;
+    }
+
+    function mark()
+    {
+        marked = true;
+        addClasses(divSquare.firstChild, boardMarkedSquareClasses);
+    }
+
+    function unmark()
+    {
+        marked = false;
+        removeClasses(divSquare.firstChild, boardMarkedSquareClasses);
+    }
+
     return {
         element: divSquare,
+
+        isMarked,
+        mark,
+        unmark
     }
 }

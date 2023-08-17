@@ -30,6 +30,7 @@ function MainUi(boardSize)
         nameTag: ["name-tag"],
         board: ["board-container"],
         boardSquare: ["square"],
+        boardSquareMarked: ["marked"],
         empty: ["empty"],
         ship: ["ship"],
         sunk: ["sunk"],
@@ -44,6 +45,27 @@ function MainUi(boardSize)
     const playerBoard = PlayerBoard(cssClasses, boardSize);
     const aiBoard = AiBoard(cssClasses, boardSize);
     const controls = Controls(cssClasses);
+
+    for (let y = 0; y < boardSize; y++)
+    {
+        for (let x = 0; x < boardSize; x++)
+        {
+            const square = aiBoard.getSquare([x, y]);
+            square.element.addEventListener("click", (e) => {
+
+                console.log(`${x},${y}`);
+
+                if (square.isMarked())
+                {
+                    square.unmark(cssClasses.boardSquareMarked);
+                }
+                else
+                {
+                    square.mark(cssClasses.boardSquareMarked);
+                }
+            });
+        }
+    }
 
     function mount()
     {
@@ -266,7 +288,7 @@ function FleetEditor(boardSize)
     {
         for (let x = 0; x < boardSize; x++)
         {
-            const square = board.getSquare([x, y]);
+            const square = board.getSquare([x, y]).element;
             square.addEventListener("click", () => {
 
                 dispatchCustomEvent("shipMoved", {shipIndex: currentShipIndex, newPivot: encodeCoord([x, y])}, square, true);

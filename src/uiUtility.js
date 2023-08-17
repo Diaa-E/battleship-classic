@@ -130,7 +130,7 @@ function initBoard(hideShips, uiBoard, board, cssClasses)
     {
         for (let x = 0; x < board.length; x++)
         {
-            const uiSquare = uiBoard.getSquare([x, y]);
+            const uiSquare = uiBoard.getSquare([x, y]).element;
 
             if (typeof board[y][x] === "object")
             {
@@ -158,7 +158,7 @@ function initEditorBoard(uiBoard, board, cssClasses)
     {
         for (let x = 0; x < board.length; x++)
         {
-            const uiSquare = uiBoard.getSquare([x, y])
+            const uiSquare = uiBoard.getSquare([x, y]).element;
 
             if (typeof board[y][x] === "object")
             {
