@@ -53,16 +53,7 @@ function MainUi(boardSize)
             const square = aiBoard.getSquare([x, y]);
             square.element.addEventListener("click", (e) => {
 
-                console.log(`${x},${y}`);
-
-                if (square.isMarked())
-                {
-                    square.unmark(cssClasses.boardSquareMarked);
-                }
-                else
-                {
-                    square.mark(cssClasses.boardSquareMarked);
-                }
+                dispatchCustomEvent("attackMarkToggled", {uiSquare: square, decodedCoord: [x, y]}, square.element, true);
             });
         }
     }

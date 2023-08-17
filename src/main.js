@@ -62,6 +62,18 @@ function newGame()
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
     });
 
+    document.addEventListener("attackMarkToggled", (e) => {
+
+        if (e.detail.uiSquare.isMarked())
+        {
+            e.detail.uiSquare.unmark();
+        }
+        else
+        {
+            e.detail.uiSquare.mark();
+        }
+    });
+
     document.addEventListener("keydown", quickInit);
 
     function quickInit(e)
