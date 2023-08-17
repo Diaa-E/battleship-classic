@@ -61,6 +61,21 @@ function newGame()
         screen.refreshEditorBoard(game.humanBoard);
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
     });
+
+    document.addEventListener("keydown", (e) => {
+
+        if (e.code === "NumpadDivide")
+        {
+            screen.closeGameSettings();
+            game.init("Human", 1);
+            screen.loadMainUi(game.rules.BOARD_SIZE);
+            screen.setAiName(game.aiName);
+            screen.setPlayerName(game.humanName);
+            screen.initBoards(game.humanBoard, game.aiBoard);
+            screen.disableFireButton();
+            screen.initBoards(game.humanBoard, game.aiBoard);
+        }
+    })
     // game.humanFleet.ships.forEach(ship => {
 
     //     ship.position.forEach(square => {
