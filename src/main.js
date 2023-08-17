@@ -78,6 +78,7 @@ function newGame()
                 if (value === encodeCoord(e.detail.decodedCoord)) return index;
             });
             playerMarkedShots.splice(removeIndex, 1);
+            screen.disableFireButton();
             console.log(playerMarkedShots);
         }
         else
@@ -87,6 +88,8 @@ function newGame()
                 e.detail.uiSquare.mark();
                 playerMarkedShots.push(encodeCoord(e.detail.decodedCoord));
                 console.log(playerMarkedShots);
+
+                if (playerMarkedShots.length === playerAvailableShots) screen.enableFireButton();
             }
         }
     });
