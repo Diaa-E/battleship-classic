@@ -3,6 +3,7 @@
 import { Game } from "./game";
 import { ConsoleScreen, uiScreen } from "./screen";
 import "./css/style.css";
+import { encodeCoord } from "./positionUtility";
 
 newGame();
 
@@ -10,6 +11,9 @@ function newGame()
 {
     const game = Game();
     const screen = uiScreen();
+    let playerAvailableShots;
+    let playerMarkedShots = [];
+
     screen.loadGameSettings();
     screen.openGameSettings();
 
@@ -64,13 +68,26 @@ function newGame()
 
     document.addEventListener("attackMarkToggled", (e) => {
 
+        playerAvailableShots = game.players.human.getAvailableShots();
+
         if (e.detail.uiSquare.isMarked())
         {
             e.detail.uiSquare.unmark();
+            const removeIndex = playerMarkedShots.find((value, index) => {
+
+                if (value === encodeCoord(e.detail.decodedCoord)) return index;
+            });
+            playerMarkedShots.splice(removeIndex, 1);
+            console.log(playerMarkedShots);
         }
         else
         {
-            e.detail.uiSquare.mark();
+            if (!(playerMarkedShots.length === playerAvailableShots))
+            {
+                e.detail.uiSquare.mark();
+                playerMarkedShots.push(encodeCoord(e.detail.decodedCoord));
+                console.log(playerMarkedShots);
+            }
         }
     });
 
