@@ -62,8 +62,10 @@ function newGame()
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
     });
 
-    document.addEventListener("keydown", (e) => {
+    document.addEventListener("keydown", quickInit);
 
+    function quickInit(e)
+    {
         if (e.code === "NumpadDivide")
         {
             screen.closeGameSettings();
@@ -74,8 +76,9 @@ function newGame()
             screen.initBoards(game.humanBoard, game.aiBoard);
             screen.disableFireButton();
             screen.initBoards(game.humanBoard, game.aiBoard);
+            document.removeEventListener("keydown", quickInit);
         }
-    })
+    }
     // game.humanFleet.ships.forEach(ship => {
 
     //     ship.position.forEach(square => {
