@@ -79,7 +79,7 @@ function newGame()
             });
             playerMarkedShots.splice(removeIndex, 1);
             screen.disableFireButton();
-            console.log(playerMarkedShots);
+            screen.updateRemainingShots(playerAvailableShots - playerMarkedShots.length);
         }
         else
         {
@@ -87,9 +87,9 @@ function newGame()
             {
                 e.detail.uiSquare.mark();
                 playerMarkedShots.push(encodeCoord(e.detail.decodedCoord));
-                console.log(playerMarkedShots);
 
                 if (playerMarkedShots.length === playerAvailableShots) screen.enableFireButton();
+                screen.updateRemainingShots(playerAvailableShots - playerMarkedShots.length);
             }
         }
     });
