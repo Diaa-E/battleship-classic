@@ -68,6 +68,7 @@ function newGame()
 
     document.addEventListener("playerAttackInbound", (e) => {
 
+        screen.disableFireButton();
         game.humanPlay(encodedAttackCoords);
     });
 
