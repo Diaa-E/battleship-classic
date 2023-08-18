@@ -52,6 +52,7 @@
 }
 
 .ship{
+    position: absolute;
     object-fit: contain;
 }
 
@@ -60,8 +61,24 @@
 }
 
 .empty{
-    width: 90%;
+    position: absolute;
+    object-fit: contain;
     opacity: 0%;
+}
+
+.sunk{
+    position: absolute;
+    object-fit: contain;
+}
+
+.damaged{
+    position: absolute;
+    object-fit: contain;
+}
+
+.missed{
+    position: absolute;
+    object-fit: contain;
 }
 
 .ai-sticker .empty:hover{

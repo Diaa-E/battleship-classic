@@ -68,8 +68,8 @@ function updateSquare(uiSquare, pinBox, board, decodedCoord, cssClasses, hideShi
     }
     else if (boardSquare === pinBox.hit)
     {
-        if (!hideShips) drawShip(uiSquare.element, cssClasses.ship);
         drawDamaged(uiSquare.element, cssClasses.damaged);
+        if (!hideShips) drawShip(uiSquare.element, cssClasses.ship);
     }
     else if (boardSquare === pinBox.missed)
     {
@@ -116,7 +116,7 @@ function drawSunk(uiSquare, sunkClasses)
 {
     const imgCrossed = CrossedImg(sunkClasses);
     const imgSunk = SunkImg(sunkClasses);
-    uiSquare.append(imgCrossed.element, imgSunk.element);
+    uiSquare.append(imgSunk.element, imgCrossed.element);
 }
 
 function drawMissed(uiSquare, missedClasses)
