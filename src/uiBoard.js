@@ -1,6 +1,6 @@
 "use strict";
 
-import { addClasses, randomSnapRotation, initBoard, initEditorBoard, removeClasses } from "./uiUtility";
+import { addClasses, randomSnapRotation, initBoard, initEditorBoard, removeClasses, updateSquare } from "./uiUtility";
 import { decodeCoord } from "./positionUtility";
 
 export {
@@ -75,9 +75,9 @@ function PlayerBoard(cssClasses, boardSize)
     const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
     const playerNameTag = NameTag(cssClasses.nameTag);
 
-    function refreshBoard(board)
+    function refreshBoard(board, pinBox)
     {
-
+        playerBoard.refreshBoard(board, pinBox, cssClasses, false);
     }
 
     function init(board)
@@ -124,9 +124,9 @@ function AiBoard(cssClasses, boardSize)
         aiNameTag.element
     );
 
-    function refreshBoard(board)
+    function refreshBoard(board, pinBox)
     {
-
+        aiBoard.refreshBoard(board, pinBox, cssClasses, true);
     }
 
     function getSquare(decodedCoord)
@@ -212,6 +212,17 @@ function Board(boardClasses, boardSquareClasses, boardSize, boardMarkedSquareCla
         }
     }
 
+    function refreshBoard(board, pinBox, cssClasses, hideShips)
+    {
+        for (let y = 0; y < board.length; y++)
+        {
+            for (let x = 0; x < board.length; x++)
+            {
+                updateSquare(uiSquares[y][x], pinBox, board, [x, y], cssClasses, hideShips);
+            }
+        }
+    }
+
     function getSquare(decodedCoord)
     {
         return uiSquares[decodedCoord[1]][decodedCoord[0]];
@@ -233,7 +244,7 @@ function Board(boardClasses, boardSquareClasses, boardSize, boardMarkedSquareCla
 
             row.forEach(square => {
 
-                square.element.innerHTML = "";
+                square.clear();
             });
         });
     }
@@ -244,7 +255,8 @@ function Board(boardClasses, boardSquareClasses, boardSize, boardMarkedSquareCla
         getSquare,
         clearAllSquares,
         markSquare,
-        unmarkSquare
+        unmarkSquare,
+        refreshBoard
     }
 }
 
@@ -271,11 +283,17 @@ function BoardSquare(boardSquareClasses, boardMarkedSquareClasses)
         removeClasses(divSquare.firstChild, boardMarkedSquareClasses);
     }
 
+    function clear()
+    {
+        divSquare.innerHTML = "";
+    }
+
     return {
         element: divSquare,
 
         isMarked,
         mark,
-        unmark
+        unmark,
+        clear
     }
 }

@@ -2,15 +2,19 @@
 
 import { Player, Ai } from "./player";
 import { pickGameMode } from "./rules";
+import { dispatchCustomEvent } from "./uiUtility";
 
 export function Game()
 {
     let pinBox = PinBox("E", "M", "H", "S");
     let rules;
-    let aiTurn = pickRandomTurn() === 0 ? false : true;
+    let aiTurn = true //pickRandomTurn() === 0 ? false : true;
     let gameOver = false;
     let winner = undefined;
     let players;
+    const REFRESH_INTERVAL_MS = 500;
+
+    switchTurn();
 
     function init(playerName, gameModeNumber)
     {
@@ -24,6 +28,8 @@ export function Game()
     function switchTurn()
     {
         aiTurn = !aiTurn;
+
+        dispatchCustomEvent("turnSwitched", {aiTurn: aiTurn}, document, true);
     }
 
     function aiPlay()
@@ -31,12 +37,17 @@ export function Game()
         const attacks = players.ai.aiBrain.getNextAttack(players.human.board, pinBox, players.human.fleet, players.ai.getAvailableShots());
         players.ai.addShotsFired(attacks.length);
 
-        attacks.forEach(attack => {
+        for (let i = 0; i < attacks.length; i++)
+        {
+            setTimeout(() => {
+                
+                players.human.receiveAttack(attacks[i]);
+                dispatchCustomEvent("playerBoardChanged", {}, document, true);
 
-            players.human.receiveAttack(attack);
-        });
+            }, REFRESH_INTERVAL_MS * i);
+        }
 
-        switchTurn();
+        setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1)
 
         if (players.human.fleetDestroyed())
         {
@@ -49,12 +60,17 @@ export function Game()
     {
         players.human.addShotsFired(attacks.length);
 
-        attacks.forEach(attack => {
+        for (let i = 0; i < attacks.length; i++)
+        {
+            setTimeout(() => {
 
-            players.ai.receiveAttack(attack);
-        });
+                players.ai.receiveAttack(attacks[i]);
+                dispatchCustomEvent("aiBoardChanged", {}, document, true);
 
-        switchTurn();
+            }, REFRESH_INTERVAL_MS * i);
+        }
+
+        setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1)
 
         if (players.ai.fleetDestroyed())
         {

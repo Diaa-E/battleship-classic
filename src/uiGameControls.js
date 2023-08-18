@@ -1,6 +1,6 @@
 "use strict";
 
-import { addClasses } from "./uiUtility";
+import { addClasses, dispatchCustomEvent } from "./uiUtility";
 import { ImageButton } from "./uiButtons";
 
 export {
@@ -17,6 +17,11 @@ function Controls(cssClasses)
         fireButton.element,
         shotsCounter.element
     )
+
+    fireButton.element.addEventListener("click", (e) => {
+
+        dispatchCustomEvent("playerAttackInbound", {}, e.target, true);
+    });
 
     function setNumber(newNumber)
     {

@@ -66,6 +66,34 @@ function newGame()
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
     });
 
+    document.addEventListener("playerAttackInbound", (e) => {
+
+        game.humanPlay(encodedAttackCoords);
+    });
+
+    document.addEventListener("aiBoardChanged", (e) => {
+
+        screen.refreshAiBoard(game.aiBoard, game.pinBox);
+    });
+
+    document.addEventListener("playerBoardChanged", (e) => {
+
+        screen.refreshPlayerBoard(game.humanBoard, game.pinBox);
+    });
+
+    document.addEventListener("turnSwitched", (e) => {
+
+        if (e.detail.aiTurn)
+        {
+            game.aiPlay();
+        }
+        else
+        {
+            encodedAttackCoords = [];
+            availableShots = game.players.human.getAvailableShots();
+        }
+    });
+
     document.addEventListener("attackMarkToggled", (e) => {
 
         availableShots = game.players.human.getAvailableShots();

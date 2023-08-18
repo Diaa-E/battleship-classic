@@ -63,14 +63,14 @@ function uiScreen()
         fleetEditor.closeDialog();
     }
 
-    function refreshAiBoard(pinBox, aiBoard, decodedCoord)
+    function refreshAiBoard(board, pinBox)
     {
-        mainUi.refreshAiBoard(pinBox, aiBoard, decodedCoord);
+        mainUi.refreshAiBoard(board, pinBox);
     }
 
-    function refreshPlayerBoard(pinBox, playerBoard, decodedCoord)
+    function refreshPlayerBoard(board, pinBox)
     {
-        mainUi.refreshPlayerBoard(pinBox, playerBoard, decodedCoord)
+        mainUi.refreshPlayerBoard(board, pinBox);
     }
 
     function setPlayerName(newName)

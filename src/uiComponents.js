@@ -73,14 +73,14 @@ function MainUi(boardSize)
         controls.setNumber(newNumber);
     }
 
-    function refreshAiBoard(pinBox, board, decodedCoord)
+    function refreshAiBoard(board, pinBox)
     {
-        updateSquare(pinBox, board, decodedCoord, aiBoard.element, cssClasses, true);
+        aiBoard.refreshBoard(board, pinBox);
     }
 
-    function refreshPlayerBoard(pinBox, board, decodedCoord)
+    function refreshPlayerBoard(board, pinBox)
     {
-        updateSquare(pinBox, board, decodedCoord, playerBoard.element, cssClasses, false);
+        playerBoard.refreshBoard(board, pinBox);
     }
 
     function setPlayerName(newName)

@@ -52,37 +52,39 @@ function appendToParent(parent, children)
     });
 }
 
-function updateSquare(pinBox, board, decodedCoord, uiBoard, cssClasses, hideShips)
+function updateSquare(uiSquare, pinBox, board, decodedCoord, cssClasses, hideShips)
 {
     const boardSquare = board[decodedCoord[1]][decodedCoord[0]];
-    const uiSquare = getUiSquare(decodedCoord, uiBoard);
 
+    uiSquare.clear();
     if (boardSquare === pinBox.empty)
     {
-        uiSquare.innerHTML = "";
-        drawEmpty(uiSquare, cssClasses.empty);
+        drawEmpty(uiSquare.element, cssClasses.empty);
     }
     else if (boardSquare === pinBox.sunk)
     {
-        uiSquare.innerHTML = "";
-        if (!hideShips) drawShip(uiSquare, cssClasses.ship);
-        drawSunk(uiSquare, cssClasses.sunk);
+        if (!hideShips) drawShip(uiSquare.element, cssClasses.ship);
+        drawSunk(uiSquare.element, cssClasses.sunk);
     }
     else if (boardSquare === pinBox.hit)
     {
-        uiSquare.innerHTML = "";
-        if (!hideShips) drawShip(uiSquare, cssClasses.ship);
-        drawDamaged(uiSquare, cssClasses.damaged);
+        if (!hideShips) drawShip(uiSquare.element, cssClasses.ship);
+        drawDamaged(uiSquare.element, cssClasses.damaged);
     }
     else if (boardSquare === pinBox.missed)
     {
-        uiSquare.innerHTML = "";
-        drawMissed(uiSquare, cssClasses.missed);
+        drawMissed(uiSquare.element, cssClasses.missed);
     }
     else if (typeof boardSquare === "object")
     {
-        uiSquare.innerHTML = "";
-        if (!hideShips) drawShip(uiSquare, cssClasses.ship);
+        if (hideShips)
+        {
+            drawEmpty(uiSquare.element, cssClasses.empty);
+        }
+        else
+        {
+            drawShip(uiSquare.element, cssClasses.ship);
+        } 
     }
 }
 
