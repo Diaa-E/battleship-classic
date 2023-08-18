@@ -160,7 +160,7 @@ function GameSettings()
         form.element,
     ]);
 
-    btnNext.element.addEventListener("click", (e) => {
+    form.element.addEventListener("submit", (e) => {
 
         dispatchCustomEvent(
             "gameSettingsClosed",
@@ -168,7 +168,7 @@ function GameSettings()
             e.target,
             true
         );
-    })
+    });
 
     function getPlayerName()
     {
