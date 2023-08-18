@@ -140,13 +140,6 @@ function newGame()
             document.removeEventListener("keydown", quickInit);
         }
     }
-    // game.humanFleet.ships.forEach(ship => {
-
-    //     ship.position.forEach(square => {
-
-    //         screen.refreshPlayerBoard(game.pinBox, game.humanBoard, decodeCoord(square.coord));
-    //     });
-    // });
 }
 
 function newConsoleGame()
