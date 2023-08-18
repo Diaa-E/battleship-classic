@@ -47,7 +47,7 @@ export function Game()
             }, REFRESH_INTERVAL_MS * i);
         }
 
-        setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1)
+        setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1);
 
         if (players.human.fleetDestroyed())
         {
@@ -70,7 +70,7 @@ export function Game()
             }, REFRESH_INTERVAL_MS * i);
         }
 
-        setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1)
+        setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1);
 
         if (players.ai.fleetDestroyed())
         {
