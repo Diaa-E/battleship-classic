@@ -11,8 +11,8 @@ function newGame()
 {
     const game = Game();
     const screen = uiScreen();
-    let playerAvailableShots;
-    let playerMarkedShots = [];
+    let availableShots;
+    let encodedAttackCoords = [];
 
     screen.loadGameSettings();
     screen.openGameSettings();
@@ -68,28 +68,28 @@ function newGame()
 
     document.addEventListener("attackMarkToggled", (e) => {
 
-        playerAvailableShots = game.players.human.getAvailableShots();
+        availableShots = game.players.human.getAvailableShots();
 
         if (e.detail.uiSquare.isMarked())
         {
             e.detail.uiSquare.unmark();
-            const removeIndex = playerMarkedShots.find((value, index) => {
+            const removeIndex = encodedAttackCoords.find((value, index) => {
 
                 if (value === encodeCoord(e.detail.decodedCoord)) return index;
             });
-            playerMarkedShots.splice(removeIndex, 1);
+            encodedAttackCoords.splice(removeIndex, 1);
             screen.disableFireButton();
-            screen.updateRemainingShots(playerAvailableShots - playerMarkedShots.length);
+            screen.updateRemainingShots(availableShots - encodedAttackCoords.length);
         }
         else
         {
-            if (!(playerMarkedShots.length === playerAvailableShots))
+            if (!(encodedAttackCoords.length === availableShots))
             {
                 e.detail.uiSquare.mark();
-                playerMarkedShots.push(encodeCoord(e.detail.decodedCoord));
+                encodedAttackCoords.push(encodeCoord(e.detail.decodedCoord));
 
-                if (playerMarkedShots.length === playerAvailableShots) screen.enableFireButton();
-                screen.updateRemainingShots(playerAvailableShots - playerMarkedShots.length);
+                if (encodedAttackCoords.length === availableShots) screen.enableFireButton();
+                screen.updateRemainingShots(availableShots - encodedAttackCoords.length);
             }
         }
     });
