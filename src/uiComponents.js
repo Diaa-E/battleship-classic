@@ -73,14 +73,14 @@ function MainUi(boardSize)
         controls.setNumber(newNumber);
     }
 
-    function refreshAiBoard(board, pinBox)
+    function refreshAiBoard(board, pinBox, encodedAttackCoord, ships)
     {
-        aiBoard.refreshBoard(board, pinBox);
+        aiBoard.refreshBoard(board, pinBox, encodedAttackCoord, ships);
     }
 
-    function refreshPlayerBoard(board, pinBox)
+    function refreshPlayerBoard(board, pinBox, encodedAttackCoord, ships)
     {
-        playerBoard.refreshBoard(board, pinBox);
+        playerBoard.refreshBoard(board, pinBox, encodedAttackCoord, ships);
     }
 
     function setPlayerName(newName)

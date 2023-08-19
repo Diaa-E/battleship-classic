@@ -75,9 +75,9 @@ function PlayerBoard(cssClasses, boardSize)
     const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
     const playerNameTag = NameTag(cssClasses.nameTag);
 
-    function refreshBoard(board, pinBox)
+    function refreshBoard(board, pinBox, encodedAttackCoord, ships)
     {
-        playerBoard.refreshBoard(board, pinBox, cssClasses, false);
+        playerBoard.refreshBoard(board, pinBox, cssClasses, false, encodedAttackCoord, ships);
     }
 
     function init(board)
@@ -124,9 +124,9 @@ function AiBoard(cssClasses, boardSize)
         aiNameTag.element
     );
 
-    function refreshBoard(board, pinBox)
+    function refreshBoard(board, pinBox, encodedAttackCoord, ships)
     {
-        aiBoard.refreshBoard(board, pinBox, cssClasses, true);
+        aiBoard.refreshBoard(board, pinBox, cssClasses, true, encodedAttackCoord, ships);
     }
 
     function getSquare(decodedCoord)
@@ -212,14 +212,37 @@ function Board(boardClasses, boardSquareClasses, boardSize, boardMarkedSquareCla
         }
     }
 
-    function refreshBoard(board, pinBox, cssClasses, hideShips)
+    function refreshBoard(board, pinBox, cssClasses, hideShips, encodedAttackCoord, ships)
     {
-        for (let y = 0; y < board.length; y++)
+        const decodedCoord = decodeCoord(encodedAttackCoord);
+        if (board[decodedCoord[1]][decodedCoord[0]] === pinBox.sunk)
         {
-            for (let x = 0; x < board.length; x++)
+            const sunkShips = [];
+            let freshSunkCoords;
+
+            ships.forEach(ship => {
+
+                if (ship.isSunk) sunkShips.push(ship);
+            });
+
+            for (const ship of ships)
             {
-                updateSquare(uiSquares[y][x], pinBox, board, [x, y], cssClasses, hideShips);
+                const positionCoords = ship.position.map(element => element.coord);
+                if (positionCoords.includes(encodedAttackCoord))
+                {
+                    freshSunkCoords = positionCoords;
+                    break;
+                }
             }
+
+            freshSunkCoords.forEach(element => {
+
+                updateSquare(getSquare(decodeCoord(element)), pinBox, board, decodedCoord, cssClasses, hideShips);
+            });
+        }
+        else
+        {
+            updateSquare(getSquare(decodedCoord), pinBox, board, decodedCoord, cssClasses, hideShips);
         }
     }
 

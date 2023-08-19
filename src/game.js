@@ -1,6 +1,7 @@
 "use strict";
 
 import { Player, Ai } from "./player";
+import { decodeCoord } from "./positionUtility";
 import { pickGameMode } from "./rules";
 import { dispatchCustomEvent } from "./uiUtility";
 
@@ -42,7 +43,7 @@ export function Game()
             setTimeout(() => {
                 
                 players.human.receiveAttack(attacks[i]);
-                dispatchCustomEvent("playerBoardChanged", {}, document, true);
+                dispatchCustomEvent("playerBoardChanged", {encodedAttackCoord: attacks[i]}, document, true);
 
             }, REFRESH_INTERVAL_MS * i);
         }
@@ -65,7 +66,7 @@ export function Game()
             setTimeout(() => {
 
                 players.ai.receiveAttack(attacks[i]);
-                dispatchCustomEvent("aiBoardChanged", {}, document, true);
+                dispatchCustomEvent("aiBoardChanged", {encodedAttackCoord: attacks[i]}, document, true);
 
             }, REFRESH_INTERVAL_MS * i);
         }
@@ -109,6 +110,7 @@ export function Game()
         get humanName(){ return players.human.NAME },
         get BOARD_SIZE(){ return rules.BOARD_SIZE },
         get humanFleet(){ return players.human.fleet },
+        get aiFleet(){ return players.ai.fleet },
         get rules(){ return rules },
         get players(){ return players },
 

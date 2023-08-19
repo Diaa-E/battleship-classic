@@ -74,12 +74,12 @@ function newGame()
 
     document.addEventListener("aiBoardChanged", (e) => {
 
-        screen.refreshAiBoard(game.aiBoard, game.pinBox);
+        screen.refreshAiBoard(game.aiBoard, game.pinBox, e.detail.encodedAttackCoord, game.aiFleet.ships);
     });
 
     document.addEventListener("playerBoardChanged", (e) => {
 
-        screen.refreshPlayerBoard(game.humanBoard, game.pinBox);
+        screen.refreshPlayerBoard(game.humanBoard, game.pinBox, e.detail.encodedAttackCoord, game.humanFleet.ships);
     });
 
     document.addEventListener("turnSwitched", (e) => {
