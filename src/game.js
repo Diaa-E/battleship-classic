@@ -49,12 +49,6 @@ export function Game()
         }
 
         setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1);
-
-        if (players.human.fleetDestroyed())
-        {
-            gameOver = true;
-            winner = players.ai.NAME;
-        }
     }
 
     function humanPlay(attacks)
@@ -72,12 +66,6 @@ export function Game()
         }
 
         setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1);
-
-        if (players.ai.fleetDestroyed())
-        {
-            gameOver = true;
-            winner = players.human.NAME;
-        }
     }
 
     function getTotalShots()
@@ -96,6 +84,29 @@ export function Game()
     function rotatePlayerShip(encodedCoord)
     {
         players.human.rotateShip(encodedCoord);
+    }
+
+    function checkGameOver()
+    {
+        if (players.ai.fleetDestroyed())
+        {
+            dispatchCustomEvent(
+                "gameOver",
+                {winner: players.human.NAME, shots: getTotalShots()},
+                document,
+                true
+            );
+        }
+        else if (players.human.fleetDestroyed())
+        {
+            dispatchCustomEvent(
+                "gameOver",
+                {winner: players.ai.NAME, shots: getTotalShots()},
+                document,
+                true
+            );
+        }
+        
     }
 
     return {
@@ -120,7 +131,8 @@ export function Game()
         getTotalShots,
         movePlayerShip,
         rotatePlayerShip,
-        init
+        init,
+        checkGameOver
     };
 }
 

@@ -9,81 +9,183 @@ newGame();
 
 function newGame()
 {
+    const events = [
+        {
+            type: "gameSettingsClosed",
+            handler: openFleetEditor,
+        },
+        {
+            type: "fleetEditorClosed",
+            handler: startGame,
+        },
+        {
+            type: "currentShipChanged",
+            handler: changeCurrentShip,
+        },
+        {
+            type: "shipMoved",
+            handler: moveCurrentShip,
+        },
+        {
+            type: "shipRotated",
+            handler: rotateCurrentShip,
+        },
+        {
+            type: "fleetRandomized",
+            handler: randomizeFleet,
+        },
+        {
+            type: "playerAttackInbound",
+            handler: handlePlayerAttack,
+        },
+        {
+            type: "aiBoardChanged",
+            handler: refreshAiBoard,
+        },
+        {
+            type: "playerBoardChanged",
+            handler: refreshPlayerBoard,
+        },
+        {
+            type: "turnSwitched",
+            handler: handleTurnSwitch
+        },
+        {
+            type: "attackMarkToggled",
+            handler: toggleAttackMark,
+        },
+        {
+            type: "keydown",
+            handler: quickInit,
+        },
+        {
+            type: "gameOver",
+            handler: endGame,
+        }
+    ]
+
     const game = Game();
     const screen = uiScreen();
     let availableShots;
     let encodedAttackCoords = [];
+    
+    openGameSettings();
+    addAllEvents();
+    
+    function addAllEvents()
+    {
+        for (const event of events)
+        {
+            document.addEventListener(event.type, event.handler, false);
+        }
+    }
 
-    screen.loadGameSettings();
-    screen.openGameSettings();
+    function removeAllEvents()
+    {
+        events.forEach(event => {
 
-    document.addEventListener("gameSettingsClosed", (e) => {
+            document.removeEventListener(event.type, event.handler);
+        });
+    }
 
+    function endGame(e)
+    {
+        removeAllEvents();
+        console.log(`${e.detail.winner} wins!`);
+        console.table(e.detail.shots);
+    }
+
+    function quickInit(e)
+    {
+        if (e.code === "NumpadDivide")
+        {
+            screen.closeGameSettings();
+            game.init("Human", 1);
+            screen.loadMainUi(game.rules.BOARD_SIZE);
+            screen.setAiName(game.aiName);
+            screen.setPlayerName(game.humanName);
+            screen.initBoards(game.humanBoard, game.aiBoard);
+            screen.disableFireButton();
+            screen.initBoards(game.humanBoard, game.aiBoard);
+            document.removeEventListener("keydown", quickInit);
+        }
+    }
+
+    function handlePlayerAttack(e)
+    {
+        screen.disableFireButton();
+        game.humanPlay(encodedAttackCoords);
+    }
+
+    function randomizeFleet(e)
+    {
+        game.players.human.randomizeFleet();
+        screen.refreshEditorBoard(game.humanBoard);
+        screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
+    }
+
+    function moveCurrentShip(e)
+    {
+        game.movePlayerShip(game.humanFleet.ships[e.detail.shipIndex].position[0].coord, e.detail.newPivot);
+        screen.refreshEditorBoard(game.humanBoard);
+        screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
+    }
+
+    function changeCurrentShip(e)
+    {
+        game.humanFleet.ships.forEach(ship => {
+
+            screen.unhighLightShip(ship.position);
+        });
+        screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
+    }
+
+    function openFleetEditor(e)
+    {
         game.init(e.detail.playerName, e.detail.gameMode);
         screen.loadFleetEditor(game.rules.BOARD_SIZE);
         screen.openFleetEditor();
         screen.refreshEditorBoard(game.humanBoard);
         screen.highLightShip(game.humanFleet.ships[0].position);
-    });
+    }
 
-    document.addEventListener("fleetEditorClosed", (e) => {
-
+    function startGame(e)
+    {
         screen.loadMainUi(game.rules.BOARD_SIZE);
         screen.setAiName(game.aiName);
         screen.setPlayerName(game.humanName);
         screen.initBoards(game.humanBoard, game.aiBoard);
         screen.disableFireButton();
         screen.initBoards(game.humanBoard, game.aiBoard);
-    });
+    }
 
-    document.addEventListener("currentShipChanged", (e) => {
+    function openGameSettings()
+    {
+        screen.loadGameSettings();
+        screen.openGameSettings();    
+    }
 
-        game.humanFleet.ships.forEach(ship => {
-
-            screen.unhighLightShip(ship.position);
-        });
-        screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
-    });
-
-    document.addEventListener("shipMoved", (e) => {
-
-        game.movePlayerShip(game.humanFleet.ships[e.detail.shipIndex].position[0].coord, e.detail.newPivot);
-        screen.refreshEditorBoard(game.humanBoard);
-        screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
-    });
-
-    document.addEventListener("shipRotated", (e) => {
-
+    function rotateCurrentShip(e)
+    {
         game.rotatePlayerShip(game.humanFleet.ships[e.detail.shipIndex].position[0].coord);
         screen.refreshEditorBoard(game.humanBoard);
         screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
-    });
+    }
 
-    document.addEventListener("fleetRandomized", (e) => {
-
-        game.players.human.randomizeFleet();
-        screen.refreshEditorBoard(game.humanBoard);
-        screen.highLightShip(game.humanFleet.ships[e.detail.shipIndex].position);
-    });
-
-    document.addEventListener("playerAttackInbound", (e) => {
-
-        screen.disableFireButton();
-        game.humanPlay(encodedAttackCoords);
-    });
-
-    document.addEventListener("aiBoardChanged", (e) => {
-
+    function refreshAiBoard(e)
+    {
         screen.refreshAiBoard(game.aiBoard, game.pinBox, e.detail.encodedAttackCoord, game.aiFleet.ships);
-    });
+    }
 
-    document.addEventListener("playerBoardChanged", (e) => {
-
+    function refreshPlayerBoard(e)
+    {
         screen.refreshPlayerBoard(game.humanBoard, game.pinBox, e.detail.encodedAttackCoord, game.humanFleet.ships);
-    });
+    }
 
-    document.addEventListener("turnSwitched", (e) => {
-
+    function handleTurnSwitch(e)
+    {
+        game.checkGameOver();
+        
         if (e.detail.aiTurn)
         {
             game.aiPlay();
@@ -93,10 +195,10 @@ function newGame()
             encodedAttackCoords = [];
             availableShots = game.players.human.getAvailableShots();
         }
-    });
+    }
 
-    document.addEventListener("attackMarkToggled", (e) => {
-
+    function toggleAttackMark(e)
+    {
         availableShots = game.players.human.getAvailableShots();
 
         if (e.detail.uiSquare.isMarked())
@@ -117,24 +219,6 @@ function newGame()
                 if (encodedAttackCoords.length === availableShots) screen.enableFireButton();
                 screen.updateRemainingShots(availableShots - encodedAttackCoords.length);
             }
-        }
-    });
-
-    document.addEventListener("keydown", quickInit);
-
-    function quickInit(e)
-    {
-        if (e.code === "NumpadDivide")
-        {
-            screen.closeGameSettings();
-            game.init("Human", 1);
-            screen.loadMainUi(game.rules.BOARD_SIZE);
-            screen.setAiName(game.aiName);
-            screen.setPlayerName(game.humanName);
-            screen.initBoards(game.humanBoard, game.aiBoard);
-            screen.disableFireButton();
-            screen.initBoards(game.humanBoard, game.aiBoard);
-            document.removeEventListener("keydown", quickInit);
         }
     }
 }
