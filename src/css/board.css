@@ -74,11 +74,13 @@
 .damaged{
     position: absolute;
     object-fit: contain;
+    filter: invert(60%) sepia(75%) saturate(2859%) hue-rotate(331deg) brightness(99%) contrast(98%);
 }
 
 .missed{
     position: absolute;
     object-fit: contain;
+    filter: invert(50%) sepia(40%) saturate(4232%) hue-rotate(186deg) brightness(99%) contrast(100%);
 }
 
 .ai-sticker .empty:hover{
