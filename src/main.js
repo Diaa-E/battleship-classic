@@ -102,10 +102,7 @@ function newGame()
         if (e.detail.uiSquare.isMarked())
         {
             e.detail.uiSquare.unmark();
-            const removeIndex = encodedAttackCoords.find((value, index) => {
-
-                if (value === encodeCoord(e.detail.decodedCoord)) return index;
-            });
+            const removeIndex = encodedAttackCoords.findIndex(element => element === encodeCoord(e.detail.decodedCoord));
             encodedAttackCoords.splice(removeIndex, 1);
             screen.disableFireButton();
             screen.updateRemainingShots(availableShots - encodedAttackCoords.length);
