@@ -61,6 +61,10 @@ function newGame()
         {
             type: "gameOver",
             handler: endGame,
+        },
+        {
+            type: "playAgain",
+            handler: playAgain,
         }
     ]
 
@@ -88,9 +92,13 @@ function newGame()
         });
     }
 
+    function playAgain()
+    {
+        location.reload();
+    }
+
     function endGame(e)
     {
-        removeAllEvents();
         screen.loadGameover();
         screen.openGameover();
         screen.setWinnerName(e.detail.winner);

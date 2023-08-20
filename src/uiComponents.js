@@ -414,6 +414,11 @@ function GameOver()
         form.element
     ]);
 
+    form.element.addEventListener("submit", () => {
+
+        dispatchCustomEvent("playAgain", {}, document, true);
+    });
+
     function openDialog()
     {
         dialog.open();
