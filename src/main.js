@@ -120,6 +120,15 @@ function newGame()
             screen.disableFireButton();
             screen.initBoards(game.humanBoard, game.aiBoard);
             document.removeEventListener("keydown", quickInit);
+            
+            if (game.aiTurn)
+            {
+                handleAiTurn();
+            }
+            else
+            {
+                handleHumanTurn();
+            }
         }
     }
 
@@ -169,6 +178,15 @@ function newGame()
         screen.initBoards(game.humanBoard, game.aiBoard);
         screen.disableFireButton();
         screen.initBoards(game.humanBoard, game.aiBoard);
+
+        if (game.aiTurn)
+        {
+            handleAiTurn();
+        }
+        else
+        {
+            handleHumanTurn();
+        }
     }
 
     function openGameSettings()

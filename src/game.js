@@ -9,13 +9,11 @@ export function Game()
 {
     let pinBox = PinBox("E", "M", "H", "S");
     let rules;
-    let aiTurn = true //pickRandomTurn() === 0 ? false : true;
+    let aiTurn = pickRandomTurn() === 0 ? false : true;
     let gameOver = false;
     let winner = undefined;
     let players;
     const REFRESH_INTERVAL_MS = 500;
-
-    switchTurn();
 
     function init(playerName, gameModeNumber)
     {
