@@ -6,6 +6,7 @@
 @import url("./dialog.css");
 @import url("./input.css");
 @import url("./prompts.css");
+@import url("./gameover.css");
 
 body{
     background-color: var(--c-background);

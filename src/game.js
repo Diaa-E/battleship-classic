@@ -92,7 +92,12 @@ export function Game()
         {
             dispatchCustomEvent(
                 "gameOver",
-                {winner: players.human.NAME, shots: getTotalShots()},
+                {
+                    winner: players.human.NAME,
+                    loser: players.ai.NAME,
+                    winnerShots: getTotalShots().human,
+                    loserShots: getTotalShots().ai,
+                },
                 document,
                 true
             );
@@ -101,7 +106,12 @@ export function Game()
         {
             dispatchCustomEvent(
                 "gameOver",
-                {winner: players.ai.NAME, shots: getTotalShots()},
+                {
+                    winner: players.ai.NAME,
+                    loser: players.human.NAME,
+                    winnerShots: getTotalShots().ai,
+                    loserShots: getTotalShots().human,
+                },
                 document,
                 true
             );

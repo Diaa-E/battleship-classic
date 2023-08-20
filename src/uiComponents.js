@@ -15,11 +15,12 @@ import { Dialog, DialogForm } from "./uiDialogs";
 import { DialogButton, ImageButton } from "./uiButtons";
 import { encodeCoord } from "./positionUtility";
 import { TextBox } from "./uiTextboxes";
-import { NamePrompt } from "./uiPrompts";
+import { NamePrompt, Paragraph } from "./uiPrompts";
 import { CheckBox } from "./uiCheckboxes";
 import { dispatchCustomEvent } from "./uiUtility";
+import { GameoverSticker } from "./uiGameover";
 
-export { MainUi, FleetEditor, GameSettings };
+export { MainUi, FleetEditor, GameSettings, GameOver };
 
 function MainUi(boardSize)
 {
@@ -368,5 +369,95 @@ function FleetEditor(boardSize)
         refreshBoard,
         highLightShip,
         unhighlightShip,
+    }
+}
+
+function GameOver()
+{
+    const cssClasses = {
+        dialog: ["dialog"],
+        gameoverForm: ["gameover-form"],
+        winnerContainer: ["gameover-sticker", "winner-sticker"],
+        loserContainer: ["gameover-sticker", "loser-sticker"],
+        gameoverNames: ["gameover-text", "gameover-name"],
+        gameoverShots: ["gameover-text", "gameover-shots"],
+        rotateButton: ["editor-button", "rotate-button"],
+    };
+
+    const dialog = Dialog(cssClasses.dialog);
+    const form = DialogForm(cssClasses.gameoverForm);
+    const winnerSticker = GameoverSticker(cssClasses.winnerContainer);
+    const loserSticker = GameoverSticker(cssClasses.loserContainer);
+    const winnerName = Paragraph(cssClasses.gameoverNames);
+    const loserName = Paragraph(cssClasses.gameoverNames);
+    const winnerTotalShots = Paragraph(cssClasses.gameoverShots);
+    const loserTotalShots = Paragraph(cssClasses.gameoverShots);
+    const btnPlayAgain = ImageButton(cssClasses.rotateButton, "submit");
+
+    winnerSticker.element.append(
+        winnerName.element,
+        winnerTotalShots.element,
+    );
+
+    loserSticker.element.append(
+        loserName.element,
+        loserTotalShots.element,
+    );  
+
+    form.appendElements([
+        winnerSticker.element,
+        loserSticker.element,
+        btnPlayAgain.element
+    ]);
+
+    dialog.appendElements([
+        form.element
+    ]);
+
+    function openDialog()
+    {
+        dialog.open();
+    }
+
+    function closeDialog()
+    {
+        dialog.close();
+    }
+
+    function mount()
+    {
+        document.body.append(dialog.element);
+    }
+
+    function setWinnerName(newName)
+    {
+        winnerName.setText(newName);
+    }
+
+    function setWinnerTotalShots(newTotalShots)
+    {
+        winnerTotalShots.setText(newTotalShots);
+    }
+
+    function setLoserName(newName)
+    {
+        loserName.setText(newName);
+    }
+
+    function setLoserTotalShots(newTotalShots)
+    {
+        loserTotalShots.setText(newTotalShots);
+    }
+
+    return {
+        element: dialog.element,
+
+        openDialog,
+        closeDialog,
+        mount,
+        setWinnerName,
+        setWinnerTotalShots,
+        setLoserName,
+        setLoserTotalShots,
     }
 }

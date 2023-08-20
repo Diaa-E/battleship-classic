@@ -2,7 +2,27 @@
 
 import { addClasses } from "./uiUtility";
 
-export { NamePrompt };
+export { 
+    NamePrompt,
+    Paragraph,
+};
+
+function Paragraph(paragraphClasses)
+{
+    const p = document.createElement("p");
+    addClasses(p, paragraphClasses);
+
+    function setText(newText)
+    {
+        p.innerText = newText;
+    }
+
+    return {
+        element: p,
+
+        setText,
+    }
+}
 
 function NamePrompt(cssClasses)
 {

@@ -1,0 +1,40 @@
+.gameover-sticker{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+    "gameover-name gameover-shots";
+}
+
+.winner-sticker{
+    background-image: url("../../assets/images/winner_sticker.svg");
+    grid-area: winner;
+    padding: 9vw 4vw 0 4vw;
+    width: 40vw;
+    height: 15vw;
+}
+
+.loser-sticker{
+    background-image: url("../../assets/images/loser_sticker.svg");
+    grid-area: loser;
+    padding: 4vw 4vw 0 4vw;
+    width: 40vw;
+    height: 10vw;
+}
+
+.gameover-text{
+    font-family: var(--font-hand);
+    font-size: 3vw;
+}
+
+.gameover-name{
+    text-align: left;
+}
+
+.gameover-shots{
+    color: var(--c-red);
+    text-align: right;
+}

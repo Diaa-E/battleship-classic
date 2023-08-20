@@ -8,6 +8,20 @@
     /*for some reason color variables are not working*/
 }
 
+.gameover-form{
+    background-color: var(--c-background);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.5fr 1fr 1fr;
+    grid-template-areas: 
+    "winner"
+    "loser"
+    "rotate";
+    place-content: center;
+    place-items: center;
+    gap: 1vw;
+}
+
 .settings-form{
     background-color: var(--c-background);
     display: grid;

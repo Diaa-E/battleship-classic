@@ -1,6 +1,6 @@
 "use strict";
 
-import { FleetEditor, MainUi, GameSettings } from "./uiComponents";
+import { FleetEditor, MainUi, GameSettings, GameOver } from "./uiComponents";
 
 export { ConsoleScreen, uiScreen };
 
@@ -9,6 +9,43 @@ function uiScreen()
     let mainUi;
     let fleetEditor;
     let gameSettings;
+    let gameover;
+
+    function loadGameover()
+    {
+        gameover = GameOver();
+        gameover.mount();
+    }
+
+    function openGameover()
+    {
+        gameover.openDialog();
+    }
+
+    function closeGameover()
+    {
+        gameover.closeDialog();
+    }
+
+    function setWinnerName(newName)
+    {
+        gameover.setWinnerName(newName);
+    }
+
+    function setWinnerTotalShots(newTotalShots)
+    {
+        gameover.setWinnerTotalShots(newTotalShots);
+    }
+
+    function setLoserName(newName)
+    {
+        gameover.setLoserName(newName);
+    }
+
+    function setLoserTotalShots(newTotalShots)
+    {
+        gameover.setLoserTotalShots(newTotalShots);
+    }
 
     function loadMainUi(boardSize)
     {
@@ -123,6 +160,13 @@ function uiScreen()
         loadFleetEditor,
         loadGameSettings,
         loadMainUi,
+        loadGameover,
+        openGameover,
+        closeGameover,
+        setWinnerName,
+        setWinnerTotalShots,
+        setLoserName,
+        setLoserTotalShots
     }
 }
 

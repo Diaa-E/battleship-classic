@@ -91,8 +91,12 @@ function newGame()
     function endGame(e)
     {
         removeAllEvents();
-        console.log(`${e.detail.winner} wins!`);
-        console.table(e.detail.shots);
+        screen.loadGameover();
+        screen.openGameover();
+        screen.setWinnerName(e.detail.winner);
+        screen.setWinnerTotalShots(e.detail.winnerShots);
+        screen.setLoserName(e.detail.loser);
+        screen.setLoserTotalShots(e.detail.loserShots);
     }
 
     function quickInit(e)
