@@ -200,13 +200,25 @@ function newGame()
         
         if (e.detail.aiTurn)
         {
-            game.aiPlay();
+            handleAiTurn();
         }
         else
         {
-            encodedAttackCoords = [];
-            availableShots = game.players.human.getAvailableShots();
+            handleHumanTurn();
         }
+    }
+
+    function handleAiTurn()
+    {
+        screen.updateRemainingShots("N/A");
+        game.aiPlay();
+    }
+
+    function handleHumanTurn()
+    {
+        encodedAttackCoords = [];
+        availableShots = game.players.human.getAvailableShots();
+        screen.updateRemainingShots(availableShots);
     }
 
     function toggleAttackMark(e)
