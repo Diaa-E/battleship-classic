@@ -118,7 +118,7 @@ function newGame()
                 }
             ];
 
-            console.log("Debugging mode enabled, Press numpad '*' to enter commands");
+            console.warn("Debugging mode enabled, Press numpad '*' to enter commands");
             addEvents(debugEvents);
             document.removeEventListener("keydown", enableDebugging);
         }
@@ -159,7 +159,14 @@ function newGame()
             console.table(commands);
             const command = prompt("Enter command.\nCheck console for command list.");
 
-            if (commands.hasOwnProperty(command)) commands[command].handler(...commands[command].args);
+            if (commands.hasOwnProperty(command))
+            {
+                commands[command].handler(...commands[command].args);
+            }
+            else
+            {
+                console.error(`The command "${command}" does not exist.`);
+            }
         }
     }
 
