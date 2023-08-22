@@ -143,7 +143,17 @@ function newGame()
                     desc: "Destroy AI's fleet",
                     handler: debug_killAI,
                     args: [],
-                }
+                },
+                "sAi": {
+                    desc: "Display Ai stats and moves so far",
+                    handler: debug_showAiLogs,
+                    args: [],
+                },
+                "eLog": {
+                    desc: "Enable logging",
+                    handler: debug_enableLogging,
+                    args: [],
+                },
             };
 
             console.table(commands);
@@ -151,6 +161,16 @@ function newGame()
 
             if (commands.hasOwnProperty(command)) commands[command].handler(...commands[command].args);
         }
+    }
+
+    function debug_enableLogging()
+    {
+        game.debug_enableLogging();
+    }
+
+    function debug_showAiLogs()
+    {
+        console.log(game.log);
     }
 
     function debug_killAI()
@@ -181,6 +201,7 @@ function newGame()
         screen.initBoards(game.humanBoard, game.aiBoard);
         screen.disableFireButton();
         screen.initBoards(game.humanBoard, game.aiBoard);
+        debug_enableLogging();
         
         if (game.aiTurn)
         {

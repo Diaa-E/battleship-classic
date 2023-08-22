@@ -6,6 +6,9 @@ export {AiBrain, createWeightedBoard, bustRows, bustColumns, getDamagedSquares, 
 
 function AiBrain()
 {
+    let logging = false;
+    let log = {};
+
     const WEIGHTS = {
         HUNT: 100,
         BUST: 50,
@@ -13,6 +16,12 @@ function AiBrain()
         DAMAGE: 10,
         NONE: 0,
     };
+
+
+    function debug_enableLogging()
+    {
+        logging = true;
+    }
 
     function _getRandomIndex(movesArray)
     {
@@ -22,6 +31,8 @@ function AiBrain()
     function getNextAttack(board, pinBox, opponentFleet, availableShots)
     {
         const possibleMoves = _analyzeBoard(board, pinBox, opponentFleet);
+
+        if (logging) log.possibleMoves = JSON.parse(JSON.stringify(possibleMoves)); //copy before they get mutated by _getAttackCoords
 
         return _getAttackCoords(availableShots, possibleMoves);
     }
@@ -64,11 +75,16 @@ function AiBrain()
             }
         }
 
+        if (logging) log.attack = new Array(attackCoords);
+
         return attackCoords;
     }
 
     return {
+        get log(){ return log },
+
         getNextAttack,
+        debug_enableLogging,
     }
 }
 

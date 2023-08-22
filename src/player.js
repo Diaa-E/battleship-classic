@@ -69,8 +69,15 @@ function Ai(rules, pinBox)
     const aiBrain = AiBrain();
     const gameBoard = GameBoard(rules.SHIP_LIST, rules.BOARD_SIZE, pinBox);
     let totalShots = 0;
+    let logging = false;
 
     _placeShips();
+
+    function debug_enableLogging()
+    {
+        logging = true;
+        aiBrain.debug_enableLogging();
+    }
 
     function _generateAiName()
     {
@@ -121,10 +128,12 @@ function Ai(rules, pinBox)
         get fleet(){ return gameBoard.fleet },
         get aiBrain(){ return aiBrain },
         get totalShots(){ return totalShots },
+        get log(){ return aiBrain.log },
 
         getAvailableShots,
         fleetDestroyed,
         addShotsFired,
         receiveAttack,
+        debug_enableLogging,
     }
 }

@@ -13,6 +13,7 @@ export function Game()
     let gameOver = false;
     let winner = undefined;
     let players;
+    let logging = false;
     const REFRESH_INTERVAL_MS = 500;
 
     function init(playerName, gameModeNumber)
@@ -22,6 +23,12 @@ export function Game()
             human: Player(playerName, rules, pinBox),
             ai: Ai(rules, pinBox)
         };
+    }
+
+    function debug_enableLogging()
+    {
+        logging = true;
+        players.ai.debug_enableLogging();
     }
     
     function switchTurn()
@@ -132,6 +139,7 @@ export function Game()
         get aiFleet(){ return players.ai.fleet },
         get rules(){ return rules },
         get players(){ return players },
+        get log(){ return players.ai.log }, 
 
         switchTurn,
         aiPlay,
@@ -140,7 +148,8 @@ export function Game()
         movePlayerShip,
         rotatePlayerShip,
         init,
-        checkGameOver
+        checkGameOver,
+        debug_enableLogging,
     };
 }
 
