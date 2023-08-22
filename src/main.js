@@ -131,17 +131,17 @@ function newGame()
             const commands = {
                 "quickInit1": {
                     desc: "Bypass dialogs and start a game (advanced mode, fleet initial position, default name)",
-                    handler: quickInit,
+                    handler: debug_quickInit,
                     args: [1],
                 },
                 "quickInit0": {
                     desc: "Bypass dialogs and start a game (regular mode, fleet initial position, default name)",
-                    handler: quickInit,
+                    handler: debug_quickInit,
                     args: [0],
                 },
                 "killAi": {
                     desc: "Destroy AI's fleet",
-                    handler: killAi,
+                    handler: debug_killAI,
                     args: [],
                 }
             };
@@ -153,7 +153,7 @@ function newGame()
         }
     }
 
-    function killAi()
+    function debug_killAI()
     {
         if (!game.aiTurn)
         {
@@ -171,7 +171,7 @@ function newGame()
         }
     }
 
-    function quickInit(gameMode)
+    function debug_quickInit(gameMode)
     {
         screen.closeGameSettings();
         game.init("Human", gameMode);
