@@ -129,17 +129,17 @@ function newGame()
         if (e.code === "NumpadMultiply")
         {
             const commands = {
-                "quickInit1": {
+                "q1": {
                     desc: "Bypass dialogs and start a game (advanced mode, fleet initial position, default name)",
                     handler: debug_quickInit,
                     args: [1],
                 },
-                "quickInit0": {
+                "q0": {
                     desc: "Bypass dialogs and start a game (regular mode, fleet initial position, default name)",
                     handler: debug_quickInit,
                     args: [0],
                 },
-                "killAi": {
+                "kAi": {
                     desc: "Destroy AI's fleet",
                     handler: debug_killAI,
                     args: [],
