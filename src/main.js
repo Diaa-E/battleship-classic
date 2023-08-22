@@ -138,6 +138,11 @@ function newGame()
                     desc: "Bypass dialogs and start a game (regular mode, fleet initial position, default name)",
                     handler: quickInit,
                     args: [0],
+                },
+                "killAi": {
+                    desc: "Destroy AI's fleet",
+                    handler: killAi,
+                    args: [],
                 }
             };
 
@@ -145,6 +150,24 @@ function newGame()
             const command = prompt("Enter command.\nCheck console for command list.");
 
             if (commands.hasOwnProperty(command)) commands[command].handler(...commands[command].args);
+        }
+    }
+
+    function killAi()
+    {
+        if (!game.aiTurn)
+        {
+            const preciseAttacks = [];
+            
+            for (const ship of game.aiFleet.ships)
+            {
+                ship.position.forEach(pair => {
+                    
+                    if (!pair.sunk) preciseAttacks.push(pair.coord);
+                });
+            }
+            
+            game.humanPlay(preciseAttacks);
         }
     }
 
