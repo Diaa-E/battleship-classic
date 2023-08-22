@@ -74,19 +74,19 @@ function newGame()
     let encodedAttackCoords = [];
     
     openGameSettings();
-    addAllEvents();
+    addEvents(events);
     
-    function addAllEvents()
+    function addEvents(eventList)
     {
-        for (const event of events)
+        for (const event of eventList)
         {
             document.addEventListener(event.type, event.handler, false);
         }
     }
 
-    function removeAllEvents()
+    function removeEvents(eventList)
     {
-        events.forEach(event => {
+        eventList.forEach(event => {
 
             document.removeEventListener(event.type, event.handler);
         });
