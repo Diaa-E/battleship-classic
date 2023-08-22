@@ -56,7 +56,7 @@ function newGame()
         },
         {
             type: "keydown",
-            handler: quickInit,
+            handler: enableDebugging,
         },
         {
             type: "gameOver",
@@ -107,28 +107,59 @@ function newGame()
         screen.setLoserTotalShots(e.detail.loserShots);
     }
 
-    function quickInit(e)
+    function enableDebugging(e)
     {
         if (e.code === "NumpadDivide")
         {
-            screen.closeGameSettings();
-            game.init("Human", 1);
-            screen.loadMainUi(game.rules.BOARD_SIZE);
-            screen.setAiName(game.aiName);
-            screen.setPlayerName(game.humanName);
-            screen.initBoards(game.humanBoard, game.aiBoard);
-            screen.disableFireButton();
-            screen.initBoards(game.humanBoard, game.aiBoard);
-            document.removeEventListener("keydown", quickInit);
-            
-            if (game.aiTurn)
-            {
-                handleAiTurn();
-            }
-            else
-            {
-                handleHumanTurn();
-            }
+            const debugEvents = [
+                {
+                    type: "keydown",
+                    handler: runDebuggerCommand,
+                }
+            ];
+
+            console.log("Debugging mode enabled, Press numpad '*' to enter commands");
+            addEvents(debugEvents);
+            document.removeEventListener("keydown", enableDebugging);
+        }
+    }
+
+    function runDebuggerCommand(e)
+    {
+        if (e.code === "NumpadMultiply")
+        {
+            const commands = {
+                "quickInit": {
+                    handler: quickInit,
+                    desc: "Bypass dialogs and start a game (advanced mode, fleet initial position, default name)"
+                }
+            };
+
+            console.table(commands);
+            const command = prompt("Enter command.\nCheck console for command list.");
+
+            if (commands.hasOwnProperty(command)) commands[command].handler();
+        }
+    }
+
+    function quickInit()
+    {
+        screen.closeGameSettings();
+        game.init("Human", 1);
+        screen.loadMainUi(game.rules.BOARD_SIZE);
+        screen.setAiName(game.aiName);
+        screen.setPlayerName(game.humanName);
+        screen.initBoards(game.humanBoard, game.aiBoard);
+        screen.disableFireButton();
+        screen.initBoards(game.humanBoard, game.aiBoard);
+        
+        if (game.aiTurn)
+        {
+            handleAiTurn();
+        }
+        else
+        {
+            handleHumanTurn();
         }
     }
 
