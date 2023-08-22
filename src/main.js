@@ -129,23 +129,29 @@ function newGame()
         if (e.code === "NumpadMultiply")
         {
             const commands = {
-                "quickInit": {
+                "quickInit1": {
+                    desc: "Bypass dialogs and start a game (advanced mode, fleet initial position, default name)",
                     handler: quickInit,
-                    desc: "Bypass dialogs and start a game (advanced mode, fleet initial position, default name)"
+                    args: [1],
+                },
+                "quickInit0": {
+                    desc: "Bypass dialogs and start a game (regular mode, fleet initial position, default name)",
+                    handler: quickInit,
+                    args: [0],
                 }
             };
 
             console.table(commands);
             const command = prompt("Enter command.\nCheck console for command list.");
 
-            if (commands.hasOwnProperty(command)) commands[command].handler();
+            if (commands.hasOwnProperty(command)) commands[command].handler(...commands[command].args);
         }
     }
 
-    function quickInit()
+    function quickInit(gameMode)
     {
         screen.closeGameSettings();
-        game.init("Human", 1);
+        game.init("Human", gameMode);
         screen.loadMainUi(game.rules.BOARD_SIZE);
         screen.setAiName(game.aiName);
         screen.setPlayerName(game.humanName);
