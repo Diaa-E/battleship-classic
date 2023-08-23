@@ -134,26 +134,31 @@ function newGame()
                     desc: "Bypass dialogs and start a game (advanced mode, fleet initial position, default name)",
                     handler: debug_quickInit,
                     args: [1],
+                    msg: "Quick game initiated."
                 },
                 "q0": {
                     desc: "Bypass dialogs and start a game (regular mode, fleet initial position, default name)",
                     handler: debug_quickInit,
                     args: [0],
+                    msg: "Quick game initiated."
                 },
                 "kAi": {
                     desc: "Destroy AI's fleet",
                     handler: debug_killAI,
                     args: [],
+                    msg: "Ai kill in progress."
                 },
                 "sAi": {
                     desc: "Display Ai stats and moves so far",
                     handler: debug_showAiLogs,
                     args: [],
+                    msg: "Showing game logs"
                 },
                 "eLog": {
                     desc: "Enable logging",
                     handler: debug_enableLogging,
                     args: [],
+                    msg: "Logging enabled"
                 },
             };
 
@@ -163,6 +168,7 @@ function newGame()
             if (commands.hasOwnProperty(command))
             {
                 commands[command].handler(...commands[command].args);
+                console.warn(commands[command].msg);
             }
             else
             {
