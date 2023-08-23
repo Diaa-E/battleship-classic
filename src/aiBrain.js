@@ -18,9 +18,9 @@ function AiBrain()
     };
 
 
-    function debug_enableLogging()
+    function debug_setLogging(enableLogging)
     {
-        logging = true;
+        logging = enableLogging;
     }
 
     function _getRandomIndex(movesArray)
@@ -84,7 +84,7 @@ function AiBrain()
         get log(){ return log },
 
         getNextAttack,
-        debug_enableLogging,
+        debug_setLogging,
     }
 }
 

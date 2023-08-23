@@ -72,6 +72,7 @@ function newGame()
     const screen = uiScreen();
     let availableShots;
     let encodedAttackCoords = [];
+    let logging = false;
     
     openGameSettings();
     addEvents(events);
@@ -172,7 +173,7 @@ function newGame()
 
     function debug_enableLogging()
     {
-        game.debug_enableLogging();
+        logging = true;
     }
 
     function debug_showAiLogs()
@@ -208,7 +209,7 @@ function newGame()
         screen.initBoards(game.humanBoard, game.aiBoard);
         screen.disableFireButton();
         screen.initBoards(game.humanBoard, game.aiBoard);
-        debug_enableLogging();
+        game.debug_setLogging(logging);
         
         if (game.aiTurn)
         {
@@ -256,6 +257,7 @@ function newGame()
         screen.openFleetEditor();
         screen.refreshEditorBoard(game.humanBoard);
         screen.highLightShip(game.humanFleet.ships[0].position);
+        game.debug_setLogging(logging);
     }
 
     function startGame(e)

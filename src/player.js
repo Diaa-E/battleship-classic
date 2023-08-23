@@ -73,10 +73,10 @@ function Ai(rules, pinBox)
 
     _placeShips();
 
-    function debug_enableLogging()
+    function debug_setLogging(enableLogging)
     {
-        logging = true;
-        aiBrain.debug_enableLogging();
+        logging = enableLogging;
+        aiBrain.debug_setLogging();
     }
 
     function _generateAiName()
@@ -134,6 +134,6 @@ function Ai(rules, pinBox)
         fleetDestroyed,
         addShotsFired,
         receiveAttack,
-        debug_enableLogging,
+        debug_setLogging,
     }
 }

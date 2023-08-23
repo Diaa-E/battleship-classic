@@ -25,10 +25,10 @@ export function Game()
         };
     }
 
-    function debug_enableLogging()
+    function debug_setLogging(enableLogging)
     {
-        logging = true;
-        players.ai.debug_enableLogging();
+        logging = enableLogging;
+        players.ai.debug_setLogging();
     }
     
     function switchTurn()
@@ -149,7 +149,7 @@ export function Game()
         rotatePlayerShip,
         init,
         checkGameOver,
-        debug_enableLogging,
+        debug_setLogging,
     };
 }
 
