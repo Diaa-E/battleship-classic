@@ -76,6 +76,7 @@ function AiBrain()
         }
 
         if (logging) log.attack = new Array(attackCoords);
+        if (logging) log.possibleMoves = JSON.parse(JSON.stringify(possibleMoves)); //log after changes
 
         return attackCoords;
     }
