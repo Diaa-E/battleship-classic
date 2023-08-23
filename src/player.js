@@ -76,7 +76,7 @@ function Ai(rules, pinBox)
     function debug_setLogging(enableLogging)
     {
         logging = enableLogging;
-        aiBrain.debug_setLogging();
+        aiBrain.debug_setLogging(enableLogging);
     }
 
     function _generateAiName()

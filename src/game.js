@@ -15,6 +15,7 @@ export function Game()
     let players;
     let logging = false;
     const REFRESH_INTERVAL_MS = 500;
+    let log = {};
 
     function init(playerName, gameModeNumber)
     {
@@ -28,7 +29,12 @@ export function Game()
     function debug_setLogging(enableLogging)
     {
         logging = enableLogging;
-        players.ai.debug_setLogging();
+        players.ai.debug_setLogging(enableLogging);
+    }
+
+    function debug_appendLogEntry(newEntry)
+    {
+        log[Object.keys(log).length] = newEntry;
     }
     
     function switchTurn()
@@ -52,6 +58,8 @@ export function Game()
 
             }, REFRESH_INTERVAL_MS * i);
         }
+
+        if (logging) debug_appendLogEntry(players.ai.log);
 
         setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1);
     }
@@ -139,7 +147,7 @@ export function Game()
         get aiFleet(){ return players.ai.fleet },
         get rules(){ return rules },
         get players(){ return players },
-        get log(){ return players.ai.log }, 
+        get log(){ return log }, 
 
         switchTurn,
         aiPlay,
