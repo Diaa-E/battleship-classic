@@ -17,7 +17,7 @@ import { encodeCoord } from "./positionUtility";
 import { TextBox } from "./uiTextboxes";
 import { NamePrompt, Paragraph } from "./uiPrompts";
 import { CheckBox } from "./uiCheckboxes";
-import { dispatchCustomEvent } from "./uiUtility";
+import { dispatchCustomEvent, randomRotation, randomSnapRotation } from "./uiUtility";
 import { GameoverSticker } from "./uiGameover";
 
 export { MainUi, FleetEditor, GameSettings, GameOver };
@@ -42,10 +42,16 @@ function MainUi(boardSize)
         shotsCounter: ["shot-counter"],
     };
 
+    const STICKER_TILT = 5;
     const logo = AppLogo(battleshipLogo, cssClasses.logo);
     const playerBoard = PlayerBoard(cssClasses, boardSize);
     const aiBoard = AiBoard(cssClasses, boardSize);
     const controls = Controls(cssClasses);
+
+    randomRotation(logo.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(playerBoard.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(aiBoard.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(controls.element, STICKER_TILT, -STICKER_TILT);
 
     for (let y = 0; y < boardSize; y++)
     {
@@ -143,12 +149,18 @@ function GameSettings()
         checkBoxLabel: ["checkbox-label"],
     };
 
+    const STICKER_TILT = 5;
     const dialog = Dialog(cssClasses.dialog);
     const form = DialogForm(cssClasses.settingsForm);
     const btnNext = DialogButton(cssClasses.dialogButton, "Next", "submit");
     const txtName = TextBox(cssClasses.nameTextbox, "Your name...", 10, true);
     const namePrompt = NamePrompt(cssClasses);
     const checkAdvancedMode = CheckBox(cssClasses, "Advanced mode");
+
+    randomRotation(btnNext.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(txtName.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(namePrompt.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(checkAdvancedMode.element, STICKER_TILT, -STICKER_TILT);
 
     form.appendElements([
         btnNext.element,
@@ -229,6 +241,7 @@ function FleetEditor(boardSize)
         destroyerImagePath,
     ];
 
+    const STICKER_TILT = 5;
     let currentShipIndex = 0;
     const currentShipImg = CurrentShipImage(cssClasses.currentShip);
     const dialog = Dialog(cssClasses.dialog);
@@ -242,6 +255,12 @@ function FleetEditor(boardSize)
     
     board.setName("Deploy fleet!");
     updateCurrentShipImage();
+
+    randomRotation(currentShipImg.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(btnNext.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(board.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(btnRandomize.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(btnRotate.element, STICKER_TILT, -STICKER_TILT);
 
     form.appendElements([
         btnNext.element,
@@ -384,6 +403,7 @@ function GameOver()
         rotateButton: ["editor-button", "rotate-button"],
     };
 
+    const STICKER_TILT = 5;
     const dialog = Dialog(cssClasses.dialog);
     const form = DialogForm(cssClasses.gameoverForm);
     const winnerSticker = GameoverSticker(cssClasses.winnerContainer);
@@ -393,6 +413,10 @@ function GameOver()
     const winnerTotalShots = Paragraph(cssClasses.gameoverShots);
     const loserTotalShots = Paragraph(cssClasses.gameoverShots);
     const btnPlayAgain = ImageButton(cssClasses.rotateButton, "submit");
+
+    randomRotation(winnerSticker.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(loserSticker.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(btnPlayAgain.element, STICKER_TILT, -STICKER_TILT);
 
     winnerSticker.element.append(
         winnerName.element,
