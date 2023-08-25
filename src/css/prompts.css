@@ -1,6 +1,6 @@
 .name-prompt{
     font-family: var(--font-hand);
-    font-size: 2.5vw;
+    font-size: 7vw;
 }
 
 .name-prompt-container{
@@ -9,10 +9,24 @@
     background-image: url("../../assets/images/name_sticker.svg");
     background-size: contain;
     background-repeat: no-repeat;
-    width: 30vw;
-    height: 7vw;
+    width: 90vw;
+    height: 25vw;
     align-items: center;
     justify-content: flex-end;
-    padding: 3vw;
-    padding-top: 4.5vw;
+    padding: 9vw;
+    padding-top: 11vw;
+}
+
+@media (min-width: 700px) and (orientation: landscape){
+    
+    .name-prompt{
+        font-size: 2.5vw;
+    }
+
+    .name-prompt-container{
+        width: 30vw;
+        height: 7vw;
+        padding: 3vw;
+        padding-top: 4.5vw;
+    }
 }
