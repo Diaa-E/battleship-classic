@@ -19,7 +19,7 @@
     "rotate";
     place-content: center;
     place-items: center;
-    gap: 1vw;
+    gap: 2vw;
 }
 
 .settings-form{
@@ -135,5 +135,9 @@
     .editor-button{
         height: 10vw;
         width: 10vw;
+    }
+
+    .gameover-form{
+        gap: 1vw;
     }
 }
