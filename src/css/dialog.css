@@ -40,14 +40,15 @@
 .fleet-editor-form{
     background-color: var(--c-background);
     display: grid;
-    grid-template-columns: 1fr repeat(2, .5fr);
-    grid-template-rows: repeat(3, 2fr) 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, min-content) 1fr;
     grid-template-areas: 
-    "player ship ship"
-    "player prev-ship next-ship"
-    "player random rotate"
-    "next next next";
-    gap: 2vw;
+    "ship ship"
+    "player player"
+    "prev-ship next-ship"
+    "random rotate"
+    "next next";
+    gap: 5vw;
     place-items: center;
     place-content: center;
 }
@@ -68,8 +69,8 @@
 }
 
 .current-ship{
-    height: 10vw;
-    width: 30vw;
+    height: 30vw;
+    width: 80vw;
     grid-area: ship;
 }
 
@@ -78,8 +79,8 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    height: 10vw;
-    width: 10vw;
+    height: 30vw;
+    width: 30vw;
     cursor: pointer;
 }
 
@@ -113,5 +114,26 @@
         border: .1vw solid black;
         border-radius: 1vw;
         box-shadow: 0vw 0vw .2vw .1vw rgba(0, 0, 0, 0.5);
+    }
+
+    .fleet-editor-form{
+        grid-template-columns: 1fr repeat(2, .5fr);
+        grid-template-rows: repeat(3, 2fr) 1fr;
+        grid-template-areas: 
+        "player ship ship"
+        "player prev-ship next-ship"
+        "player random rotate"
+        "next next next";
+        gap: 2vw;
+    }
+
+    .current-ship{
+        height: 10vw;
+        width: 30vw;
+    }
+
+    .editor-button{
+        height: 10vw;
+        width: 10vw;
     }
 }
