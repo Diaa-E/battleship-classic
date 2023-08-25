@@ -259,8 +259,6 @@ function FleetEditor(boardSize)
     randomRotation(currentShipImg.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(btnNext.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(board.element, STICKER_TILT, -STICKER_TILT);
-    randomRotation(btnRandomize.element, STICKER_TILT, -STICKER_TILT);
-    randomRotation(btnRotate.element, STICKER_TILT, -STICKER_TILT);
 
     form.appendElements([
         btnNext.element,
@@ -416,7 +414,6 @@ function GameOver()
 
     randomRotation(winnerSticker.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(loserSticker.element, STICKER_TILT, -STICKER_TILT);
-    randomRotation(btnPlayAgain.element, STICKER_TILT, -STICKER_TILT);
 
     winnerSticker.element.append(
         winnerName.element,

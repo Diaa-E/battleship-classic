@@ -21,14 +21,22 @@
     width: 25vw;
     height: 25vw;
     grid-area: button;
+    transition-duration: var(--a-duration);
 }
 
 .fire-button:enabled{
     cursor: pointer;
+    transition-duration: var(--a-duration);
 }
 
 .fire-button:disabled{
     filter: saturate(0%) brightness(250%);
+    transition-duration: var(--a-duration);
+}
+
+.fire-button:enabled:hover{
+    transform: rotate(15deg) scale(1.1);
+    transition-duration: var(--a-duration);
 }
 
 .controls-container{
