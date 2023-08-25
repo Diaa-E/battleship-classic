@@ -8,6 +8,10 @@
     list-style: none;
 }
 
+*, *::after, *::before{
+    outline: none;
+}
+
 img, picture, svg, video{
     display: block;
     max-width: 100%;
