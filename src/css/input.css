@@ -126,10 +126,6 @@
 }
 
 @media (min-width: 700px) and (orientation: landscape){
-    
-    .slider{
-
-    }
 
     .slider::-webkit-slider-runnable-track {
         height: 1vw;
