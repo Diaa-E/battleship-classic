@@ -42,6 +42,10 @@
     cursor: pointer;
 }
 
+.check-mark{
+    filter: invert(50%) sepia(40%) saturate(4232%) hue-rotate(186deg) brightness(99%) contrast(100%);
+}
+
 .slider-container{
     background-image: url("../../assets/images/game_speed.svg");
     background-size: contain;
