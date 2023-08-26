@@ -146,6 +146,16 @@ function uiScreen()
         return gameSettings.getAnimationSpeed();
     }
 
+    function activateAiBoard()
+    {
+        mainUi.activateAiBoard();
+    }
+
+    function activatePlayerBoard()
+    {
+        mainUi.activatePlayerBoard();
+    }
+
     return{
         refreshAiBoard,
         refreshPlayerBoard,
@@ -173,6 +183,8 @@ function uiScreen()
         setLoserName,
         setLoserTotalShots,
         getAnimationSpeed,
+        activateAiBoard,
+        activatePlayerBoard
     }
 }
 

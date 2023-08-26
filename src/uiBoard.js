@@ -74,6 +74,11 @@ function PlayerBoard(cssClasses, boardSize)
         playerBoard.refreshBoard(board, pinBox, cssClasses, false, encodedAttackCoord, ships);
     }
 
+    function toggleActive(active)
+    {
+        playerNameTag.toggleActive(active, cssClasses.nameTagActive);
+    }
+
     function init(board)
     {
         initBoard(false, playerBoard, board, cssClasses);
@@ -94,6 +99,7 @@ function PlayerBoard(cssClasses, boardSize)
         refreshBoard,
         setName,
         init,
+        toggleActive,
     };
 }
 
@@ -148,6 +154,11 @@ function AiBoard(cssClasses, boardSize)
         aiNameTag.setName(newName);
     }
 
+    function toggleActive(active)
+    {
+        aiNameTag.toggleActive(active, cssClasses.nameTagActive);
+    }
+
     return {
         element: aiBoardContainer.element,
 
@@ -156,7 +167,8 @@ function AiBoard(cssClasses, boardSize)
         init,
         markSquare,
         unmarkSquare,
-        getSquare
+        getSquare,
+        toggleActive
     };
 }
 
@@ -180,9 +192,22 @@ function NameTag(nameTagClasses)
         h1.innerText = newName
     }
 
+    function toggleActive(active, activeClasses)
+    {
+        if (active)
+        {
+            addClasses(h1, activeClasses)
+        }
+        else
+        {
+            removeClasses(h1, activeClasses);
+        }
+    }
+
     return {
         element: h1,
         setName,
+        toggleActive,
     }
 }
 

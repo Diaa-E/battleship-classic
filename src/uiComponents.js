@@ -30,6 +30,7 @@ function MainUi(boardSize)
         playerContainer: ["sticker", "player-sticker"],
         aiContainer: ["sticker", "ai-sticker"],
         nameTag: ["name-tag"],
+        nameTagActive:["name-tag-active"],
         board: ["board-container"],
         boardSquare: ["square"],
         boardSquareMarked: ["marked"],
@@ -74,6 +75,18 @@ function MainUi(boardSize)
             aiBoard.element,
             controls.element,
         );
+    }
+
+    function activateAiBoard()
+    {
+        aiBoard.toggleActive(true);
+        playerBoard.toggleActive(false);
+    }
+
+    function activatePlayerBoard()
+    {
+        aiBoard.toggleActive(false);
+        playerBoard.toggleActive(true);
     }
 
     function updateRemainingShots(newNumber)
@@ -132,6 +145,8 @@ function MainUi(boardSize)
         updateRemainingShots,
         enableFireButton,
         disableFireButton,
+        activateAiBoard,
+        activatePlayerBoard,
     }
 }
 

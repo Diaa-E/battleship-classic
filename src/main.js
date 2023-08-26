@@ -278,10 +278,12 @@ function newGame()
 
         if (game.aiTurn)
         {
+            screen.activateAiBoard();
             handleAiTurn();
         }
         else
         {
+            screen.activatePlayerBoard();
             handleHumanTurn();
         }
     }
@@ -315,10 +317,12 @@ function newGame()
         
         if (e.detail.aiTurn)
         {
+            screen.activateAiBoard();
             handleAiTurn();
         }
         else
         {
+            screen.activatePlayerBoard();
             handleHumanTurn();
         }
     }
