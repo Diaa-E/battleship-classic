@@ -26,13 +26,14 @@
     background-color: var(--c-background);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 2fr 1fr 2fr 1fr;
+    grid-template-rows: repeat(3, min-content) 1fr;
     grid-template-areas: 
     "name-prompt"
     "name-box"
     "advanced"
+    "speed"
     "next";
-    gap: 2vw;
+    gap: 10vw;
     place-items: center;
     place-content: center;
 }
@@ -138,6 +139,16 @@
 
 @media (min-width: 700px) and (orientation: landscape){
     
+    .settings-form{
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, min-content) 1fr;
+        grid-template-areas: 
+        "name-prompt advanced"
+        "name-box speed"
+        "next next";
+        gap: 2vw;
+    }
+
     .dialog-button{
         width: 8vw;
         height: 4vw;
