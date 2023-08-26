@@ -15,11 +15,6 @@ function EditorBoard(cssClasses, boardSize)
     const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
     const playerNameTag = NameTag(cssClasses.nameTag);
 
-    function refreshBoard(board)
-    {
-
-    }
-
     function highlightShip(highlightClasses, encodedShipPosition)
     {
         encodedShipPosition.forEach(codedPair => {
@@ -60,7 +55,6 @@ function EditorBoard(cssClasses, boardSize)
 
     return {
         element: playerBoardContainer.element,
-        refreshBoard,
         setName,
         init,
         highlightShip,
