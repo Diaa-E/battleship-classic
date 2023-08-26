@@ -259,6 +259,7 @@ function newGame()
     function openFleetEditor(e)
     {
         game.init(e.detail.playerName, e.detail.gameMode);
+        game.setAnimationSpeed(screen.getAnimationSpeed());
         screen.loadFleetEditor(game.rules.BOARD_SIZE);
         screen.openFleetEditor();
         screen.refreshEditorBoard(game.humanBoard);

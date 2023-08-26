@@ -161,20 +161,20 @@ function GameSettings()
     const txtName = TextBox(cssClasses.nameTextbox, "Your name...", 10, true);
     const namePrompt = NamePrompt(cssClasses);
     const checkAdvancedMode = CheckBox(cssClasses, "Advanced mode");
-    const animationSlider = Slider(2000, 300, 10, cssClasses, "animation-speed", "Animation Speed");
+    const animationSpeedSlider = Slider(2000, 300, 10, cssClasses, "animation-speed", "Animation Speed");
 
     randomRotation(btnNext.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(txtName.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(namePrompt.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(checkAdvancedMode.element, STICKER_TILT, -STICKER_TILT);
-    randomRotation(animationSlider.element, STICKER_TILT, -STICKER_TILT);
+    randomRotation(animationSpeedSlider.element, STICKER_TILT, -STICKER_TILT);
 
     form.appendElements([
         btnNext.element,
         txtName.element,
         namePrompt.element,
         checkAdvancedMode.element,
-        animationSlider.element
+        animationSpeedSlider.element
     ]);
 
     dialog.appendElements([
@@ -194,6 +194,11 @@ function GameSettings()
     function getPlayerName()
     {
         return txtName.getValue();
+    }
+
+    function getAnimationSpeed()
+    {
+        return animationSpeedSlider.getValue();
     }
 
     function openDialog()
@@ -218,6 +223,7 @@ function GameSettings()
         closeDialog,
         openDialog,
         getPlayerName,
+        getAnimationSpeed,
     }
 }
 

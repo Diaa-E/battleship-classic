@@ -141,6 +141,11 @@ function uiScreen()
         mainUi.disableFireButton();
     }
 
+    function getAnimationSpeed()
+    {
+        return gameSettings.getAnimationSpeed();
+    }
+
     return{
         refreshAiBoard,
         refreshPlayerBoard,
@@ -166,7 +171,8 @@ function uiScreen()
         setWinnerName,
         setWinnerTotalShots,
         setLoserName,
-        setLoserTotalShots
+        setLoserTotalShots,
+        getAnimationSpeed,
     }
 }
 

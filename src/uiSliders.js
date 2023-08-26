@@ -25,8 +25,15 @@ function Slider(max = 100, min = 0, step = 1, cssClasses, sliderId, title)
         sliderLabel.setLabelValue(sliderBar.getValue());
     });
 
+    function getValue()
+    {
+        return sliderBar.getValue();
+    }
+
     return{
         element: sliderContainer.element,
+
+        getValue,
     }
 }
 

@@ -14,7 +14,7 @@ export function Game()
     let winner = undefined;
     let players;
     let logging = false;
-    const REFRESH_INTERVAL_MS = 500;
+    let animation_speed_ms = 500;
     let log = {};
 
     function init(playerName, gameModeNumber)
@@ -24,6 +24,11 @@ export function Game()
             human: Player(playerName, rules, pinBox),
             ai: Ai(rules, pinBox)
         };
+    }
+
+    function setAnimationSpeed(newSpeedMs)
+    {
+        animation_speed_ms = +newSpeedMs;
     }
 
     function debug_setLogging(enableLogging)
@@ -56,12 +61,12 @@ export function Game()
                 players.human.receiveAttack(attacks[i]);
                 dispatchCustomEvent("playerBoardChanged", {encodedAttackCoord: attacks[i]}, document, true);
 
-            }, REFRESH_INTERVAL_MS * i);
+            }, animation_speed_ms * i);
         }
 
         if (logging) debug_appendLogEntry(players.ai.log);
 
-        setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1);
+        setTimeout(switchTurn, animation_speed_ms * attacks.length - 1);
     }
 
     function humanPlay(attacks)
@@ -75,10 +80,10 @@ export function Game()
                 players.ai.receiveAttack(attacks[i]);
                 dispatchCustomEvent("aiBoardChanged", {encodedAttackCoord: attacks[i]}, document, true);
 
-            }, REFRESH_INTERVAL_MS * i);
+            }, animation_speed_ms * i);
         }
 
-        setTimeout(switchTurn, REFRESH_INTERVAL_MS * attacks.length - 1);
+        setTimeout(switchTurn, animation_speed_ms * attacks.length - 1);
     }
 
     function getTotalShots()
@@ -158,6 +163,7 @@ export function Game()
         init,
         checkGameOver,
         debug_setLogging,
+        setAnimationSpeed,
     };
 }
 
