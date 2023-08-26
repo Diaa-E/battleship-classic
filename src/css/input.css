@@ -74,10 +74,8 @@
 }
 
 .slider {
-    height: 38px;
     appearance: none;
     background-color: transparent;
-    margin: 10px 0;
     width: 100%;
 }
 
