@@ -143,8 +143,8 @@
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, min-content) 1fr;
         grid-template-areas: 
-        "name-prompt advanced"
-        "name-box speed"
+        "name-prompt name-box"
+        "sdvanced speed"
         "next next";
         gap: 2vw;
     }
