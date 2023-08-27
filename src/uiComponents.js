@@ -45,12 +45,10 @@ function MainUi(boardSize)
     };
 
     const STICKER_TILT = 5;
-    const logo = AppLogo(battleshipLogo, cssClasses.logo);
     const playerBoard = PlayerBoard(cssClasses, boardSize);
     const aiBoard = AiBoard(cssClasses, boardSize);
     const controls = Controls(cssClasses);
 
-    randomRotation(logo.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(playerBoard.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(aiBoard.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(controls.element, STICKER_TILT, -STICKER_TILT);
@@ -70,7 +68,6 @@ function MainUi(boardSize)
     function mount()
     {
         document.body.append(
-            logo.element,
             playerBoard.element,
             aiBoard.element,
             controls.element,
