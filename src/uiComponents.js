@@ -274,7 +274,7 @@ function FleetEditor(boardSize)
     let currentShipIndex = 0;
     const currentShipImg = CurrentShipImage(cssClasses.currentShip);
     const dialog = Dialog(cssClasses.dialog);
-    const btnNext = DialogButton(cssClasses.dialogButton, "Next", "submit");
+    const btnNext = DialogButton(cssClasses.dialogButton, "Start Game", "submit");
     const form = DialogForm(cssClasses.fleetEditorForm);
     const board = EditorBoard(cssClasses, boardSize);
     const btnNextShip = ImageButton(cssClasses.nextButton);

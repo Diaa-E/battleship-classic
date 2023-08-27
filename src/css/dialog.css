@@ -62,12 +62,13 @@
     font-family: var(--font-hand);
     font-size: 7vw;
     cursor: pointer;
-    width: 30vw;
-    height: 15vw;
+    width: fit-content;
+    height: fit-content;
     box-shadow: 0vw 0vw .4vw .2vw rgba(0, 0, 0, 0.5);
     grid-area: next;
     place-self: flex-end;
     transition-duration: var(--a-duration);
+    padding: 3vw;
 }
 
 .dialog-button:hover{
@@ -150,8 +151,7 @@
     }
 
     .dialog-button{
-        width: 8vw;
-        height: 4vw;
+        padding: 1vw;
         font-size: 2vw;
         border: .1vw solid black;
         border-radius: 1vw;
