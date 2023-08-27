@@ -173,7 +173,7 @@ function GameSettings()
     const txtName = TextBox(cssClasses.nameTextbox, "Your name...", 10, true);
     const namePrompt = NamePrompt(cssClasses);
     const checkAdvancedMode = CheckBox(cssClasses, "Advanced mode");
-    const animationSpeedSlider = Slider(2000, 300, 10, cssClasses, "animation-speed", "Animation Speed");
+    const animationSpeedSlider = Slider(2000, 300, 10, cssClasses, "animation-speed", "Animation duration");
 
     randomRotation(btnNext.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(txtName.element, STICKER_TILT, -STICKER_TILT);

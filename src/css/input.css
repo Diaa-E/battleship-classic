@@ -61,7 +61,7 @@
     height: 50vw;
     grid-area: speed;
     align-items: center;
-    padding: 15vw 0 0 15vw;
+    padding: 15vw 0 0 10vw;
     gap: 10vw;
 }
 
@@ -165,7 +165,7 @@
     .slider-container{
         width: 30vw;
         height: 15vw;
-        padding: 3.5vw 0 0 5vw;
+        padding: 3.5vw 0 0 3vw;
         gap: 5vw;
     }
 
