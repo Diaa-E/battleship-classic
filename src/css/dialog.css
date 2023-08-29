@@ -200,7 +200,8 @@
     }
 
     .tutorial-form{
-        gap: 3vw;
+        gap: 1vw;
         width: 80vw;
+        height: 45vw;
     }
 }
