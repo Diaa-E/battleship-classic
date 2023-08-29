@@ -18,8 +18,8 @@
     "next";
     place-content: center;
     place-items: center;
-    gap: 3vw;
-    width: 80vw;
+    gap: 30vw;
+    width: 90vw;
     clip: auto;
 }
 
@@ -197,5 +197,10 @@
 
     .gameover-form{
         gap: 1vw;
+    }
+
+    .tutorial-form{
+        gap: 3vw;
+        width: 80vw;
     }
 }
