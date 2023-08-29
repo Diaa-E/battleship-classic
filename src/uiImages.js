@@ -11,7 +11,6 @@ import damagedImagePath from "../assets/images/damaged.svg";
 
 export {
     CurrentShipImage,
-    AppLogo,
     MissedImg,
     CrossedImg,
     DamagedImg,
@@ -55,17 +54,6 @@ function CurrentShipImage(selectedShipClasses)
         element: imgShip,
         setSrc,
     }
-}
-
-function AppLogo(logoPath, logoClasses)
-{
-    const imgLogo = new Image();
-    imgLogo.src = logoPath;
-    addClasses(imgLogo, logoClasses);
-
-    return {
-        element: imgLogo
-    };
 }
 
 function EmptyImg(emptyClasses)
