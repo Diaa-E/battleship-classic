@@ -1,6 +1,5 @@
 "use strict";
 
-import battleshipLogo from "../assets/images/logo.svg";
 import carrierImagePath from "../assets/images/carrier.svg";
 import destroyerImagePath from "../assets/images/destroyer.svg";
 import submarineImagePath from "../assets/images/submarine.svg";
@@ -15,7 +14,6 @@ import tutImgPath_6 from "../assets/images/tut_6.svg";
 import tutImgPath_7 from "../assets/images/tut_7.svg";
 import tutImgPath_8 from "../assets/images/tut_8.svg";
 
-import { AppLogo } from "./uiImages";
 import { PlayerBoard, AiBoard, EditorBoard } from "./uiBoard";
 import { Controls } from "./uiGameControls";
 import { CurrentShipImage } from "./uiImages";
