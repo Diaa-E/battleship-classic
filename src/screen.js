@@ -1,6 +1,6 @@
 "use strict";
 
-import { FleetEditor, MainUi, GameSettings, GameOver } from "./uiComponents";
+import { FleetEditor, MainUi, GameSettings, GameOver, Tutorial } from "./uiComponents";
 
 export { ConsoleScreen, uiScreen };
 
@@ -9,7 +9,24 @@ function uiScreen()
     let mainUi;
     let fleetEditor;
     let gameSettings;
+    let tutorial;
     let gameover;
+
+    function loadTutorial()
+    {
+        tutorial = Tutorial();
+        tutorial.mount();
+    }
+
+    function openTutorial()
+    {
+        tutorial.openDialog();
+    }
+
+    function closeTutorial()
+    {
+        tutorial.closeDialog();
+    }
 
     function loadGameover()
     {
@@ -184,7 +201,10 @@ function uiScreen()
         setLoserTotalShots,
         getAnimationSpeed,
         activateAiBoard,
-        activatePlayerBoard
+        activatePlayerBoard,
+        loadTutorial,
+        closeTutorial,
+        openTutorial,
     }
 }
 

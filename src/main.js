@@ -75,6 +75,8 @@ function newGame()
     let logging = false;
     
     openGameSettings();
+    screen.loadTutorial();
+    screen.openTutorial();
     addEvents(events);
     
     function addEvents(eventList)

@@ -1,0 +1,34 @@
+.tutorial-container{
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, min-content);
+    background-color: var(--c-white);
+    place-items: center;
+    place-content: center;
+    opacity: 0;
+    padding: 2vw 2vw 1vw 2vw;
+    grid-area: tutorial;
+    gap: 1vw;
+    cursor: pointer;
+    box-shadow: 0vw 0vw .2vw .1vw rgba(0, 0, 0, 0.5);
+    border: .1vw solid black;
+    transition-duration: 900ms;
+    width: 30vw;
+    left: 0;
+}
+
+.tutorial-container-visible{
+    opacity: 100%;
+    transition-duration: 500ms;
+    left: 25vw;
+}
+
+.tutorial-text{
+    font-family: var(--font-hand);
+    word-wrap: break-word;
+    text-align: left;
+    place-self: stretch;
+    font-size: 1.5vw;
+    width: 25vw;
+}

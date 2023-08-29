@@ -8,6 +8,21 @@
     /*for some reason color variables are not working*/
 }
 
+.tutorial-form{
+    background-color: var(--c-background);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(1, min-content) 1fr;
+    grid-template-areas: 
+    "tutorial"
+    "next";
+    place-content: center;
+    place-items: center;
+    gap: 3vw;
+    width: 80vw;
+    clip: auto;
+}
+
 .gameover-form{
     background-color: var(--c-background);
     display: grid;
@@ -69,6 +84,7 @@
     place-self: flex-end;
     transition-duration: var(--a-duration);
     padding: 3vw;
+    z-index: 9999;
 }
 
 .dialog-button:hover{

@@ -8,6 +8,7 @@
 @import url("./prompts.css");
 @import url("./gameover.css");
 @import url("./variables.css");
+@import url("./tutorial.css");
 
 body{
     background-color: var(--c-background);
