@@ -16,6 +16,7 @@
     transition-duration: 900ms;
     width: 70vw;
     left: -50vw;
+    pointer-events: none;
 }
 
 .tutorial-container-visible{
@@ -23,6 +24,7 @@
     transition-duration: 500ms;
     left: 10vw;
     top: 10vw;
+    pointer-events: all;
 }
 
 .tutorial-text{
