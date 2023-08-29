@@ -177,7 +177,7 @@ function Tutorial()
         },
         {
             imgPath: tutImgPath_3,
-            text: "Each ship can be placed or rotated on a 10x10 board. Ships cannot overlap, bend or go off the board."
+            text: "Each ship can be placed or rotated on a 10x10 grid. Ships cannot overlap, bend or go off the board."
         },
         {
             imgPath: tutImgPath_4,
@@ -189,7 +189,7 @@ function Tutorial()
         },
         {
             imgPath: tutImgPath_6,
-            text: "Wehn Advanced Mode is enabled, each player must place a total of six shots per turn instead of just one."
+            text: "When Advanced Mode is enabled, each player must place a total of six shots per turn instead of just one."
         },
         {
             imgPath: tutImgPath_7,
@@ -197,7 +197,7 @@ function Tutorial()
         },
         {
             imgPath: tutImgPath_8,
-            text: "The player who sinks their opponent's fleet first, Wins."
+            text: "Sink your opponent's fleet first to win the game."
         }
     ];
 
