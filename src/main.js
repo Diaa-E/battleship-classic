@@ -210,6 +210,7 @@ function newGame()
     function debug_quickInit(gameMode)
     {
         screen.closeGameSettings();
+        screen.closeTutorial();
         game.init("Human", gameMode);
         screen.loadMainUi(game.rules.BOARD_SIZE);
         screen.setAiName(game.aiName);
