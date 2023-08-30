@@ -173,15 +173,15 @@ function Tutorial()
         },
         {
             imgPath: tutImgPath_2,
-            text: "Battleship is a 2-player guessing game. Each player gets a fleet of five ships."
+            text: "Each player gets a fleet of five ships with different lengths."
         },
         {
             imgPath: tutImgPath_3,
-            text: "Each ship can be placed or rotated on a 10x10 grid. Ships cannot overlap, bend or go off the board."
+            text: "Each ship can be moved or rotated anywhere on the grid as long as they do not overlap, bend or go off the grid."
         },
         {
             imgPath: tutImgPath_4,
-            text: "If desired, Ships can be placed right next to each other."
+            text: "If desired, Ships can be placed right next to each other. Ships cannot be moved or rotated once the game starts."
         },
         {
             imgPath: tutImgPath_5,
@@ -193,11 +193,11 @@ function Tutorial()
         },
         {
             imgPath: tutImgPath_7,
-            text: "While Advanced Mode is on, a player's available shots per turn will be reduced for each sunk ship of their own fleet."
+            text: "While Advanced Mode is on, a player's available shots per turn will be reduced for each destroyed ship of their own fleet."
         },
         {
             imgPath: tutImgPath_8,
-            text: "Sink your opponent's fleet first to win the game."
+            text: "Destroy your opponent's fleet to win the game."
         }
     ];
 
