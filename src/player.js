@@ -34,7 +34,11 @@ function Player(playerName, rules, pinBox)
 
     function getAvailableShots()
     {
-        return rules.ADVANCED_MODE ? gameBoard.getAvailableShots() : 1;
+        const availableShots = gameBoard.getAvailableShots();
+        
+        if (availableShots === 0) return 0;
+        if (rules.ADVANCED_MODE) return availableShots;
+        return 1;
     }
 
     function fleetDestroyed()
@@ -99,7 +103,11 @@ function Ai(rules, pinBox)
 
     function getAvailableShots()
     {
-        return rules.ADVANCED_MODE ? gameBoard.getAvailableShots() : 1;
+        const availableShots = gameBoard.getAvailableShots();
+        
+        if (availableShots === 0) return 0;
+        if (rules.ADVANCED_MODE) return availableShots;
+        return 1;
     }
 
     function fleetDestroyed()
