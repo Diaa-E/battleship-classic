@@ -315,7 +315,7 @@ function newGame()
 
     function handleTurnSwitch(e)
     {
-        game.checkGameOver();
+        if (game.checkGameOver()) return;
         
         if (e.detail.aiTurn)
         {

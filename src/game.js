@@ -119,6 +119,7 @@ export function Game()
                 document,
                 true
             );
+            return true;
         }
         else if (players.human.fleetDestroyed())
         {
@@ -133,6 +134,7 @@ export function Game()
                 document,
                 true
             );
+            return true;
         }
         
     }
