@@ -277,7 +277,6 @@ function newGame()
         screen.setPlayerName(game.humanName);
         screen.initBoards(game.humanBoard, game.aiBoard);
         screen.disableFireButton();
-        screen.initBoards(game.humanBoard, game.aiBoard);
 
         if (game.aiTurn)
         {
