@@ -344,6 +344,8 @@ function newGame()
 
     function toggleAttackMark(e)
     {
+        if (game.aiTurn) return;
+
         availableShots = game.players.human.getAvailableShots();
 
         if (e.detail.uiSquare.isMarked())
