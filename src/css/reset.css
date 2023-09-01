@@ -11,6 +11,12 @@
 
 *, *::after, *::before{
     outline: none;
+    cursor: default;
+    user-select: none;
+}
+
+input[type=text]{
+    cursor: text;
 }
 
 img, picture, svg, video{
