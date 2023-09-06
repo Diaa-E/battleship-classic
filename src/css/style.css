@@ -41,7 +41,6 @@ body{
     width: 20vw;
     height: 20vw;
     transition-duration: var(--a-duration);
-    z-index: 99999;
 }
 
 
