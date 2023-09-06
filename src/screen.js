@@ -173,6 +173,11 @@ function uiScreen()
         mainUi.activatePlayerBoard();
     }
 
+    function toggleFullScreenButtons(isFullScreen)
+    {
+        mainUi.toggleFullScreenButtons(isFullScreen);
+    }
+
     return{
         refreshAiBoard,
         refreshPlayerBoard,
@@ -205,6 +210,7 @@ function uiScreen()
         loadTutorial,
         closeTutorial,
         openTutorial,
+        toggleFullScreenButtons,
     }
 }
 

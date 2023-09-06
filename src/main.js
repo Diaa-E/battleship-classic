@@ -65,6 +65,10 @@ function newGame()
         {
             type: "playAgain",
             handler: playAgain,
+        },
+        {
+            type: "fullscreenchange",
+            handler: toggleFullscreenButtons,
         }
     ]
 
@@ -93,6 +97,12 @@ function newGame()
 
             document.removeEventListener(event.type, event.handler);
         });
+    }
+
+    function toggleFullscreenButtons()
+    {
+        const isFullScreen = Boolean(document.fullscreenElement);
+        screen.toggleFullScreenButtons(isFullScreen);
     }
 
     function playAgain()

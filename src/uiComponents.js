@@ -49,12 +49,37 @@ function MainUi(boardSize)
         controls: ["controls-container"],
         fireButton: ["fire-button"],
         shotsCounter: ["shot-counter"],
+        enableFullScreen: ["full-screen", "enable-full-screen"],
+        disableFullScreen: ["full-screen", "disable-full-screen"],
     };
 
     const STICKER_TILT = 5;
     const playerBoard = PlayerBoard(cssClasses, boardSize);
     const aiBoard = AiBoard(cssClasses, boardSize);
     const controls = Controls(cssClasses);
+    const btnEnableFull = ImageButton(cssClasses.enableFullScreen, "button");
+    const btnDisableFull = ImageButton(cssClasses.disableFullScreen, "button");
+
+    if (document.fullscreenElement === null)
+    {
+        btnEnableFull.enable();
+        btnDisableFull.disable();
+    }
+    else
+    {
+        btnEnableFull.disable();
+        btnDisableFull.enable();
+    }
+
+    btnEnableFull.element.addEventListener("click", () => {
+
+        document.documentElement.requestFullscreen();
+    });
+
+    btnDisableFull.element.addEventListener("click", () => {
+
+        document.exitFullscreen();
+    });
 
     randomRotation(playerBoard.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(aiBoard.element, STICKER_TILT, -STICKER_TILT);
@@ -78,7 +103,23 @@ function MainUi(boardSize)
             playerBoard.element,
             aiBoard.element,
             controls.element,
+            btnDisableFull.element,
+            btnEnableFull.element,
         );
+    }
+
+    function toggleFullScreenButtons(isFullScreen)
+    {
+        if (isFullScreen)
+        {
+            btnDisableFull.enable();
+            btnEnableFull.disable();
+        }
+        else
+        {
+            btnDisableFull.disable();
+            btnEnableFull.enable();
+        }
     }
 
     function activateAiBoard()
@@ -151,6 +192,7 @@ function MainUi(boardSize)
         disableFireButton,
         activateAiBoard,
         activatePlayerBoard,
+        toggleFullScreenButtons,
     }
 }
 
