@@ -34,6 +34,11 @@
     place-self: stretch;
     font-size: 5vw;
     width: 60vw;
+    cursor: pointer;
+}
+
+.tutorial-img{
+    cursor: pointer;
 }
 
 @media (min-width: 700px) and (orientation: landscape){
