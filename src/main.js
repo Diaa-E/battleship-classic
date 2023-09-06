@@ -192,6 +192,7 @@ function newGame()
     function debug_enableLogging()
     {
         logging = true;
+        game.debug_setLogging(logging);
     }
 
     function debug_showAiLogs()
@@ -228,7 +229,7 @@ function newGame()
         screen.initBoards(game.humanBoard, game.aiBoard);
         screen.disableFireButton();
         screen.initBoards(game.humanBoard, game.aiBoard);
-        game.debug_setLogging(logging);
+        debug_enableLogging();
         
         if (game.aiTurn)
         {
