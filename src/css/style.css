@@ -26,11 +26,6 @@ body{
     padding: 30vw 0 10vw 0;
 }
 
-.logo{
-    width: 90vw;
-    grid-area: logo;
-}
-
 .full-screen{
     position: absolute;
     left: 5vw;
@@ -76,10 +71,6 @@ body{
         "player controls ai";
         gap: 2vh;
         padding: 0 0 0 0;
-    }
-
-    .logo{
-        width: 25vw;
     }
 
     .full-screen{
