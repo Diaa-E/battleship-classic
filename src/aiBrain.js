@@ -32,7 +32,7 @@ function AiBrain()
     {
         const possibleMoves = _analyzeBoard(board, pinBox, opponentFleet);
 
-        if (logging) log.possibleMoves = JSON.parse(JSON.stringify(possibleMoves)); //copy before they get mutated by _getAttackCoords
+        if (logging) log.possibleMovesBefore = JSON.parse(JSON.stringify(possibleMoves)); //copy before they get mutated by _getAttackCoords
 
         return _getAttackCoords(availableShots, possibleMoves);
     }
@@ -76,7 +76,7 @@ function AiBrain()
         }
 
         if (logging) log.attack = new Array(attackCoords);
-        if (logging) log.possibleMoves = JSON.parse(JSON.stringify(possibleMoves)); //log after changes
+        if (logging) log.possibleMovesAfter = JSON.parse(JSON.stringify(possibleMoves)); //log after changes
 
         return attackCoords;
     }
