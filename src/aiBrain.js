@@ -125,7 +125,15 @@ function scanRow(square, weightedBoard,  weights, longestShipAlive)
 
     for (let offset = 1; offset < longestShipAlive; offset++)
     {
-        if (weightedBoard[coord[1]][coord[0] + offset] >= weights.RANDOM)
+        if (weightedBoard[coord[1]][coord[0] + offset] === weights.NONE)
+        {
+            break;
+        }
+        else if (weightedBoard[coord[1]][coord[0] + offset] === weights.DAMAGE)
+        {
+            continue;
+        }
+        else if (weightedBoard[coord[1]][coord[0] + offset] >= weights.RANDOM)
         {
             weightedBoard[coord[1]][coord[0] + offset] = weights.HUNT;
             break;
@@ -134,7 +142,15 @@ function scanRow(square, weightedBoard,  weights, longestShipAlive)
 
     for (let offset = 1; offset < longestShipAlive; offset++)
     {
-        if (weightedBoard[coord[1]][coord[0] - offset] >= weights.RANDOM)
+        if (weightedBoard[coord[1]][coord[0] - offset] === weights.NONE)
+        {
+            break;
+        }
+        else if (weightedBoard[coord[1]][coord[0] - offset] === weights.DAMAGE)
+        {
+            continue;
+        }
+        else if (weightedBoard[coord[1]][coord[0] - offset] >= weights.RANDOM)
         {
             weightedBoard[coord[1]][coord[0] - offset] = weights.HUNT;
             break;
@@ -150,7 +166,15 @@ function scanColumn(square, weightedBoard,  weights, longestShipAlive)
 
     for (let offset = 1; offset < longestShipAlive; offset++)
     {
-        if (weightedBoard[coord[1] + offset]?.[coord[0]] >= weights.RANDOM)
+        if (weightedBoard[coord[1] + offset]?.[coord[0]] === weights.NONE)
+        {
+            break;
+        }
+        else if (weightedBoard[coord[1] + offset]?.[coord[0]] === weights.DAMAGE)
+        {
+            continue;
+        }
+        else if (weightedBoard[coord[1] + offset]?.[coord[0]] >= weights.RANDOM)
         {
             weightedBoard[coord[1] + offset][coord[0]] = weights.HUNT;
             break;
@@ -159,7 +183,15 @@ function scanColumn(square, weightedBoard,  weights, longestShipAlive)
 
     for (let offset = 1; offset < longestShipAlive; offset++)
     {
-        if (weightedBoard[coord[1] - offset]?.[coord[0]] >= weights.RANDOM)
+        if (weightedBoard[coord[1] - offset]?.[coord[0]] === weights.NONE)
+        {
+            break;
+        }
+        else if (weightedBoard[coord[1] - offset]?.[coord[0]] === weights.DAMAGE)
+        {
+            continue;
+        }
+        else if (weightedBoard[coord[1] - offset]?.[coord[0]] >= weights.RANDOM)
         {
             weightedBoard[coord[1] - offset][coord[0]] = weights.HUNT;
             break;
