@@ -15,7 +15,7 @@ export function Game()
     let players;
     let logging = false;
     let animation_speed_ms = 500;
-    let log = {};
+    let log = [];
 
     function init(playerName, gameModeNumber)
     {
@@ -39,7 +39,7 @@ export function Game()
 
     function debug_appendLogEntry(newEntry)
     {
-        log[Object.keys(log).length] = newEntry;
+        log.push(newEntry);
     }
     
     function switchTurn()

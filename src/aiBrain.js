@@ -30,6 +30,7 @@ function AiBrain()
 
     function getNextAttack(board, pinBox, opponentFleet, availableShots)
     {
+        if (logging) log = {};
         const possibleMoves = _analyzeBoard(board, pinBox, opponentFleet);
 
         if (logging) log.possibleMovesBefore = JSON.parse(JSON.stringify(possibleMoves)); //copy before they get mutated by _getAttackCoords
