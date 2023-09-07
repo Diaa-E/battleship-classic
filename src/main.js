@@ -160,15 +160,21 @@ function newGame()
                     args: [],
                     msg: "Ai kill in progress."
                 },
-                "sAi": {
-                    desc: "Display Ai stats and moves so far",
-                    handler: debug_showAiLogs,
+                "LAi": {
+                    desc: "Logs Ai stats and moves so far",
+                    handler: debug_logAiLogs,
                     args: [],
                     msg: "Showing game logs"
                 },
                 "eLog": {
                     desc: "Enable logging",
                     handler: debug_enableLogging,
+                    args: [],
+                    msg: "Logging enabled"
+                },
+                "OAi": {
+                    desc: "Shows Ai stats and moves so farg in a new tab",
+                    handler: debug_showAILogs,
                     args: [],
                     msg: "Logging enabled"
                 },
@@ -195,9 +201,15 @@ function newGame()
         game.debug_setLogging(logging);
     }
 
-    function debug_showAiLogs()
+    function debug_logAiLogs()
     {
         console.log(game.log);
+    }
+
+    function debug_showAILogs()
+    {
+        const newWindow = window.open();
+        newWindow.document.write(JSON.stringify(game.log));
     }
 
     function debug_killAI()
