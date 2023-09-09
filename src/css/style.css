@@ -14,12 +14,11 @@ body{
     background-color: var(--c-background);
     display: grid;
     width: 100vw;
-    grid-template-rows: repeat(3, min-content);
-    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, min-content);
+    grid-template-columns: 2fr 1fr;
     grid-template-areas: 
-        "player"
-        "controls"
-        "ai";
+        "ai ai"
+        "player controls";
     place-items: center;
     place-content: center;
     gap: 4vw;

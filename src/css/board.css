@@ -11,6 +11,7 @@
 }
 
 .player-sticker{
+    --width: 50vw;
     background-image: url("../../assets/images/card_player.svg");
     grid-template-rows: 1fr 6fr;
     grid-area: player;
@@ -34,6 +35,10 @@
     justify-self: flex-start;
     font-size: 8vw;
     color: var(--c-black);
+}
+
+.player-sticker>.name-tag{
+    font-size: 5vw;
 }
 
 .name-tag-active{
@@ -115,6 +120,10 @@
     }
 
     .name-tag{
+        font-size: 3vw;
+    }
+
+    .player-sticker>.name-tag{
         font-size: 3vw;
     }
 }
