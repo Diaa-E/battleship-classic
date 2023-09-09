@@ -287,6 +287,10 @@ function Tutorial()
             tutorialCards[currentTip].show();
             currentTip++;
         }
+        else
+        {
+            form.element.submit();
+        }
     }
 
     function openDialog()
