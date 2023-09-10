@@ -85,7 +85,7 @@ function newGame()
         screen.loadTutorial();
         screen.openTutorial();
     }
-    
+
     addEvents(events);
     
     function addEvents(eventList)
@@ -238,7 +238,7 @@ function newGame()
     function debug_quickInit(gameMode)
     {
         screen.closeGameSettings();
-        screen.closeTutorial();
+        if (Boolean(JSON.parse(sessionStorage.getItem("tutorialComplete"))) === false) screen.closeTutorial();
         game.init("Human", gameMode);
         screen.loadMainUi(game.rules.BOARD_SIZE);
         screen.setAiName(game.aiName);
