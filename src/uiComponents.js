@@ -280,6 +280,11 @@ function Tutorial()
         form.element
     ]);
 
+    form.element.addEventListener("submit", () => {
+
+        sessionStorage.setItem("tutorialComplete", "true");
+    });
+
     function showNextTip()
     {
         if (currentTip < tutorials.length)
@@ -289,7 +294,9 @@ function Tutorial()
         }
         else
         {
+            //submition from script doesn't fire the submit event for some reason
             form.element.submit();
+            sessionStorage.setItem("tutorialComplete", "true");
         }
     }
 

@@ -79,8 +79,13 @@ function newGame()
     let logging = false;
     
     openGameSettings();
-    screen.loadTutorial();
-    screen.openTutorial();
+
+    if (Boolean(JSON.parse(sessionStorage.getItem("tutorialComplete"))) === false)
+    {
+        screen.loadTutorial();
+        screen.openTutorial();
+    }
+    
     addEvents(events);
     
     function addEvents(eventList)
