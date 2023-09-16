@@ -32,11 +32,11 @@
 }
 
 .tutorial-container-visible:nth-child(even){
-    transform: translate(0vw, 2vw) rotate(-5deg);
+    transform: translate(0vw, 0vw) rotate(-5deg);
 }
 
 .tutorial-container-visible:first-child{
-    transform: translate(0vw, 2vw);
+    transform: translate(0vw, 0vw);
 }
 
 .tutorial-text{
@@ -66,9 +66,5 @@
     .tutorial-text{
         font-size: 1.5vw;
         width: 25vw;
-    }
-
-    .tutorial-container-visible{
-
     }
 }
