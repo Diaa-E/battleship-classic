@@ -1,5 +1,5 @@
 .tutorial-container{
-    position: absolute;
+    will-change: transform, opacity;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, min-content);
@@ -14,17 +14,29 @@
     box-shadow: 0vw 0vw .4vw .2vw rgba(0, 0, 0, 0.5);
     border: .3vw solid black;
     transition-duration: 900ms;
+    transition-timing-function: ease-in-out;
     width: 70vw;
-    left: -50vw;
+    transform: translate(-50vw, 0);
     pointer-events: none;
 }
 
 .tutorial-container-visible{
+    will-change: transform, opacity;
     opacity: 100%;
-    transition-duration: 500ms;
-    left: 10vw;
-    top: 10vw;
     pointer-events: all;
+    transform: translate(0vw, 0vw);
+}
+
+.tutorial-container-visible:nth-child(odd){
+    transform: translate(0vw, 2vw) rotate(10deg);
+}
+
+.tutorial-container-visible:nth-child(even){
+    transform: translate(0vw, 2vw) rotate(-5deg);
+}
+
+.tutorial-container-visible:first-child{
+    transform: translate(0vw, 2vw);
 }
 
 .tutorial-text{
@@ -49,7 +61,6 @@
         box-shadow: 0vw 0vw .2vw .1vw rgba(0, 0, 0, 0.5);
         border: .1vw solid black;
         width: 30vw;
-        left: 0;
     }
 
     .tutorial-text{
@@ -58,7 +69,6 @@
     }
 
     .tutorial-container-visible{
-        left: 25vw;
-        top: 5vw;
+
     }
 }

@@ -12,15 +12,14 @@
     background-color: var(--c-background);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(1, min-content) 1fr;
+    grid-template-rows: repeat(1, 150vw) 1fr;
     grid-template-areas: 
     "tutorial"
     "next";
     place-content: center;
     place-items: center;
-    gap: 30vw;
+    gap: 5vw;
     width: 90vw;
-    clip: auto;
 }
 
 .gameover-form{
@@ -90,7 +89,6 @@
 .dialog-button:hover{
     background-color: var(--c-blue);
     color: var(--c-white);
-    transition-duration: var(--a-duration);
 }
 
 .current-ship{
@@ -200,8 +198,8 @@
     }
 
     .tutorial-form{
+        grid-template-rows: repeat(1, min-content) 1fr;
         gap: 1vw;
         width: 80vw;
-        height: 45vw;
     }
 }

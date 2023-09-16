@@ -252,13 +252,11 @@ function Tutorial()
 
     randomRotation(btnSkip.element, STICKER_TILT, -STICKER_TILT);
 
-    tutorials.forEach((tutorial, index) => {
+    tutorials.forEach((tutorial) => {
 
         const currentCard = TutorialCard(cssClasses, tutorial.imgPath);
         currentCard.setText(tutorial.text);
         form.appendElements([currentCard.element]);
-        if (index !== 0) randomRotation(currentCard.element, STICKER_TILT * 2, -STICKER_TILT * 2);
-        currentCard.element.style.zIndex = 9000 + index;
 
         currentCard.element.addEventListener("click", () => {
 
