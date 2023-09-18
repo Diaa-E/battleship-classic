@@ -69,6 +69,7 @@
 }
 
 .dialog-button{
+    will-change: background-color, color, transform;
     background-color: var(--c-white);
     border-radius: 3vw;
     border: .3vw solid black;
@@ -83,7 +84,6 @@
     place-self: flex-end;
     transition-duration: var(--a-duration);
     padding: 3vw;
-    z-index: 9999;
 }
 
 .dialog-button:hover{
