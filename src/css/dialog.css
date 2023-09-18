@@ -188,8 +188,14 @@
     }
 
     .current-ship{
+        will-change: opacity;
+        opacity: 0;
         height: 10vw;
         width: 30vw;
+    }
+
+    .visible{
+        opacity: 1;
     }
 
     .editor-button{

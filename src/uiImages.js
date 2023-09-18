@@ -40,19 +40,26 @@ function CheckMark(checkMarkClasses)
     };
 }
 
-function CurrentShipImage(selectedShipClasses)
+function CurrentShipImage(selectedShipClasses, srcPath)
 {
     const imgShip = new Image();
     addClasses(imgShip, selectedShipClasses);
+    imgShip.src = srcPath;
 
     function setSrc(newSrc)
     {
         imgShip.src = newSrc;
     }
 
+    function toggleVisibility(visibilityClasses)
+    {
+        imgShip.classList.toggle(visibilityClasses);
+    }
+
     return {
         element: imgShip,
         setSrc,
+        toggleVisibility,
     }
 }
 

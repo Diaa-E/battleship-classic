@@ -421,6 +421,7 @@ function FleetEditor(boardSize)
         dialogButton: ["dialog-button"],
         fleetEditorForm: ["fleet-editor-form"],
         currentShip: ["current-ship"],
+        visible: ["visible"],
         nextButton: ["editor-button", "next-button"],
         prevButton: ["editor-button", "prev-button"],
         randomButton: ["editor-button", "random-button"],
@@ -435,16 +436,15 @@ function FleetEditor(boardSize)
     };
 
     const fleetImages = [
-        carrierImagePath,
-        battleshipImagePath,
-        cruiserImagePath,
-        submarineImagePath,
-        destroyerImagePath,
+        CurrentShipImage(cssClasses.currentShip, carrierImagePath),
+        CurrentShipImage(cssClasses.currentShip, battleshipImagePath),
+        CurrentShipImage(cssClasses.currentShip, cruiserImagePath),
+        CurrentShipImage(cssClasses.currentShip, submarineImagePath),
+        CurrentShipImage(cssClasses.currentShip, destroyerImagePath),
     ];
 
     const STICKER_TILT = 5;
     let currentShipIndex = 0;
-    const currentShipImg = CurrentShipImage(cssClasses.currentShip);
     const dialog = Dialog(cssClasses.dialog);
     const btnNext = DialogButton(cssClasses.dialogButton, "Start Game", "submit");
     const form = DialogForm(cssClasses.fleetEditorForm);
@@ -457,18 +457,25 @@ function FleetEditor(boardSize)
     board.setName("Deploy fleet!");
     updateCurrentShipImage();
 
-    randomRotation(currentShipImg.element, STICKER_TILT, -STICKER_TILT);
+    fleetImages.forEach(ship => {
+        
+        randomRotation(ship.element, STICKER_TILT, -STICKER_TILT);
+    });
     randomRotation(btnNext.element, STICKER_TILT, -STICKER_TILT);
     randomRotation(board.element, STICKER_TILT, -STICKER_TILT);
 
     form.appendElements([
         btnNext.element,
         board.element,
-        currentShipImg.element,
         btnNextShip.element,
         btnPrevShip.element,
         btnRandomize.element,
-        btnRotate.element
+        btnRotate.element,
+        fleetImages[0].element,
+        fleetImages[1].element,
+        fleetImages[2].element,
+        fleetImages[3].element,
+        fleetImages[4].element
     ]);
 
     dialog.appendElements([
@@ -482,6 +489,7 @@ function FleetEditor(boardSize)
 
     btnNextShip.element.addEventListener("click", (e) => {
 
+        updateCurrentShipImage();
         selectNextShip();
         updateCurrentShipImage();
         dispatchCustomEvent("currentShipChanged", {shipIndex: currentShipIndex}, e.target);
@@ -489,6 +497,7 @@ function FleetEditor(boardSize)
 
     btnPrevShip.element.addEventListener("click", (e) => {
 
+        updateCurrentShipImage();
         selectPreviousShip();
         updateCurrentShipImage();
         dispatchCustomEvent("currentShipChanged", {shipIndex: currentShipIndex}, e.target);
@@ -538,7 +547,7 @@ function FleetEditor(boardSize)
 
     function updateCurrentShipImage()
     {
-        currentShipImg.setSrc(fleetImages[currentShipIndex]);
+        fleetImages[currentShipIndex].toggleVisibility(cssClasses.visible)
     }
 
     function selectNextShip()
