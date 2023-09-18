@@ -108,6 +108,7 @@
 }
 
 .next-button{
+    will-change: transform;
     background-image: url("../../assets/images/arrow.svg");
     grid-area: next-ship;
     transition-duration: var(--a-duration);
@@ -119,6 +120,7 @@
 }
 
 .prev-button{
+    will-change: transform;
     background-image: url("../../assets/images/arrow.svg");
     transform: scaleX(-1);
     grid-area: prev-ship;
@@ -131,6 +133,7 @@
 }
 
 .random-button{
+    will-change: transform;
     background-image: url("../../assets/images/randomize.svg");
     grid-area: random;
     transition-duration: var(--a-duration);
@@ -142,6 +145,7 @@
 }
 
 .rotate-button{
+    will-change: transform;
     background-image: url("../../assets/images/rotate.svg");
     grid-area: rotate;
     transition-duration: var(--a-duration);
