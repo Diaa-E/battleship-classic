@@ -92,6 +92,8 @@
 }
 
 .current-ship{
+    will-change: opacity;
+    opacity: 0;
     height: 30vw;
     width: 80vw;
     grid-area: ship;
@@ -156,6 +158,10 @@
     transition-duration: var(--a-duration);
 }
 
+.visible{
+    opacity: 1;
+}
+
 @media (min-width: 700px) and (orientation: landscape){
     
     .settings-form{
@@ -188,14 +194,8 @@
     }
 
     .current-ship{
-        will-change: opacity;
-        opacity: 0;
         height: 10vw;
         width: 30vw;
-    }
-
-    .visible{
-        opacity: 1;
     }
 
     .editor-button{
