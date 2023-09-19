@@ -56,17 +56,35 @@
 }
 
 .square{
+    display: grid;
     background-image: url("../../assets/images/square.svg");
     background-size: cover;
     overflow: hidden;
 }
 
+.square img{
+    will-change: opacity;
+    grid-row-start: 1;
+    grid-column-start: 1;
+}
+
 .ship{
     will-change: opacity;
+    opacity: 0;
 }
 
 .ship-highlight{
     filter: brightness(0%) saturate(100%) invert(50%) sepia(40%) saturate(4232%) hue-rotate(186deg) brightness(99%) contrast(100%);
+    opacity: 0;
+}
+
+.ship-highlight:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+.ship.visible ~ .ship-highlight:hover{
+    opacity: 0;
 }
 
 .empty{
@@ -105,13 +123,17 @@
 .editor-empty{
     will-change: opacity;
     width: 90%;
-    opacity: 0%;
+    opacity: 0;
 }
 
 .editor-empty:hover{
-    opacity: 100%;
-    cursor: pointer;
     filter: brightness(0%) saturate(100%) invert(50%) sepia(40%) saturate(4232%) hue-rotate(186deg) brightness(99%) contrast(100%);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.visible{
+    opacity: 1;
 }
 
 @media (min-width: 700px) and (orientation: landscape){

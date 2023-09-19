@@ -1,6 +1,7 @@
 "use strict";
 
 import { addClasses, randomSnapRotation, initBoard, initEditorBoard, removeClasses, updateSquare } from "./uiUtility";
+import { ShipImg } from "./uiImages";
 import { decodeCoord } from "./positionUtility";
 
 export {
@@ -12,35 +13,46 @@ export {
 function EditorBoard(cssClasses, boardSize)
 {
     const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
-    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
+    const editorGrid = EditorGrid(cssClasses, boardSize);
     const playerNameTag = NameTag(cssClasses.nameTag);
 
-    function highlightShip(highlightClasses, encodedShipPosition)
+    function highlightShip(encodedShipPosition)
     {
         encodedShipPosition.forEach(codedPair => {
 
-            const uiSquare = playerBoard.getSquare(decodeCoord(codedPair.coord)).element;
-            addClasses(uiSquare.firstChild, highlightClasses);
+            editorGrid.highlightSquare(decodeCoord(codedPair.coord));
         });
     }
 
-    function unhighlightShip(highlightClasses, encodedShipPosition)
+    function unhighlightShip(encodedShipPosition)
     {
         encodedShipPosition.forEach(codedPair => {
 
-            const uiSquare = playerBoard.getSquare(decodeCoord(codedPair.coord)).element;
-            removeClasses(uiSquare.firstChild, highlightClasses);
+            editorGrid.unhighlightSquare(decodeCoord(codedPair.coord));
         });
     }
 
     function getSquare(decodedCoord)
     {
-        return playerBoard.getSquare(decodedCoord);
+        return editorGrid.getSquare(decodedCoord);
     }
 
     function init(board)
     {
-        initEditorBoard(playerBoard, board, cssClasses);
+        for (let y = 0; y < board.length; y++)
+    {
+        for (let x = 0; x < board.length; x++)
+        {
+            if (typeof board[y][x] === "object")
+            {
+                editorGrid.unhighlightSquare([x, y]);
+            }
+            else
+            {
+                editorGrid.clearSquare([x, y]);
+            }
+        }
+    }
     }
 
     function setName(newName)
@@ -49,18 +61,109 @@ function EditorBoard(cssClasses, boardSize)
     }
 
     playerBoardContainer.element.append(
-        playerBoard.element,
+        editorGrid.element,
         playerNameTag.element
     );
 
     return {
         element: playerBoardContainer.element,
+        
         setName,
         init,
         highlightShip,
         unhighlightShip,
         getSquare,
     };
+}
+
+function EditorGrid(cssClasses, boardSize)
+{
+    const divBoard = document.createElement("div");
+    const uiSquares = [];
+    addClasses(divBoard, cssClasses.board);
+    divBoard.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
+    divBoard.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
+
+    for (let y = 0; y < boardSize; y++)
+    {
+        uiSquares.push([]);
+        for (let x = 0; x < boardSize; x++)
+        {
+            const square = EditorSquare(cssClasses);
+            uiSquares[y].push(square);
+            divBoard.appendChild(square.element);
+        }
+    }
+
+    function highlightSquare(decodedCoord)
+    {
+        uiSquares[decodedCoord[1]][decodedCoord[0]].highlight();
+    }
+
+    function unhighlightSquare(decodedCoord)
+    {
+        uiSquares[decodedCoord[1]][decodedCoord[0]].removeHighlight();
+    }
+
+    function clearSquare(decodedCoord)
+    {
+        uiSquares[decodedCoord[1]][decodedCoord[0]].clear();
+    }
+
+    function getSquare(decodedCoord)
+    {
+        return uiSquares[decodedCoord[1]][decodedCoord[0]];
+    }
+
+    return {
+        element: divBoard,
+
+        highlightSquare,
+        unhighlightSquare,
+        clearSquare,
+        getSquare,
+    }
+}
+
+function EditorSquare(cssClasses)
+{
+    const divSquare = document.createElement("div");
+    addClasses(divSquare, cssClasses.boardSquare);
+    const shipImg = ShipImg(cssClasses.ship);
+    const highlightImg = ShipImg(cssClasses.highlight);
+
+    randomSnapRotation(divSquare);
+
+    divSquare.append(
+        shipImg.element,
+        highlightImg.element
+    );
+
+    function highlight()
+    {
+        removeClasses(shipImg.element, cssClasses.visible);
+        addClasses(highlightImg.element, cssClasses.visible);
+    }
+
+    function removeHighlight()
+    {
+        addClasses(shipImg.element, cssClasses.visible);
+        removeClasses(highlightImg.element, cssClasses.visible);
+    }
+
+    function clear()
+    {
+        removeClasses(shipImg.element, cssClasses.visible);
+        removeClasses(highlightImg.element, cssClasses.visible);
+    }
+
+    return {
+        element: divSquare,
+
+        highlight,
+        removeHighlight,
+        clear,
+    }
 }
 
 function PlayerBoard(cssClasses, boardSize)

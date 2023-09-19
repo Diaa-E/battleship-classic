@@ -433,6 +433,7 @@ function FleetEditor(boardSize)
         empty: ["editor-empty"],
         ship: ["ship"],
         highlight: ["ship-highlight"],
+        visible: ["visible"],
     };
 
     const fleetImages = [
@@ -527,12 +528,12 @@ function FleetEditor(boardSize)
 
     function highLightShip(encodedShipPosition)
     {
-        board.highlightShip(cssClasses.highlight, encodedShipPosition);
+        board.highlightShip(encodedShipPosition);
     }
 
     function unhighlightShip(encodedShipPosition)
     {
-        board.unhighlightShip(cssClasses.highlight, encodedShipPosition);
+        board.unhighlightShip(encodedShipPosition);
     }
 
     function refreshBoard(playerBoard)
