@@ -120,18 +120,6 @@
     filter: invert(14%) sepia(91%) saturate(3511%) hue-rotate(313deg) brightness(103%) contrast(104%);
 }
 
-.editor-empty{
-    will-change: opacity;
-    width: 90%;
-    opacity: 0;
-}
-
-.editor-empty:hover{
-    filter: brightness(0%) saturate(100%) invert(50%) sepia(40%) saturate(4232%) hue-rotate(186deg) brightness(99%) contrast(100%);
-    opacity: 1;
-    cursor: pointer;
-}
-
 .visible{
     opacity: 1;
 }

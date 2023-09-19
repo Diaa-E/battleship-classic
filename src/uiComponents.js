@@ -430,7 +430,6 @@ function FleetEditor(boardSize)
         nameTag: ["name-tag"],
         board: ["board-container"],
         boardSquare: ["square"],
-        empty: ["editor-empty"],
         ship: ["ship"],
         highlight: ["ship-highlight"],
         visible: ["visible"],
