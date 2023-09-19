@@ -58,11 +58,11 @@
 .square{
     background-image: url("../../assets/images/square.svg");
     background-size: cover;
+    overflow: hidden;
 }
 
 .ship{
-    position: absolute;
-    object-fit: contain;
+    will-change: opacity;
 }
 
 .ship-highlight{
@@ -103,6 +103,7 @@
 }
 
 .editor-empty{
+    will-change: opacity;
     width: 90%;
     opacity: 0%;
 }
