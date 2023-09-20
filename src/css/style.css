@@ -14,43 +14,39 @@ body{
     background-color: var(--c-background);
     display: grid;
     width: 100vw;
-    grid-template-rows: repeat(2, min-content);
+    grid-template-rows: repeat(3, min-content);
     grid-template-columns: 2fr 1fr;
     grid-template-areas: 
+        "full full"
         "ai ai"
         "player controls";
     place-items: center;
     place-content: center;
     gap: 4vw;
-    padding: 30vw 0 10vw 0;
+    padding: 5vw 0 10vw 0;
 }
 
 .full-screen{
-    position: absolute;
-    left: 5vw;
-    top: 5vw;
+    will-change: opacity, transform;
+    grid-area: full;
+    justify-self: flex-start;
     background-color: rgba(255, 255, 255, 0);
     background-repeat: no-repeat;
     background-size: contain;
     width: 20vw;
     height: 20vw;
     transition-duration: var(--a-duration);
-}
-
-
-.full-screen:enabled{
+    margin: 0 0 0 5vw;
     cursor: pointer;
-    transition-duration: var(--a-duration);
 }
 
 .full-screen:disabled{
-    visibility: hidden;
-    transition-duration: var(--a-duration);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .full-screen:enabled:hover{
     transform: rotate(15deg) scale(1.1);
-    transition-duration: var(--a-duration);
 }
 
 .enable-full-screen{
@@ -64,17 +60,17 @@ body{
 @media (min-width: 700px) and (orientation: landscape){
     body
     {
-        grid-template-rows: repeat(1, min-content);
+        grid-template-rows: repeat(2, min-content);
         grid-template-columns: 3fr 2fr 3fr;
         grid-template-areas: 
+        "full full full"
         "player controls ai";
-        gap: 2vh;
+        gap: 3vw;
         padding: 0 0 0 0;
     }
 
     .full-screen{
-        left: 2vw;
-        top: 2vw;
+        margin: 0 0 0 3vw;
         width: 5vw;
         height: 5vw;
     }
