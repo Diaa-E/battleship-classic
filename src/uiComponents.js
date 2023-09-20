@@ -51,6 +51,7 @@ function MainUi(boardSize)
         shotsCounter: ["shot-counter"],
         enableFullScreen: ["full-screen", "enable-full-screen"],
         disableFullScreen: ["full-screen", "disable-full-screen"],
+        visible: ["visible"],
     };
 
     const STICKER_TILT = 5;

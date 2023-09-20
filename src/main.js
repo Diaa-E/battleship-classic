@@ -87,6 +87,8 @@ function newGame()
     }
 
     addEvents(events);
+
+    debug_quickInit(1);
     
     function addEvents(eventList)
     {

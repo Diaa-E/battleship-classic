@@ -1,7 +1,7 @@
 "use strict";
 
 import { addClasses, randomSnapRotation, initBoard, initEditorBoard, removeClasses, updateSquare } from "./uiUtility";
-import { ShipImg } from "./uiImages";
+import { DamagedImg, MissedImg, ShipImg, SunkImg } from "./uiImages";
 import { decodeCoord } from "./positionUtility";
 
 export {
@@ -129,6 +129,7 @@ function EditorSquare(cssClasses)
 {
     const divSquare = document.createElement("div");
     addClasses(divSquare, cssClasses.boardSquare);
+
     const shipImg = ShipImg(cssClasses.ship);
     const highlightImg = ShipImg(cssClasses.highlight);
 
@@ -169,12 +170,12 @@ function EditorSquare(cssClasses)
 function PlayerBoard(cssClasses, boardSize)
 {
     const playerBoardContainer = PlayerBoardContainer(cssClasses.playerContainer);
-    const playerBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
+    const playerGrid = PlayerGrid(cssClasses, boardSize);
     const playerNameTag = NameTag(cssClasses.nameTag);
 
     function refreshBoard(board, pinBox, encodedAttackCoord, ships)
     {
-        playerBoard.refreshBoard(board, pinBox, cssClasses, false, encodedAttackCoord, ships);
+        playerGrid.refreshBoard(board, pinBox, cssClasses, false, encodedAttackCoord, ships);
     }
 
     function toggleActive(active)
@@ -184,7 +185,7 @@ function PlayerBoard(cssClasses, boardSize)
 
     function init(board)
     {
-        initBoard(false, playerBoard, board, cssClasses);
+        initGrid(false, playerGrid, board);
     }
 
     function setName(newName)
@@ -192,18 +193,190 @@ function PlayerBoard(cssClasses, boardSize)
         playerNameTag.setName(newName);
     }
 
+    function refreshBoard(board, pinBox, encodedAttackCoord, ships)
+    {
+        playerGrid.refreshGrid(board, pinBox, encodedAttackCoord, ships);
+    }
+
     playerBoardContainer.element.append(
-        playerBoard.element,
+        playerGrid.element,
         playerNameTag.element
     );
 
     return {
         element: playerBoardContainer.element,
+
         refreshBoard,
         setName,
         init,
         toggleActive,
     };
+}
+
+function PlayerGrid(cssClasses, boardSize)
+{
+    const divBoard = document.createElement("div");
+    const uiSquares = [];
+    addClasses(divBoard, cssClasses.board);
+    divBoard.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
+    divBoard.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
+
+    for (let y = 0; y < boardSize; y++)
+    {
+        uiSquares.push([]);
+        for (let x = 0; x < boardSize; x++)
+        {
+            const square = PlayerSquare(cssClasses);
+            uiSquares[y].push(square);
+            divBoard.appendChild(square.element);
+        }
+    }
+
+    function clearSquare(decodedCoord)
+    {
+        uiSquares[decodedCoord[1]][decodedCoord[0]].clear();
+    }
+
+    function getSquare(decodedCoord)
+    {
+        return uiSquares[decodedCoord[1]][decodedCoord[0]];
+    }
+
+    function refreshGrid(board, pinBox, encodedAttackCoord, ships)
+    {
+        const decodedCoord = decodeCoord(encodedAttackCoord);
+        if (board[decodedCoord[1]][decodedCoord[0]] === pinBox.sunk)
+        {
+            let freshSunkCoords;
+
+            for (const ship of ships)
+            {
+                const positionCoords = ship.position.map(element => element.coord);
+                if (positionCoords.includes(encodedAttackCoord))
+                {
+                    freshSunkCoords = positionCoords;
+                    break;
+                }
+            }
+
+            freshSunkCoords.forEach(element => {
+
+                refreshSquare(getSquare(decodeCoord(element)), pinBox, board, decodedCoord);
+            });
+        }
+        else
+        {
+            refreshSquare(getSquare(decodedCoord), pinBox, board, decodedCoord);
+        }
+    }
+
+    return {
+        element: divBoard,
+
+        clearSquare,
+        getSquare,
+        refreshGrid
+    };
+}
+
+function PlayerSquare(cssClasses)
+{
+    const divSquare = document.createElement("div");
+    addClasses(divSquare, cssClasses.boardSquare);
+
+    const shipImg = ShipImg(cssClasses.ship);
+    const missedImg = MissedImg(cssClasses.missed);
+    const sunkImg = SunkImg(cssClasses.sunk);
+    const damagedImg = DamagedImg(cssClasses.damaged);
+
+    randomSnapRotation(divSquare);
+
+    divSquare.append(
+        shipImg.element,
+        missedImg.element,
+        sunkImg.element,
+        damagedImg.element,
+    );
+
+    function sink()
+    {
+        removeClasses(damagedImg.element, cssClasses.visible);
+        addClasses(sunkImg.element, cssClasses.visible);
+    }
+
+    function damage()
+    {
+        addClasses(damagedImg.element, cssClasses.visible);
+    }
+
+    function miss()
+    {
+        addClasses(missedImg.element, cssClasses.visible);
+    }
+
+    function drawShip()
+    {
+        addClasses(shipImg.element, cssClasses.visible);
+    }
+
+    function clear()
+    {
+        removeClasses(shipImg.element, cssClasses.visible);
+        removeClasses(sunkImg.element, cssClasses.visible);
+        removeClasses(damagedImg.element, cssClasses.visible);
+        removeClasses(missedImg.element, cssClasses.visible);
+    }
+
+    return {
+        element: divSquare,
+
+        clear,
+        sink,
+        damage,
+        miss,
+        drawShip,
+    };
+}
+
+function initGrid(hideShips, uiBoard, board)
+{
+    for (let y = 0; y < board.length; y++)
+    {
+        for (let x = 0; x < board.length; x++)
+        {
+            const uiSquare = uiBoard.getSquare([x, y]);
+
+            if (typeof board[y][x] === "object")
+            {
+                if (!hideShips)
+                {
+                    uiSquare.drawShip();
+                }
+            }
+        }
+    }
+}
+
+function refreshSquare(uiSquare, pinBox, board, decodedCoord)
+{
+    const boardSquare = board[decodedCoord[1]][decodedCoord[0]];
+
+    if (boardSquare === pinBox.empty)
+    {
+        return;
+    }
+    else if (boardSquare === pinBox.sunk)
+    {
+        uiSquare.sink();
+    }
+    else if (boardSquare === pinBox.hit)
+    {
+        uiSquare.damage();
+    }
+    else if (boardSquare === pinBox.missed)
+    {
+        uiSquare.miss();
+    }
 }
 
 function PlayerBoardContainer(playerContainerClasses)
