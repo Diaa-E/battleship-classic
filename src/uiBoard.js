@@ -1,6 +1,6 @@
 "use strict";
 
-import { addClasses, randomSnapRotation, initBoard, initEditorBoard, removeClasses, updateSquare } from "./uiUtility";
+import { addClasses, randomSnapRotation, removeClasses, initGrid, refreshSquare } from "./uiUtility";
 import { DamagedImg, EmptyImg, MissedImg, ShipImg, SunkImg } from "./uiImages";
 import { decodeCoord } from "./positionUtility";
 
@@ -546,47 +546,6 @@ function AiSquare(cssClasses)
     };
 }
 
-function initGrid(hideShips, uiBoard, board)
-{
-    for (let y = 0; y < board.length; y++)
-    {
-        for (let x = 0; x < board.length; x++)
-        {
-            const uiSquare = uiBoard.getSquare([x, y]);
-
-            if (typeof board[y][x] === "object")
-            {
-                if (!hideShips)
-                {
-                    uiSquare.drawShip();
-                }
-            }
-        }
-    }
-}
-
-function refreshSquare(uiSquare, pinBox, board, decodedCoord)
-{
-    const boardSquare = board[decodedCoord[1]][decodedCoord[0]];
-
-    if (boardSquare === pinBox.empty)
-    {
-        return;
-    }
-    else if (boardSquare === pinBox.sunk)
-    {
-        uiSquare.sink();
-    }
-    else if (boardSquare === pinBox.hit)
-    {
-        uiSquare.damage();
-    }
-    else if (boardSquare === pinBox.missed)
-    {
-        uiSquare.miss();
-    }
-}
-
 function PlayerBoardContainer(playerContainerClasses)
 {
     const divContainer = document.createElement("div");
@@ -633,135 +592,5 @@ function NameTag(nameTagClasses)
         element: h1,
         setName,
         toggleActive,
-    }
-}
-
-function Board(boardClasses, boardSquareClasses, boardSize, boardMarkedSquareClasses)
-{
-    const divBoard = document.createElement("div");
-    const uiSquares = [];
-    addClasses(divBoard, boardClasses);
-    divBoard.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
-    divBoard.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
-
-    for (let y = 0; y < boardSize; y++)
-    {
-        uiSquares.push([]);
-        for (let x = 0; x < boardSize; x++)
-        {
-            const square = BoardSquare(boardSquareClasses, boardMarkedSquareClasses);
-            uiSquares[y].push(square);
-            randomSnapRotation(square.element);
-            divBoard.appendChild(square.element);
-        }
-    }
-
-    function refreshBoard(board, pinBox, cssClasses, hideShips, encodedAttackCoord, ships)
-    {
-        const decodedCoord = decodeCoord(encodedAttackCoord);
-        if (board[decodedCoord[1]][decodedCoord[0]] === pinBox.sunk)
-        {
-            const sunkShips = [];
-            let freshSunkCoords;
-
-            ships.forEach(ship => {
-
-                if (ship.isSunk) sunkShips.push(ship);
-            });
-
-            //Todo: limit ship iteration to sunk ships only
-            for (const ship of ships)
-            {
-                const positionCoords = ship.position.map(element => element.coord);
-                if (positionCoords.includes(encodedAttackCoord))
-                {
-                    freshSunkCoords = positionCoords;
-                    break;
-                }
-            }
-
-            freshSunkCoords.forEach(element => {
-
-                updateSquare(getSquare(decodeCoord(element)), pinBox, board, decodedCoord, cssClasses, hideShips);
-            });
-        }
-        else
-        {
-            updateSquare(getSquare(decodedCoord), pinBox, board, decodedCoord, cssClasses, hideShips);
-        }
-    }
-
-    function getSquare(decodedCoord)
-    {
-        return uiSquares[decodedCoord[1]][decodedCoord[0]];
-    }
-
-    function markSquare(decodedCoord, boardMarkedSquareClasses)
-    {
-        uiSquares[decodedCoord[1]][decodedCoord[0]].mark(boardMarkedSquareClasses);
-    }
-
-    function unmarkSquare(decodedCoord, boardMarkedSquareClasses)
-    {
-        uiSquares[decodedCoord[1]][decodedCoord[0]].unmark(boardMarkedSquareClasses);
-    }
-
-    function clearAllSquares()
-    {
-        uiSquares.forEach(row => {
-
-            row.forEach(square => {
-
-                square.clear();
-            });
-        });
-    }
-
-    return {
-        element: divBoard,
-
-        getSquare,
-        clearAllSquares,
-        markSquare,
-        unmarkSquare,
-        refreshBoard
-    }
-}
-
-function BoardSquare(boardSquareClasses, boardMarkedSquareClasses)
-{
-    let marked = false;
-    const divSquare = document.createElement("div");
-    addClasses(divSquare, boardSquareClasses);
-
-    function isMarked()
-    {
-        return marked;
-    }
-
-    function mark()
-    {
-        marked = true;
-        addClasses(divSquare.firstChild, boardMarkedSquareClasses);
-    }
-
-    function unmark()
-    {
-        marked = false;
-        removeClasses(divSquare.firstChild, boardMarkedSquareClasses);
-    }
-
-    function clear()
-    {
-        divSquare.innerHTML = "";
-    }
-
-    return {
-        element: divSquare,
-
-        isMarked,
-        mark,
-        unmark,
-        clear
     }
 }

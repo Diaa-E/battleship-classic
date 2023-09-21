@@ -1,17 +1,14 @@
 "use strict";
 
-import { EmptyImg, CrossedImg, DamagedImg, ShipImg, MissedImg, SunkImg, EmptyEditorImg } from "./uiImages";
-
 export {
     addClasses,
     removeClasses,
     randomRotation,
     randomSnapRotation,
     appendToParent,
-    updateSquare,
-    initBoard,
-    initEditorBoard,
     dispatchCustomEvent,
+    initGrid,
+    refreshSquare,
 };
 
 function addClasses(element, cssClasses = [])
@@ -52,125 +49,44 @@ function appendToParent(parent, children)
     });
 }
 
-function updateSquare(uiSquare, pinBox, board, decodedCoord, cssClasses, hideShips)
+function initGrid(hideShips, uiBoard, board)
 {
-    const boardSquare = board[decodedCoord[1]][decodedCoord[0]];
-
-    uiSquare.clear();
-    if (boardSquare === pinBox.empty)
-    {
-        drawEmpty(uiSquare.element, cssClasses.empty);
-    }
-    else if (boardSquare === pinBox.sunk)
-    {
-        if (!hideShips) drawShip(uiSquare.element, cssClasses.ship);
-        drawSunk(uiSquare.element, cssClasses.sunk);
-    }
-    else if (boardSquare === pinBox.hit)
-    {
-        drawDamaged(uiSquare.element, cssClasses.damaged);
-        if (!hideShips) drawShip(uiSquare.element, cssClasses.ship);
-    }
-    else if (boardSquare === pinBox.missed)
-    {
-        drawMissed(uiSquare.element, cssClasses.missed);
-    }
-    else if (typeof boardSquare === "object")
-    {
-        if (hideShips)
-        {
-            drawEmpty(uiSquare.element, cssClasses.empty);
-        }
-        else
-        {
-            drawShip(uiSquare.element, cssClasses.ship);
-        } 
-    }
-}
-
-function drawEmpty(uiSquare, emptyClasses)
-{
-    const imgEmpty = EmptyImg(emptyClasses);
-    uiSquare.appendChild(imgEmpty.element);
-}
-
-function drawEditorEmpty(uiSquare, emptyEditorClasses)
-{
-    const imgEmpty = EmptyEditorImg(emptyEditorClasses);
-    uiSquare.appendChild(imgEmpty.element);
-}
-
-function drawShip(uiSquare, shipClasses)
-{
-    const imgShip = ShipImg(shipClasses);
-    uiSquare.append(imgShip.element);
-}
-
-function drawDamaged(uiSquare, damagedClasses)
-{
-    const imgDamaged = DamagedImg(damagedClasses);
-    uiSquare.append(imgDamaged.element);
-}
-
-function drawSunk(uiSquare, sunkClasses)
-{
-    const imgCrossed = CrossedImg(sunkClasses);
-    const imgSunk = SunkImg(sunkClasses);
-    uiSquare.append(imgSunk.element, imgCrossed.element);
-}
-
-function drawMissed(uiSquare, missedClasses)
-{
-    const imgMissed = MissedImg(missedClasses);
-    uiSquare.append(imgMissed.element);
-}
-
-function initBoard(hideShips, uiBoard, board, cssClasses)
-{
-    uiBoard.clearAllSquares();
     for (let y = 0; y < board.length; y++)
     {
         for (let x = 0; x < board.length; x++)
         {
-            const uiSquare = uiBoard.getSquare([x, y]).element;
+            const uiSquare = uiBoard.getSquare([x, y]);
 
             if (typeof board[y][x] === "object")
             {
                 if (!hideShips)
                 {
-                    drawShip(uiSquare, cssClasses.ship);
+                    uiSquare.drawShip();
                 }
-                else
-                {
-                    drawEmpty(uiSquare, cssClasses.empty);
-                }
-            }
-            else
-            {
-                drawEmpty(uiSquare, cssClasses.empty);
             }
         }
     }
 }
 
-function initEditorBoard(uiBoard, board, cssClasses)
+function refreshSquare(uiSquare, pinBox, board, decodedCoord)
 {
-    uiBoard.clearAllSquares();
-    for (let y = 0; y < board.length; y++)
-    {
-        for (let x = 0; x < board.length; x++)
-        {
-            const uiSquare = uiBoard.getSquare([x, y]).element;
+    const boardSquare = board[decodedCoord[1]][decodedCoord[0]];
 
-            if (typeof board[y][x] === "object")
-            {
-                drawShip(uiSquare, cssClasses.ship);
-            }
-            else
-            {
-                drawEditorEmpty(uiSquare, cssClasses.empty);
-            }
-        }
+    if (boardSquare === pinBox.empty)
+    {
+        return;
+    }
+    else if (boardSquare === pinBox.sunk)
+    {
+        uiSquare.sink();
+    }
+    else if (boardSquare === pinBox.hit)
+    {
+        uiSquare.damage();
+    }
+    else if (boardSquare === pinBox.missed)
+    {
+        uiSquare.miss();
     }
 }
 

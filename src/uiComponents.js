@@ -40,7 +40,6 @@ function MainUi(boardSize)
         nameTagActive:["name-tag-active"],
         board: ["board-container"],
         boardSquare: ["square"],
-        boardSquareMarked: ["marked"],
         empty: ["empty"],
         ship: ["ship"],
         sunk: ["sunk"],
