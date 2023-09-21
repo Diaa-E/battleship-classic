@@ -80,7 +80,7 @@
 }
 
 .ship-highlight:hover{
-    opacity: 1;
+    opacity: .5;
     cursor: pointer;
 }
 
