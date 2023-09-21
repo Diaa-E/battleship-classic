@@ -4,7 +4,6 @@ import { addClasses, randomRotation, randomSnapRotation } from "./uiUtility";
 
 import shipImagePath from "../assets/images/ship.svg";
 import emptyImagePath from "../assets/images/empty.svg";
-import crossedImagePath from "../assets/images/crossed.svg";
 import sunkImagePath from "../assets/images/sunk.svg";
 import missedImagePath from "../assets/images/missed.svg";
 import damagedImagePath from "../assets/images/damaged.svg";
@@ -12,7 +11,6 @@ import damagedImagePath from "../assets/images/damaged.svg";
 export {
     CurrentShipImage,
     MissedImg,
-    CrossedImg,
     DamagedImg,
     EmptyImg,
     ShipImg,
@@ -84,18 +82,6 @@ function EmptyEditorImg(emptyEditorClasses)
 
     return {
         element: imgEditorEmpty
-    };
-}
-
-function CrossedImg(crossedClasses)
-{
-    const imgCrossed = new Image();
-    imgCrossed.src = crossedImagePath;
-    addClasses(imgCrossed, crossedClasses);
-    randomSnapRotation(imgCrossed);
-
-    return {
-        element: imgCrossed
     };
 }
 
