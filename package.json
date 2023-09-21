@@ -1,6 +1,6 @@
 {
   "name": "battleship-classic",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Battleship with original board game rules",
   "main": "index.js",
   "private": true,
