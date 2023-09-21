@@ -30,6 +30,7 @@
 }
 
 .name-tag{
+    will-change: color;
     font-family: var(--font-hand);
     grid-area: name;
     justify-self: flex-start;
