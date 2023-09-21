@@ -20,6 +20,10 @@
         "board";
 }
 
+.editor-sticker{
+    --width: 90vw;
+}
+
 .ai-sticker{
     background-image: url("../../assets/images/card_ai.svg");
     grid-template-rows: 6fr 1fr;

@@ -427,7 +427,7 @@ function FleetEditor(boardSize)
         prevButton: ["editor-button", "prev-button"],
         randomButton: ["editor-button", "random-button"],
         rotateButton: ["editor-button", "rotate-button"],
-        playerContainer: ["sticker", "player-sticker"],
+        playerContainer: ["sticker", "player-sticker", "editor-sticker"],
         nameTag: ["name-tag"],
         board: ["board-container"],
         boardSquare: ["square"],
