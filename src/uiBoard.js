@@ -1,7 +1,7 @@
 "use strict";
 
 import { addClasses, randomSnapRotation, initBoard, initEditorBoard, removeClasses, updateSquare } from "./uiUtility";
-import { DamagedImg, MissedImg, ShipImg, SunkImg } from "./uiImages";
+import { DamagedImg, EmptyImg, MissedImg, ShipImg, SunkImg } from "./uiImages";
 import { decodeCoord } from "./positionUtility";
 
 export {
@@ -173,11 +173,6 @@ function PlayerBoard(cssClasses, boardSize)
     const playerGrid = PlayerGrid(cssClasses, boardSize);
     const playerNameTag = NameTag(cssClasses.nameTag);
 
-    function refreshBoard(board, pinBox, encodedAttackCoord, ships)
-    {
-        playerGrid.refreshBoard(board, pinBox, cssClasses, false, encodedAttackCoord, ships);
-    }
-
     function toggleActive(active)
     {
         playerNameTag.toggleActive(active, cssClasses.nameTagActive);
@@ -338,6 +333,219 @@ function PlayerSquare(cssClasses)
     };
 }
 
+function AiBoard(cssClasses, boardSize)
+{
+    const aiBoardContainer = AiBoardContainer(cssClasses.aiContainer);
+    const aiGrid = AiGrid(cssClasses, boardSize);
+    const aiNameTag = NameTag(cssClasses.nameTag);
+
+    aiBoardContainer.element.append(
+        aiGrid.element,
+        aiNameTag.element
+    );
+
+    function toggleActive(active)
+    {
+        aiNameTag.toggleActive(active, cssClasses.nameTagActive);
+    }
+
+    function init(board)
+    {
+        initGrid(true, aiGrid, board);
+    }
+
+    function setName(newName)
+    {
+        aiNameTag.setName(newName);
+    }
+
+    function refreshBoard(board, pinBox, encodedAttackCoord, ships)
+    {
+        aiGrid.refreshGrid(board, pinBox, encodedAttackCoord, ships);
+    }
+
+    function markSquare(decodedCoord)
+    {
+        aiGrid.getSquare(decodedCoord).mark();
+    }
+
+    function unmarkSquare(decodedCoord)
+    {
+        aiGrid.getSquare(decodedCoord).unmark();
+    }
+
+    function getSquare(decodedCoord)
+    {
+        return aiGrid.getSquare(decodedCoord);
+    }
+
+    return {
+        element: aiBoardContainer.element,
+
+        refreshBoard,
+        setName,
+        init,
+        markSquare,
+        unmarkSquare,
+        getSquare,
+        toggleActive
+    };
+}
+
+function AiGrid(cssClasses, boardSize)
+{
+    const divBoard = document.createElement("div");
+    const uiSquares = [];
+    addClasses(divBoard, cssClasses.board);
+    divBoard.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
+    divBoard.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
+
+    for (let y = 0; y < boardSize; y++)
+    {
+        uiSquares.push([]);
+        for (let x = 0; x < boardSize; x++)
+        {
+            const square = AiSquare(cssClasses);
+            uiSquares[y].push(square);
+            divBoard.appendChild(square.element);
+        }
+    }
+
+    function clearSquare(decodedCoord)
+    {
+        uiSquares[decodedCoord[1]][decodedCoord[0]].clear();
+    }
+
+    function getSquare(decodedCoord)
+    {
+        return uiSquares[decodedCoord[1]][decodedCoord[0]];
+    }
+
+    function refreshGrid(board, pinBox, encodedAttackCoord, ships)
+    {
+        const decodedCoord = decodeCoord(encodedAttackCoord);
+        if (board[decodedCoord[1]][decodedCoord[0]] === pinBox.sunk)
+        {
+            let freshSunkCoords;
+
+            for (const ship of ships)
+            {
+                const positionCoords = ship.position.map(element => element.coord);
+                if (positionCoords.includes(encodedAttackCoord))
+                {
+                    freshSunkCoords = positionCoords;
+                    break;
+                }
+            }
+
+            freshSunkCoords.forEach(element => {
+
+                refreshSquare(getSquare(decodeCoord(element)), pinBox, board, decodedCoord);
+            });
+        }
+        else
+        {
+            refreshSquare(getSquare(decodedCoord), pinBox, board, decodedCoord);
+        }
+    }
+
+    return {
+        element: divBoard,
+
+        clearSquare,
+        getSquare,
+        refreshGrid
+    };
+}
+
+function AiSquare(cssClasses)
+{
+    const divSquare = document.createElement("div");
+    addClasses(divSquare, cssClasses.boardSquare);
+
+    const missedImg = MissedImg(cssClasses.missed);
+    const sunkImg = SunkImg(cssClasses.sunk);
+    const damagedImg = DamagedImg(cssClasses.damaged);
+    const emptyImg = EmptyImg(cssClasses.empty);
+
+    let marked = false;
+    let empty = true;
+
+    randomSnapRotation(divSquare);
+
+    divSquare.append(
+        missedImg.element,
+        sunkImg.element,
+        damagedImg.element,
+        emptyImg.element,
+    );
+
+    function sink()
+    {
+        empty = false;
+        removeClasses(emptyImg.element, cssClasses.visible);
+        removeClasses(damagedImg.element, cssClasses.visible);
+        addClasses(sunkImg.element, cssClasses.visible);
+    }
+
+    function damage()
+    {
+        empty = false;
+        removeClasses(emptyImg.element, cssClasses.visible);
+        addClasses(damagedImg.element, cssClasses.visible);
+    }
+
+    function miss()
+    {
+        empty = false;
+        removeClasses(emptyImg.element, cssClasses.visible);
+        addClasses(missedImg.element, cssClasses.visible);
+    }
+
+    function mark()
+    {
+        addClasses(emptyImg.element, cssClasses.visible);
+        marked = true;
+    }
+
+    function unmark()
+    {
+        removeClasses(emptyImg.element, cssClasses.visible);
+        marked = false;
+    }
+
+    function clear()
+    {
+        removeClasses(emptyImg.element, cssClasses.visible);
+        removeClasses(sunkImg.element, cssClasses.visible);
+        removeClasses(damagedImg.element, cssClasses.visible);
+        removeClasses(missedImg.element, cssClasses.visible);
+    }
+
+    function isMarked()
+    {
+        return marked;
+    }
+
+    function isEmpty()
+    {
+        return empty;
+    }
+
+    return {
+        element: divSquare,
+
+        clear,
+        sink,
+        damage,
+        miss,
+        mark,
+        unmark,
+        isMarked,
+        isEmpty
+    };
+}
+
 function initGrid(hideShips, uiBoard, board)
 {
     for (let y = 0; y < board.length; y++)
@@ -387,65 +595,6 @@ function PlayerBoardContainer(playerContainerClasses)
     return {
         element: divContainer
     }
-}
-
-function AiBoard(cssClasses, boardSize)
-{
-    const aiBoardContainer = AiBoardContainer(cssClasses.aiContainer);
-    const aiBoard = Board(cssClasses.board, cssClasses.boardSquare, boardSize, cssClasses.boardSquareMarked);
-    const aiNameTag = NameTag(cssClasses.nameTag);
-
-    aiBoardContainer.element.append(
-        aiBoard.element,
-        aiNameTag.element
-    );
-
-    function refreshBoard(board, pinBox, encodedAttackCoord, ships)
-    {
-        aiBoard.refreshBoard(board, pinBox, cssClasses, true, encodedAttackCoord, ships);
-    }
-
-    function getSquare(decodedCoord)
-    {
-        return aiBoard.getSquare(decodedCoord);
-    }
-
-    function markSquare(decodedCoord)
-    {
-        aiBoard.markSquare(decodedCoord, cssClasses.boardSquareMarked);
-    }
-
-    function unmarkSquare(decodedCoord)
-    {
-        aiBoard.markSquare(decodedCoord, cssClasses.boardSquareMarked);
-    }
-
-    function init(board)
-    {
-        initBoard(true, aiBoard, board, cssClasses);
-    }
-
-    function setName(newName)
-    {
-        aiNameTag.setName(newName);
-    }
-
-    function toggleActive(active)
-    {
-        aiNameTag.toggleActive(active, cssClasses.nameTagActive);
-    }
-
-    return {
-        element: aiBoardContainer.element,
-
-        refreshBoard,
-        setName,
-        init,
-        markSquare,
-        unmarkSquare,
-        getSquare,
-        toggleActive
-    };
 }
 
 function AiBoardContainer(aiContainerClasses)
@@ -520,6 +669,7 @@ function Board(boardClasses, boardSquareClasses, boardSize, boardMarkedSquareCla
                 if (ship.isSunk) sunkShips.push(ship);
             });
 
+            //Todo: limit ship iteration to sunk ships only
             for (const ship of ships)
             {
                 const positionCoords = ship.position.map(element => element.coord);

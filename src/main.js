@@ -87,8 +87,6 @@ function newGame()
     }
 
     addEvents(events);
-
-    debug_quickInit(1);
     
     function addEvents(eventList)
     {
@@ -375,6 +373,7 @@ function newGame()
     function toggleAttackMark(e)
     {
         if (game.aiTurn) return;
+        if (!e.detail.uiSquare.isEmpty()) return;
 
         availableShots = game.players.human.getAvailableShots();
 

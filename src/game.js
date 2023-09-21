@@ -9,7 +9,7 @@ export function Game()
 {
     let pinBox = PinBox("E", "M", "H", "S");
     let rules;
-    let aiTurn = false //pickRandomTurn() === 0 ? false : true;
+    let aiTurn = pickRandomTurn() === 0 ? false : true;
     let gameOver = false;
     let winner = undefined;
     let players;

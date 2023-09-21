@@ -88,9 +88,24 @@
 }
 
 .empty{
-    position: absolute;
-    object-fit: contain;
+    will-change: opacity;
+    filter: invert(14%) sepia(91%) saturate(3511%) hue-rotate(313deg) brightness(103%) contrast(104%);
     opacity: 0%;
+}
+
+.empty:hover{
+    cursor: pointer;
+    opacity: .5;
+}
+
+/*if any other images is visible in the same cell, disable hover crosshair*/
+.visible ~ .empty:hover{
+    cursor: not-allowed;
+    opacity: 0;
+}
+
+.empty.visible:hover{
+    opacity: 1;
 }
 
 .sunk{
@@ -108,11 +123,6 @@
     will-change: opacity;
     opacity: 0;
     filter: invert(50%) sepia(40%) saturate(4232%) hue-rotate(186deg) brightness(99%) contrast(100%);
-}
-
-.ai-sticker .empty:hover{
-    opacity: 100%;
-    cursor: pointer;
 }
 
 .marked{
