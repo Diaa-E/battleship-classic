@@ -10,8 +10,8 @@ This game only supports Human vs. AI mode.
 
 ## Contents
 
-1. [**Game Rules**](##Game-Rules)
-2. [**UI Design**](##UI-Design)
+1. [**Game Rules**](#Game-Rules)
+2. [**UI Design**](#UI-Design)
 3. [**Code Documentation**](#Code-Documentation)
 
 ## Game Rules
