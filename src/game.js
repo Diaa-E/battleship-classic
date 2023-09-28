@@ -115,6 +115,7 @@ export function Game()
                     loser: players.ai.NAME,
                     winnerShots: getTotalShots().human,
                     loserShots: getTotalShots().ai,
+                    winnerShips: players.human.getRemainingShips(),
                 },
                 document,
                 true
@@ -130,13 +131,13 @@ export function Game()
                     loser: players.human.NAME,
                     winnerShots: getTotalShots().ai,
                     loserShots: getTotalShots().human,
+                    winnerShips: players.ai.getRemainingShips(),
                 },
                 document,
                 true
             );
             return true;
         }
-        
     }
 
     return {

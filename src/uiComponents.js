@@ -608,6 +608,7 @@ function GameOver()
         loserContainer: ["gameover-sticker", "loser-sticker"],
         gameoverNames: ["gameover-text", "gameover-name"],
         gameoverShots: ["gameover-text", "gameover-shots"],
+        gameoverShips: ["gameover-text", "gameover-ships"],
         rotateButton: ["editor-button", "rotate-button"],
     };
 
@@ -620,6 +621,8 @@ function GameOver()
     const loserName = Paragraph(cssClasses.gameoverNames);
     const winnerTotalShots = Paragraph(cssClasses.gameoverShots);
     const loserTotalShots = Paragraph(cssClasses.gameoverShots);
+    const winnerRemainingShips = Paragraph(cssClasses.gameoverShips);
+    const loserRemainingShips = Paragraph(cssClasses.gameoverShips);
     const btnPlayAgain = ImageButton(cssClasses.rotateButton, "submit");
 
     randomRotation(winnerSticker.element, STICKER_TILT, -STICKER_TILT);
@@ -628,11 +631,13 @@ function GameOver()
     winnerSticker.element.append(
         winnerName.element,
         winnerTotalShots.element,
+        winnerRemainingShips.element,
     );
 
     loserSticker.element.append(
         loserName.element,
         loserTotalShots.element,
+        loserRemainingShips.element,
     );  
 
     form.appendElements([
@@ -680,6 +685,16 @@ function GameOver()
         loserName.setText(newName);
     }
 
+    function setWinnerRemainingShips(newRemainingShips)
+    {
+        winnerRemainingShips.setText(newRemainingShips);
+    }
+
+    function setLoserRemainingShips(newRemainingShips)
+    {
+        loserRemainingShips.setText(newRemainingShips);
+    }
+
     function setLoserTotalShots(newTotalShots)
     {
         loserTotalShots.setText(newTotalShots);
@@ -695,5 +710,7 @@ function GameOver()
         setWinnerTotalShots,
         setLoserName,
         setLoserTotalShots,
+        setWinnerRemainingShips,
+        setLoserRemainingShips,
     }
 }

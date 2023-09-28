@@ -54,6 +54,16 @@ function uiScreen()
         gameover.setWinnerTotalShots(newTotalShots);
     }
 
+    function setWinnerRemainingShips(newRemainingShips)
+    {
+        gameover.setWinnerRemainingShips(newRemainingShips);
+    }
+
+    function setLoserRemainingShips(newRemainingShips)
+    {
+        gameover.setLoserRemainingShips(newRemainingShips);
+    }
+
     function setLoserName(newName)
     {
         gameover.setLoserName(newName);
@@ -211,6 +221,8 @@ function uiScreen()
         closeTutorial,
         openTutorial,
         toggleFullScreenButtons,
+        setWinnerRemainingShips,
+        setLoserRemainingShips,
     }
 }
 

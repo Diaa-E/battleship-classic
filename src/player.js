@@ -41,6 +41,11 @@ function Player(playerName, rules, pinBox)
         return 1;
     }
 
+    function getRemainingShips()
+    {
+        return gameBoard.getRemainingShips();
+    }
+
     function fleetDestroyed()
     {
         return gameBoard.fleetDestroyed();
@@ -64,6 +69,7 @@ function Player(playerName, rules, pinBox)
         fleetDestroyed,
         addShotsFired,
         randomizeFleet,
+        getRemainingShips,
     };
 }
 
@@ -130,6 +136,11 @@ function Ai(rules, pinBox)
         gameBoard.receiveAttack(decodeCoord(encodedCoord));;
     }
 
+    function getRemainingShips()
+    {
+        return gameBoard.getRemainingShips();
+    }
+
     return {
         get NAME(){ return NAME },
         get board(){ return gameBoard.board },
@@ -143,5 +154,6 @@ function Ai(rules, pinBox)
         addShotsFired,
         receiveAttack,
         debug_setLogging,
+        getRemainingShips,
     }
 }

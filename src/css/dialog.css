@@ -26,14 +26,15 @@
     background-color: var(--c-background);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1.5fr 1fr 1.5fr;
+    grid-template-rows: repeat(3, min-content);
     grid-template-areas: 
     "winner"
     "loser"
     "rotate";
     place-content: center;
     place-items: center;
-    gap: 2vw;
+    gap: 10vw;
+    overflow: hidden;
 }
 
 .settings-form{
@@ -204,7 +205,7 @@
     }
 
     .gameover-form{
-        gap: 1vw;
+        gap: 2vw;
     }
 
     .tutorial-form{

@@ -23,11 +23,23 @@ function createFleet(shipList)
         return updateFleet(ships, board, damagedPin, sunkPin);
     }
 
+    function getRemainingShips()
+    {
+        let remainingShips = 0;
+        ships.forEach(ship => {
+
+            if (!ship.isSunk) remainingShips ++;
+        });
+
+        return remainingShips;
+    }
+
     return {
         get ships(){ return ships},
         
         isDestroyed,
         update,
+        getRemainingShips,
     }
 }
 

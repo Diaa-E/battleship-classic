@@ -136,6 +136,11 @@ function GameBoard(shipList, boardSize, pinBox)
         return fleet.isDestroyed();
     }
 
+    function getRemainingShips()
+    {
+        return fleet.getRemainingShips();
+    }
+
     return {
         get board(){ return board },
         get pinBox(){ return pinBox },
@@ -146,7 +151,8 @@ function GameBoard(shipList, boardSize, pinBox)
         rotateShip,
         getAvailableShots,
         fleetDestroyed,
-        randomizeFleet
+        randomizeFleet,
+        getRemainingShips,
     }
 }
 

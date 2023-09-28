@@ -3,16 +3,18 @@
     background-repeat: no-repeat;
     background-size: contain;
     display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
     grid-template-areas: 
-    "gameover-name gameover-shots";
+    "gameover-name gameover-name"
+    "gameover-shots gameover-ships";
+    place-items: center;
 }
 
 .winner-sticker{
     background-image: url("../../assets/images/winner_sticker.svg");
     grid-area: winner;
-    padding: 22vw 6vw 0 6vw;
+    padding: 14vw 0 0 0;
     width: 90vw;
     height: 40vw;
 }
@@ -20,9 +22,9 @@
 .loser-sticker{
     background-image: url("../../assets/images/loser_sticker.svg");
     grid-area: loser;
-    padding: 8vw 6vw 0 6vw;
+    padding: 2vw 0 0 0;
     width: 90vw;
-    height: 25vw;
+    height: 32vw;
 }
 
 .gameover-text{
@@ -31,29 +33,46 @@
 }
 
 .gameover-name{
+    grid-area: gameover-name;
     text-align: left;
 }
 
 .gameover-shots{
+    grid-area: gameover-shots;
     color: var(--c-red);
     text-align: right;
+    margin: 0 0 0 15vw;
+}
+
+.gameover-ships{
+    grid-area: gameover-ships;
+    color: var(--c-grey);
+    margin: 0 0 0 15vw;
 }
 
 @media (min-width: 700px) and (orientation: landscape){
 
     .winner-sticker{
-        padding: 9vw 4vw 0 4vw;
+        padding: 5vw 0 0 0;
         width: 40vw;
         height: 15vw;
     }
 
     .loser-sticker{
-        padding: 4vw 4vw 0 4vw;
+        padding: 1vw 0 0 0;
         width: 40vw;
-        height: 10vw;
+        height: 12vw;
     }
 
     .gameover-text{
         font-size: 3vw;
+    }
+
+    .gameover-shots{
+        margin: 0 0 0 9vw;
+    }
+
+    .gameover-ships{
+        margin: 0 0 0 2vw;
     }
 }

@@ -121,8 +121,10 @@ function newGame()
         screen.openGameover();
         screen.setWinnerName(e.detail.winner);
         screen.setWinnerTotalShots(e.detail.winnerShots);
+        screen.setWinnerRemainingShips(e.detail.winnerShips);
         screen.setLoserName(e.detail.loser);
         screen.setLoserTotalShots(e.detail.loserShots);
+        screen.setLoserRemainingShips(0);
     }
 
     function enableDebugging(e)
