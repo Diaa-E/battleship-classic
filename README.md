@@ -1,7 +1,7 @@
 
 ![Battleship Classic Logo](./assets/images/logo.svg)
 
-# Battleship Classic v1.0.3
+# Battleship Classic v1.0.4
 
 Battleship is a two-player guessing board game. Each player tries to guess the location of their opponent's fleet by firing shots at
 the their 10 x 10 square grid.
