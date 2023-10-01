@@ -11,7 +11,8 @@ This game only supports Human vs. AI mode.
 
 1. [**Game Rules**](#Game-Rules)
 2. [**UI Design**](#UI-Design)
-3. [**Code Documentation**](#Code-Documentation)
+3. [**Abstract Structure**](#abstract-structure)
+4. [**Code Documentation**](#Code-Documentation)
 
 ## Game Rules
 
@@ -97,4 +98,37 @@ This game only supports Human vs. AI mode.
 
     ![Gameover Dialog](./assets/readme/mocks/gameover.jpg)
 
-## Code Documentation
+## Abstract Structure
+
+### Chapter Contents
+
+1. [**Top Level**](#top-level)
+2. [**Game Level**](#game-level)
+3. [**UI Level**](#ui-level)
+
+### Top Level
+    
+This application consists of 3 main objects: the main function, a game object and a UI object. The game object contains all the game's mechanics and functions. The UI object constructs and update the interface using data provided by the game object. The main function initializes both game and UI objects and handles the communication between them. 
+
+![Top level layers diagram](./assets/readme/abstract/top_level.png)
+
+### Game Level
+
+The game object handles all the game's core functions. All the data needed for UI display can be fetched from the game object, which fetches data from lower levels if needed, then passed on to the UI object by the top layer (main function). <br>
+Each game object has a player object, an AI object and a rules object. <br>
+The player and AI object are the same except for the AI brain object which makes decisions for the AI opponent, the human player's input is retreived from the UI layer. <br>
+Player and AI objects have each a Gameboard object which contains the grid and the ships and their related functions. <br>
+The rules object has all the information defining the game's rules (i.e ship's names and lengths) and is required to initialize the game. This seperation is made to ensure a dynamic strucutre that can be easily modified in the future.
+
+![Game level layers diagram](./assets/readme/abstract/game_level.png)
+
+### UI Level
+
+The UI object (in code name: screen) contains all UI components. Any data needing display is passed to this object by the top layer (main function). <br>
+The main UI components is appended directly to the body. Other components are appended to dialog elements and are dhown when needed. Main UI has both pplayers boards, game controls and an enable full screen button. <br>
+The tutorial components is displayed when the page is first loaded and it shows only once per session. <br>
+The game setting component takes necessary input from the player to start a new game, the data is passed to the top layer. <br>
+The fleet editor component allows the player to place their ships on the grid. <br>
+The gameover components shows the game winner, both players' game statistics and a button to start a new game. <br>
+
+![UI level layers diagram](./assets/readme/abstract/ui_level.png)
